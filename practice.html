@@ -69,7 +69,7 @@
         if (currentIndex < currentSet.length) {
             displayFlashcard(); // Zeigt die nächste Karte an
         } else {
-            alert("Ende des Sets erreicht. Falsche Antworten werden erneut angezeigt.");
+            alert("End of the set reached. Incorrect answers are displayed again.");
             currentIndex = 0; // Setze den Index zurück
             currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
             wrongAnswers = []; // Leere die Liste für weitere Übungen
@@ -92,7 +92,7 @@ function markCorrect() {
     } else {
         // Überprüfe, ob es noch falsche Antworten gibt
         if (wrongAnswers.length > 0) {
-            alert("Es gibt noch falsche Antworten. Diese werden jetzt abgefragt.");
+            alert("There are still incorrect answers. Those will now be requested.");
             currentIndex = 0; // Setze den Index zurück
             currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
             wrongAnswers = []; // Leere die Liste für weitere Übungen
@@ -137,7 +137,7 @@ document.getElementById('flashcard').addEventListener('click', function() {
 </script>
 
 <!-- Zurück Links -->
-<a href="javascript:history.back()">Return</a><br>
+<br><a href="javascript:history.back()">Return</a><br>
 <a href="index.html">Return to homepage</a>
 
 </body>
