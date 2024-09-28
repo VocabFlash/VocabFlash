@@ -75,24 +75,53 @@ function markWrong() {
     }
 }
 
-// Funktion für den "Correct" Button
-function markCorrect() {
-    currentIndex++; // Gehe zur nächsten Karte
-    if (currentIndex < currentSet.length) {
-        displayFlashcard(); // Zeigt die nächste Karte an
-    } else {
-        alert("Practise completed");
-        currentIndex = 0; // Setze den Index zurück für die nächste Übung
-        updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
+    // Funktion, um das ausgewählte Set zu aktualisieren
+    function updateVocabSet() {
+        const selectedSet = document.getElementById('setSelect').value;
+        currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+        currentIndex = 0; // Startindex zurücksetzen
+        displayFlashcard(); // Zeigt die erste Karte an
     }
-}
+    
+  // Funktion für den "Wrong" Button
+    function markWrong() {
+        const vocabBack = document.getElementById('vocabBack');
+        vocabBack.style.display = 'block'; // Rückseite anzeigen
+        wrongAnswers.push(currentSet[currentIndex]); // Füge die falsche Antwort zur Liste hinzu
+        currentIndex++; // Gehe zur nächsten Karte
+        if (currentIndex < currentSet.length) {
+            displayFlashcard(); // Zeigt die nächste Karte an
+        } else {
+            alert("Ende des Sets erreicht. Falsche Antworten werden erneut angezeigt.");
+            currentIndex = 0; // Setze den Index zurück
+            currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
+            wrongAnswers = []; // Leere die Liste für weitere Übungen
+            displayFlashcard(); // Zeigt die erste Karte der falschen Antworten an
+        }
+    }
 
-// Klick auf die Flashcard, um sie zu drehen
-document.getElementById('flashcard').addEventListener('click', function() {
-    const vocabBack = document.getElementById('vocabBack');
-    vocabBack.style.display = vocabBack.style.display === 'none' ? 'block' : 'none'; // Toggle zwischen Vorder- und Rückseite
-});
+    // Funktion für den "Correct" Button
+    function markCorrect() {
+        currentIndex++; // Gehe zur nächsten Karte
+        if (currentIndex < currentSet.length) {
+            displayFlashcard(); // Zeigt die nächste Karte an
+        } else {
+            alert("Practise completed");
+            currentIndex = 0; // Setze den Index zurück für die nächste Übung
+            updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
+        }
+    }
 
+    // Klick auf die Flashcard, um sie zu drehen
+    document.getElementById('flashcard').addEventListener('click', function() {
+        const vocabBack = document.getElementById('vocabBack');
+        vocabBack.style.display = vocabBack.style.display === 'none' ? 'block' : 'none'; // Toggle zwischen Vorder- und Rückseite
+    });
+
+    // Initiales Set anzeigen
+    window.onload = function() {
+        updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+    };
 </script>
 
 <!-- Zurück Links -->
