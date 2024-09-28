@@ -12,6 +12,7 @@
 <!-- Liste mit allen Vokabel Sets -->
 <h1>VocabFlash</h1>
 <h2>Flashcards</h2>
+<h3 id="counter">Card: 1 / 10</h3> <!-- Die 10 sollte durch die Anzahl der Vokabeln ersetzt werden -->
 
 <label for="setSelect">Choose a set:</label>
 <select id="setSelect">
@@ -38,6 +39,7 @@
     function displayFlashcard() {
         const vocabFront = document.getElementById('vocabFront');
         const vocabBack = document.getElementById('vocabBack');
+        const counter = document.getElementById('counter');
 
         if (currentSet.length > 0) {
             const vocab = currentSet[currentIndex];
@@ -47,6 +49,9 @@
             // Toggle zwischen Vorder- und Rückseite
             vocabFront.style.display = showBack ? 'none' : 'block';
             vocabBack.style.display = showBack ? 'block' : 'none';
+
+            // Aktualisiere den Zähler
+            counter.innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
         }
     }
 
