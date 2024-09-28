@@ -29,7 +29,54 @@
 
 <!--SKRIPT-->
 <script>
-// Hier kommt später der JavaScript-Code
+let currentSet = [];
+let currentIndex = 0;
+
+// Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
+function displayVocabWord() {
+    const vocabWord = document.getElementById('vocabWord');
+    
+    if (currentSet.length > 0) {
+        const vocab = currentSet[currentIndex];
+        vocabWord.innerText = vocab.de; // Zeige das deutsche Wort an
+    }
+}
+
+// Funktion, um das ausgewählte Set zu aktualisieren
+function updateVocabSet() {
+    const selectedSet = document.getElementById('setSelect').value;
+    currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+    currentIndex = 0; // Startindex zurücksetzen
+    displayVocabWord(); // Zeigt das erste Wort an
+}
+
+// Funktion, um die Benutzerantwort zu überprüfen
+function checkAnswer() {
+    const userInput = document.getElementById('userInput').value;
+    const correctAnswer = currentSet[currentIndex].ar; // Richtiges Wort in der Fremdsprache
+
+    if (userInput.trim().toLowerCase() === correctAnswer.toLowerCase()) {
+        alert("Correct!");
+        currentIndex++; // Gehe zur nächsten Vokabel
+        document.getElementById('userInput').value = ""; // Leere das Eingabefeld
+
+        if (currentIndex < currentSet.length) {
+            displayVocabWord(); // Zeigt das nächste Wort an
+        } else {
+            alert("Completed");
+            currentIndex = 0; // Setze den Index zurück
+            updateVocabSet(); // Optional: Set zurücksetzen
+        }
+    } else {
+        alert("Try again");
+    }
+}
+
+// Initiales Set anzeigen
+window.onload = function() {
+    updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+};
+
 </script>
 
 
