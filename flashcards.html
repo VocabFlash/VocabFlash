@@ -11,13 +11,85 @@
 
 <!-- Liste mit allen Vokabel Sets -->
 <h1>VocabFlash</h1>
-<h2>Choose a set:</h2>
+<h2>Flashcards</h2>
 
-    <div id="flashcardContainer"></div>
-    <script>
-        // Hier wird der Code hinzugefügt, um die Karteikarten darzustellen
-    </script>
+<label for="setSelect">Choose a set:</label>
+<select id="setSelect">
+    <option value="set1">Set 1</option>
+    <option value="set2">Set 2</option>
+    <!-- Füge hier weitere Sets hinzu -->
+</select>
+<button onclick="updateVocabSet()">Confirm</button>
 
+<div id="flashcard" class="flashcard">
+    <div id="vocabFront"></div>
+    <div id="vocabBack"></div>
+</div>
+
+<button id="prevCard" onclick="prevFlashcard()">Previous</button>
+<button id="nextCard" onclick="nextFlashcard()">Next</button>
+
+<script>
+    let currentSet = [];
+    let currentIndex = 0;
+    let showBack = false;
+
+    // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
+    function displayFlashcard() {
+        const vocabFront = document.getElementById('vocabFront');
+        const vocabBack = document.getElementById('vocabBack');
+
+        if (currentSet.length > 0) {
+            const vocab = currentSet[currentIndex];
+            vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
+            vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
+
+            // Toggle zwischen Vorder- und Rückseite
+            vocabFront.style.display = showBack ? 'none' : 'block';
+            vocabBack.style.display = showBack ? 'block' : 'none';
+        }
+    }
+
+    // Funktion, um das ausgewählte Set zu aktualisieren
+    function updateVocabSet() {
+        const selectedSet = document.getElementById('setSelect').value;
+        currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+        currentIndex = 0;
+        showBack = false;
+        displayFlashcard(); // Flashcard mit dem ersten Eintrag anzeigen
+    }
+
+    // Funktion für die vorherige Karte
+    function prevFlashcard() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            showBack = false;
+            displayFlashcard();
+        }
+    }
+
+    // Funktion für die nächste Karte
+    function nextFlashcard() {
+        if (currentIndex < currentSet.length - 1) {
+            currentIndex++;
+            showBack = false;
+            displayFlashcard();
+        }
+    }
+
+    // Initiales Set anzeigen
+    window.onload = function() {
+        updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+    }
+
+    // Klick auf die Flashcard, um sie zu drehen
+    document.getElementById('flashcard').addEventListener('click', function() {
+        showBack = !showBack;
+        displayFlashcard();
+    });
+</script>
+
+        
 <!-- Zurück -->
     <a href="javascript:history.back()">Return</a><br>
     <a href="index.html">Return to homepage</a>
