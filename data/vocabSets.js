@@ -96,7 +96,7 @@ const vocabSets= {
     { "de": "dort, es gibt", "ar": "هُناكَ" },
     { "de": "ausländisch, Ausländer", "ar": "أَجْنَبِيّ ج أَجانِب" },
     { "de": "Gott", "ar": "الله" }
-  ];
+  ],
 
 set2: [
 
@@ -107,7 +107,7 @@ set2: [
     { "de": "arabisches Brot", "ar": "خُبْز عَرَبِيّ" },
     { "de": "mit viel Zucker", "ar": "بِسُكَّر كَثِير" },
     { "de": "Er trank Kaffee.", "ar": "شَرِبَ قَهْوَةً." },
-  
+
     { "de": "eine wichtige Untersuchung", "ar": "البَحْث المُهِمّ" },
     { "de": "die arabische Schrift", "ar": "الخَطّ العَرَبِيّ" },
     { "de": "viel Arbeit", "ar": "عَمَل كَبِير" },
@@ -148,6 +148,6 @@ set2: [
     { "de": "Ein arabischer Wirtschaftsminister sprach mit einer wichtigen Person.", "ar": "تَكَلَّمَ وَزِير إِقْتِصَاد عَرَبِيّ مَعَ شَخْص مُهِمّ." },
     { "de": "Ein ausländischer Student wohnte in einem großen arabischen Haus.", "ar": "سَكَنَ طالِب أَجْنَبِيّ في بَيْت عَرَبِيّ كَبِير." },
     { "de": "Am Morgen eines schönen Tages besuchte der König den Minister und trank Kaffee und Tee mit viel Zucker.", "ar": "في صَباح يَوْم جَمِيل زارَ المَلِك الوَزِير فَشَرِبَ القَهْوَة وَالشّاي مَعَ سُكَّر كَثِير." }
-]
-
+  ]
+};
   
