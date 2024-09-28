@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Flashcards mit Bewertung</title>
+    <title>Practise</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/vocabSets.js" defer></script>
 </head>
@@ -10,13 +10,15 @@
 
 <!-- Titel und Karteikartenbereich -->
 <h1>VocabFlash</h1>
-<h2>Flashcards</h2>
+<h2>Flashcards Practice</h2>
 <h3 id="counter">Card: 1 / 10</h3>
 
+<!-- Set Auswahl -->
 <label for="setSelect">Choose a set:</label>
 <select id="setSelect">
     <option value="set1">Set 1</option>
     <option value="set2">Set 2</option>
+    <!-- Weitere Sets hinzufügen -->
 </select>
 <button onclick="updateVocabSet()">Confirm</button>
 
@@ -30,8 +32,65 @@
 <button id="wrongCard" onclick="markWrong()">Wrong</button>
 <button id="correctCard" onclick="markCorrect()">Correct</button>
 
+
+<!--JAVA SKRIPT--> 
 <script>
-    // Hier fügen wir die Logik hinzu
+        let currentSet = [];
+        let currentIndex = 0;
+        
+        // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
+        function displayFlashcard() {
+            const vocabFront = document.getElementById('vocabFront');
+            const vocabBack = document.getElementById('vocabBack');
+            
+            if (currentSet.length > 0) {
+                const vocab = currentSet[currentIndex];
+                vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
+                vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
+        
+                // Rückseite ausblenden
+                vocabBack.style.display = 'none';
+
+                 // Aktualisiere den Zähler
+               document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
+            }
+        }
+        
+        // Funktion, um das ausgewählte Set zu aktualisieren
+        function updateVocabSet() {
+            const selectedSet = document.getElementById('setSelect').value;
+            currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+            currentIndex = 0; // Startindex zurücksetzen
+            displayFlashcard(); // Zeigt die erste Karte an
+        }
+        
+        // Funktion für den "Wrong" Button
+        document.getElementById('wrongBtn').addEventListener('click', function() {
+            displayFlashcard(); // Zeigt die aktuelle Karte erneut an
+        });
+        
+        // Funktion für den "Correct" Button
+        document.getElementById('correctBtn').addEventListener('click', function() {
+            currentIndex++; // Gehe zur nächsten Karte
+            if (currentIndex < currentSet.length) {
+                displayFlashcard(); // Zeigt die nächste Karte an
+            } else {
+                alert("Das Ende des Sets erreicht. Übung beendet!");
+                currentIndex = 0; // Setze den Index zurück für die nächste Übung
+            }
+        });
+        
+        // Initiales Set anzeigen
+        window.onload = function() {
+            updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+        }
+        
+        // Klick auf die Flashcard, um sie zu drehen
+        document.getElementById('flashcard').addEventListener('click', function() {
+            const vocabBack = document.getElementById('vocabBack');
+            vocabBack.style.display = vocabBack.style.display === 'none' ? 'block' : 'none'; // Toggle zwischen Vorder- und Rückseite
+        });
+
 </script>
 
 <!-- Zurück Links -->
