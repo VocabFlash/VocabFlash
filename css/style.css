@@ -1,1 +1,88 @@
+/* Grundlayout für den gesamten Body */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #2E3B46; /* Hintergrundfarbe */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Header-Design und Logo-Positionierung */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 60px; /* Breite des Logos */
+    height: 60px; /* Höhe des Logos */
+}
+
+h1 {
+    color: #FFFFFF;
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Hauptbereich mit den Vokabel-Sets */
+.vocabulary-set-container {
+    background-color: #FFFFFF;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Schatten für die Box */
+    text-align: center;
+    width: 350px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Buttons für die Vokabel-Sets */
+.set-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.button {
+    background-color: #21527E; /* Hintergrundfarbe der Buttons */
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Schatten für die Buttons */
+    transition: background-color 0.3s; /* Übergangseffekt bei Hover */
+}
+
+.button:hover {
+    background-color: #1A446B; /* Hintergrundfarbe beim Hover */
+}
+
+/* Responsives Design: passt das Layout für kleinere Bildschirme an */
+@media (max-width: 768px) {
+    .vocabulary-set-container {
+        width: 90%;
+    }
+}
 
