@@ -2,14 +2,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Vokabel Eingabe</title>
+    <title>vocaspelling</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/vocabSets.js" defer></script>
 </head>
 <body>
 
 <h1>VocabFlash</h1>
-<h2 id="inputCounter">Wort: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
+<h2 id="inputCounter">Word: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
 <!-- Set Auswahl -->
 <label for="setSelect">Choose a set:</label>
 <select id="setSelect">
@@ -24,17 +24,20 @@
     <h3 id="vocabWord"></h3>
     <input type="text" id="userInput" placeholder="Gib die Übersetzung ein">
     <button id="submitAnswer" onclick="checkAnswer()">Antwort überprüfen</button>
+    <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
 </div>
+
+<!-- Feedback-Element -->
 <p id="feedback"></p> <!-- Feedback-Element hinzufügen -->
 
-
+    
 <!--SKRIPT-->
 <script>
 let currentSet = [];
 let currentIndex = 0;
 let wrongAttempts = 0; // Variable für falsche Versuche
 let wrongAnswers = []; // Liste für falsche Antworten
-
+let timer; // Variable für den Timer
     
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
@@ -59,50 +62,71 @@ function updateVocabSet() {
     displayVocabWord(); // Zeigt das erste Wort an
 }
 
+// Funktion für den Skip-Button
+function skipToNext() {
+    clearTimeout(timer); // Timer zurücksetzen
+    nextWord(); // Gehe zur nächsten Karte
+}
+
+// Funktion für den nächsten Wortwechsel
+function nextWord() {
+    clearTimeout(timer); // Timer zurücksetzen
+    const skipButton = document.getElementById('skipButton');
+    skipButton.style.display = "none"; // Blende den Skip-Button aus
+
+    currentIndex++; // Gehe zur nächsten Karte
+    // Zurücksetzen der falschen Versuche
+    wrongAttempts = 0; 
+    if (currentIndex < currentSet.length) {
+        displayVocabWord(); // Zeigt das nächste Wort an
+    } else {
+        alert("Übung abgeschlossen!");
+        // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
+    }
+}
+    
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value; // Eingabewert
     const currentWord = currentSet[currentIndex]; // Aktuelles Wort
+    const feedback = document.getElementById('feedback'); // Feedback-Element
+    const skipButton = document.getElementById('skipButton'); // Skip-Button
 
     if (userInput.toLowerCase() === currentWord.ar.toLowerCase()) {
         // Richtige Antwort
         feedback.innerText = "Richtig!";
-        currentIndex++; // Gehe zur nächsten Karte
+        skipButton.style.display = "block"; // Zeige den Skip-Button
+        startTimer(); // Starte den Timer
 
         // Zurücksetzen der falschen Versuche
         wrongAttempts = 0; 
-
-        if (currentIndex < currentSet.length) {
-            displayFlashcard(); // Zeigt die nächste Karte an
-        } else {
-            alert("Übung abgeschlossen!");
-            // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
-        }
     } else {
         // Falsche Antwort
         wrongAttempts++; // Zähler erhöhen
         feedback.innerText = "Falsch! Versuche es erneut.";
+        skipButton.style.display = "none"; // Blende den Skip-Button aus
 
         if (wrongAttempts === 2) {
             // Lösung anzeigen, wenn 2 falsche Versuche
             feedback.innerText = `Die richtige Antwort ist: ${currentWord.ar}`;
             wrongAnswers.push(currentWord); // Füge das Wort zur Liste der falschen Antworten hinzu
-            currentIndex++; // Gehe zur nächsten Karte
-
-            // Zurücksetzen der falschen Versuche
-            wrongAttempts = 0; 
-
-            if (currentIndex < currentSet.length) {
-                displayVocabWord(); // Zeigt die nächste Wort an
-            } else {
-                alert("Übung abgeschlossen!");
-                // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
-            }
+            skipButton.style.display = "block"; // Zeige den Skip-Button
+            startTimer(); // Starte den Timer
+        } else {
+            // Eingabefeld zurücksetzen, kein Timer
+            document.getElementById('userInput').value = '';
+            return; // Beende die Funktion, um zur nächsten Eingabe zu gelangen
         }
     }
 
     // Eingabefeld zurücksetzen
     document.getElementById('userInput').value = '';
+}
+
+
+// Funktion, um den Timer zu starten
+function startTimer() {
+    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
 
