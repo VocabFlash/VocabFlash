@@ -15,7 +15,26 @@
 
     <div id="vocabList"></div>
     <script>
+        
         // Hier wird der Code hinzugefügt, um die Vokabeln darzustellen
+            // Funktion, um die Vokabeln aus set1 anzuzeigen
+                function displayVocabSet(setName) {
+                    const vocabList = vocabSets[setName]; // Zugriff auf das gewünschte Set
+                    const listDiv = document.getElementById("vocabList");
+                
+                    // Erstelle eine Tabelle
+                    let table = "<table border='1'><tr><th>Deutsch</th><th>Arabisch</th></tr>";
+                    vocabList.forEach(vocab => {
+                        table += `<tr><td>${vocab.de}</td><td>${vocab.ar}</td></tr>`;
+                    });
+                    table += "</table>";
+                
+                    listDiv.innerHTML = table; // Füge die Tabelle in das div ein
+                }
+                
+                // Aufruf der Funktion mit dem gewünschten Set
+                displayVocabSet("set1"); // Ändere 'set1' nach Bedarf
+        
     </script>
 
 <!-- Zurück -->
