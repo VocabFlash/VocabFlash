@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vokabel Eingabe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="data/vocabSets.js" defer></script>
+</head>
+<body>
+
+<h1>VocabFlash</h1>
+
+<!-- Set Auswahl -->
+<label for="setSelect">Choose a set:</label>
+<select id="setSelect">
+    <option value="set1">Set 1</option>
+    <option value="set2">Set 2</option>
+    <!-- Weitere Sets hinzufügen -->
+</select>
+<button onclick="updateVocabSet()">Bestätigen</button>
+
+<!-- Bereich für die Vokabelabfrage -->
+<div id="vocabArea">
+    <h2 id="vocabWord"></h2>
+    <input type="text" id="userInput" placeholder="Gib die Übersetzung ein">
+    <button id="submitAnswer" onclick="checkAnswer()">Antwort überprüfen</button>
+</div>
+
+
+<!--SKRIPT-->
+<script>
+// Hier kommt später der JavaScript-Code
+</script>
+
+
+<!-- Zurück Links -->
+<br><a href="javascript:history.back()">Zurück</a><br>
+<a href="index.html">Zurück zur Homepage</a>
+<!--Ende HTML-->
+</body>
+</html>
