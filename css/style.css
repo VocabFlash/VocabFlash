@@ -20,10 +20,7 @@
 }
 
 /* Platzhalter für Animation */
-.flashcard:hover {
-    /* Animation Platzhalter */
-    transform: rotateY(180deg); /* Beispiel einer möglichen Animation */
-}
+
 
 /* Button Styling */
 button {
