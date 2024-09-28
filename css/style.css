@@ -42,3 +42,22 @@ button:hover {
     padding: 5px;
     font-size: 16px;
 }
+
+
+
+
+/*PRACTISE*/
+
+.button-container button {
+    padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
+    font-size: 16px; /* Verändert die Schriftgröße */
+    width: 150px; /* Setzt eine feste Breite für die Buttons */
+    margin: 0 10px; /* Optional: Abstand zwischen den Buttons */
+    cursor: pointer; /* Ändert den Mauszeiger beim Hover */
+}
+
+/* Optional: Stil für Hover-Zustand */
+.button-container button:hover {
+    background-color: #f0f0f0; /* Ändert die Hintergrundfarbe beim Hover */
+    transition: background-color 0.3s; /* Fügt eine Übergangsanimation hinzu */
+}
