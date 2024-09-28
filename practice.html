@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flashcards mit Bewertung</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="data/vocabSets.js" defer></script>
+</head>
+<body>
+
+<!-- Titel und Karteikartenbereich -->
+<h1>VocabFlash</h1>
+<h2>Flashcards</h2>
+<h3 id="counter">Card: 1 / 10</h3>
+
+<label for="setSelect">Choose a set:</label>
+<select id="setSelect">
+    <option value="set1">Set 1</option>
+    <option value="set2">Set 2</option>
+</select>
+<button onclick="updateVocabSet()">Confirm</button>
+
+<!-- Der Bereich, wo die Karte angezeigt wird -->
+<div id="flashcard" class="flashcard">
+    <div id="vocabFront"></div>
+    <div id="vocabBack"></div>
+</div>
+
+<!-- Buttons für Bewertung -->
+<button id="wrongCard" onclick="markWrong()">Wrong</button>
+<button id="correctCard" onclick="markCorrect()">Correct</button>
+
+<script>
+    // Hier fügen wir die Logik hinzu
+</script>
+
+<!-- Zurück Links -->
+<a href="javascript:history.back()">Return</a><br>
+<a href="index.html">Return to homepage</a>
+
+</body>
+</html>
