@@ -20,7 +20,27 @@
 }
 
 /* Platzhalter für Animation */
-
+        .flashcard {
+            transition: transform 0.6s ease-in-out;
+            transform-style: preserve-3d;
+        }
+        
+        /* Die Rückseite der Karte anzeigen, wenn sie die Klasse "flipped" hat */
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        /* Vorderseite und Rückseite der Flashcard */
+        #vocabFront, #vocabBack {
+            position: absolute;
+            width: 100%;
+            backface-visibility: hidden;
+        }
+        
+        /* Rückseite verstecken (wird erst durch Drehung sichtbar) */
+        #vocabBack {
+            transform: rotateY(180deg);
+        }
 
 /* Button Styling */
 button {
