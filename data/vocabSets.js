@@ -6,7 +6,7 @@ const vocabSets= {
     { de: "mein Vater", ar: "أبي" },
     { de: "Bruder", ar: "أخ" },
     { de: "Schwester", ar: "أخت" },
-    { de: "Tür", ar: "باب ج أبواب)" },
+    { de: "Tür", ar: "باب ج أبواب" },
     { de: "Krone", ar: "تاج" },
     { de: "und", ar: "و" },
     { de: "Bruder und Schwester", ar: "أخ وأخت" },
