@@ -65,24 +65,23 @@
             displayFlashcard(); // Zeigt die erste Karte an
         }
         
-      // Funktion für den "Wrong" Button
-function markWrong() {
-    // Zeige die aktuelle Karte erneut an (Rückseite zeigen)
-    const vocabBack = document.getElementById('vocabBack');
-    vocabBack.style.display = 'block'; // Rückseite anzeigen
-}
-
-// Funktion für den "Correct" Button
-function markCorrect() {
-    currentIndex++; // Gehe zur nächsten Karte
-    if (currentIndex < currentSet.length) {
-        displayFlashcard(); // Zeigt die nächste Karte an
-    } else {
-        alert("Practise completed");
-        currentIndex = 0; // Setze den Index zurück für die nächste Übung
-        updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
-    }
-}
+                // Funktion für den "Wrong" Button
+                function markWrong() {
+                    const vocabBack = document.getElementById('vocabBack');
+                    vocabBack.style.display = 'block'; // Rückseite anzeigen
+                }
+                
+                // Funktion für den "Correct" Button
+                function markCorrect() {
+                    currentIndex++; // Gehe zur nächsten Karte
+                    if (currentIndex < currentSet.length) {
+                        displayFlashcard(); // Zeigt die nächste Karte an
+                    } else {
+                        alert("Practise completed");
+                        currentIndex = 0; // Setze den Index zurück für die nächste Übung
+                        updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
+                    }
+                }
 
         });
         
