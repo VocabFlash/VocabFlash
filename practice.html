@@ -84,17 +84,27 @@
         currentIndex = 0; // Startindex zurücksetzen
         displayFlashcard(); // Zeigt die erste Karte an
     }
-    // Funktion für den "Correct" Button
-    function markCorrect() {
-        currentIndex++; // Gehe zur nächsten Karte
-        if (currentIndex < currentSet.length) {
-            displayFlashcard(); // Zeigt die nächste Karte an
+// Funktion für den "Correct" Button
+function markCorrect() {
+    currentIndex++; // Gehe zur nächsten Karte
+    if (currentIndex < currentSet.length) {
+        displayFlashcard(); // Zeigt die nächste Karte an
+    } else {
+        // Überprüfe, ob es noch falsche Antworten gibt
+        if (wrongAnswers.length > 0) {
+            alert("Es gibt noch falsche Antworten. Diese werden jetzt abgefragt.");
+            currentIndex = 0; // Setze den Index zurück
+            currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
+            wrongAnswers = []; // Leere die Liste für weitere Übungen
+            displayFlashcard(); // Zeigt die erste Karte der falschen Antworten an
         } else {
             alert("Practise completed");
             currentIndex = 0; // Setze den Index zurück für die nächste Übung
             updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
         }
     }
+}
+
 
       // Funktion zum Mischen eines Arrays
     function shuffleArray(array) {
