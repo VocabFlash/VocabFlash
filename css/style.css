@@ -1,1 +1,48 @@
 
+/*FLASHCARDS*/
+
+/* Flashcard Box Styling */
+.flashcard {
+    width: 300px;
+    height: 200px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Platzhalter für Animation */
+.flashcard:hover {
+    /* Animation Platzhalter */
+    transform: rotateY(180deg); /* Beispiel einer möglichen Animation */
+}
+
+/* Button Styling */
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Vokabelset Auswahl */
+#setSelect {
+    padding: 5px;
+    font-size: 16px;
+}
