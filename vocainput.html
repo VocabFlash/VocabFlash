@@ -68,12 +68,19 @@ function skipToNext() {
     nextWord(); // Gehe zur nächsten Karte
 }
 
+// Funktion, um das Feedback-Element zu löschen
+function clearFeedback() {
+    const feedback = document.getElementById('feedback');
+    feedback.innerText = ''; // Lösche den Text im Feedback-Element
+}
+
 // Funktion für den nächsten Wortwechsel
 function nextWord() {
     clearTimeout(timer); // Timer zurücksetzen
     const skipButton = document.getElementById('skipButton');
     skipButton.style.display = "none"; // Blende den Skip-Button aus
 
+    clearFeedback(); // Lösche vorheriges Feedback
     currentIndex++; // Gehe zur nächsten Karte
     // Zurücksetzen der falschen Versuche
     wrongAttempts = 0; 
@@ -84,7 +91,7 @@ function nextWord() {
         // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
     }
 }
-    
+
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value; // Eingabewert
@@ -112,10 +119,6 @@ function checkAnswer() {
             wrongAnswers.push(currentWord); // Füge das Wort zur Liste der falschen Antworten hinzu
             skipButton.style.display = "block"; // Zeige den Skip-Button
             startTimer(); // Starte den Timer
-        } else {
-            // Eingabefeld zurücksetzen, kein Timer
-            document.getElementById('userInput').value = '';
-            return; // Beende die Funktion, um zur nächsten Eingabe zu gelangen
         }
     }
 
