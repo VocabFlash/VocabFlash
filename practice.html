@@ -58,30 +58,7 @@
     }
 
         
-// Funktion für den "Wrong" Button
-function markWrong() {
-    const vocabBack = document.getElementById('vocabBack');
-    vocabBack.style.display = 'block'; // Rückseite anzeigen
-    wrongAnswers.push(currentSet[currentIndex]); // Füge die falsche Antwort zur Liste hinzu
-    currentIndex++; // Gehe zur nächsten Karte
-    if (currentIndex < currentSet.length) {
-        displayFlashcard(); // Zeigt die nächste Karte an
-    } else {
-        alert("Ende des Sets erreicht. Falsche Antworten werden erneut angezeigt.");
-        currentIndex = 0; // Setze den Index zurück
-        currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
-        wrongAnswers = []; // Leere die Liste für weitere Übungen
-        displayFlashcard(); // Zeigt die erste Karte der falschen Antworten an
-    }
-}
 
-    // Funktion, um das ausgewählte Set zu aktualisieren
-    function updateVocabSet() {
-        const selectedSet = document.getElementById('setSelect').value;
-        currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
-        currentIndex = 0; // Startindex zurücksetzen
-        displayFlashcard(); // Zeigt die erste Karte an
-    }
     
   // Funktion für den "Wrong" Button
     function markWrong() {
@@ -100,6 +77,13 @@ function markWrong() {
         }
     }
 
+    // Funktion, um das ausgewählte Set zu aktualisieren
+    function updateVocabSet() {
+        const selectedSet = document.getElementById('setSelect').value;
+        currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+        currentIndex = 0; // Startindex zurücksetzen
+        displayFlashcard(); // Zeigt die erste Karte an
+    }
     // Funktion für den "Correct" Button
     function markCorrect() {
         currentIndex++; // Gehe zur nächsten Karte
@@ -112,11 +96,29 @@ function markWrong() {
         }
     }
 
-    // Klick auf die Flashcard, um sie zu drehen
-    document.getElementById('flashcard').addEventListener('click', function() {
-        const vocabBack = document.getElementById('vocabBack');
-        vocabBack.style.display = vocabBack.style.display === 'none' ? 'block' : 'none'; // Toggle zwischen Vorder- und Rückseite
-    });
+      // Funktion zum Mischen eines Arrays
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // Elemente vertauschen
+        }
+        return array;
+    }
+
+// Klick auf die Flashcard, um sie zu drehen
+document.getElementById('flashcard').addEventListener('click', function() {
+    const vocabFront = document.getElementById('vocabFront');
+    const vocabBack = document.getElementById('vocabBack');
+    
+    // Toggle zwischen Vorder- und Rückseite
+    if (vocabBack.style.display === 'none') {
+        vocabBack.style.display = 'block'; // Rückseite anzeigen
+        vocabFront.style.display = 'none'; // Vorderseite ausblenden
+    } else {
+        vocabBack.style.display = 'none'; // Rückseite ausblenden
+        vocabFront.style.display = 'block'; // Vorderseite anzeigen
+    }
+});
 
     // Initiales Set anzeigen
     window.onload = function() {
