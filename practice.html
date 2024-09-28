@@ -29,8 +29,8 @@
 </div>
 
 <!-- Buttons für Bewertung -->
-<button id="wrongCard" onclick="markWrong()">Wrong</button>
-<button id="correctCard" onclick="markCorrect()">Correct</button>
+<button id="wrongButton" onclick="markWrong()">Wrong</button>
+<button id="correctButton" onclick="markCorrect()">Correct</button>
 
 
 <!--JAVA SKRIPT--> 
@@ -40,21 +40,22 @@
         
         // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
         function displayFlashcard() {
-            const vocabFront = document.getElementById('vocabFront');
-            const vocabBack = document.getElementById('vocabBack');
-            
-            if (currentSet.length > 0) {
-                const vocab = currentSet[currentIndex];
-                vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
-                vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
+        const vocabFront = document.getElementById('vocabFront');
+        const vocabBack = document.getElementById('vocabBack');
         
-                // Rückseite ausblenden
-                vocabBack.style.display = 'none';
-
-                 // Aktualisiere den Zähler
-               document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
-            }
+        if (currentSet.length > 0) {
+            const vocab = currentSet[currentIndex];
+            vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
+            vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
+    
+            // Rückseite ausblenden
+            vocabBack.style.display = 'none'; // Standardmäßig die Rückseite ausblenden
+    
+            // Aktualisiere den Zähler
+            document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
         }
+    }
+
         
         // Funktion, um das ausgewählte Set zu aktualisieren
         function updateVocabSet() {
@@ -64,20 +65,25 @@
             displayFlashcard(); // Zeigt die erste Karte an
         }
         
-        // Funktion für den "Wrong" Button
-        document.getElementById('wrongBtn').addEventListener('click', function() {
-            displayFlashcard(); // Zeigt die aktuelle Karte erneut an
-        });
-        
-        // Funktion für den "Correct" Button
-        document.getElementById('correctBtn').addEventListener('click', function() {
-            currentIndex++; // Gehe zur nächsten Karte
-            if (currentIndex < currentSet.length) {
-                displayFlashcard(); // Zeigt die nächste Karte an
-            } else {
-                alert("Das Ende des Sets erreicht. Übung beendet!");
-                currentIndex = 0; // Setze den Index zurück für die nächste Übung
-            }
+      // Funktion für den "Wrong" Button
+function markWrong() {
+    // Zeige die aktuelle Karte erneut an (Rückseite zeigen)
+    const vocabBack = document.getElementById('vocabBack');
+    vocabBack.style.display = 'block'; // Rückseite anzeigen
+}
+
+// Funktion für den "Correct" Button
+function markCorrect() {
+    currentIndex++; // Gehe zur nächsten Karte
+    if (currentIndex < currentSet.length) {
+        displayFlashcard(); // Zeigt die nächste Karte an
+    } else {
+        alert("Practise completed");
+        currentIndex = 0; // Setze den Index zurück für die nächste Übung
+        updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
+    }
+}
+
         });
         
         // Initiales Set anzeigen
