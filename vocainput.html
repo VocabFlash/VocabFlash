@@ -9,7 +9,7 @@
 <body>
 
 <h1>VocabFlash</h1>
-
+<h2 id="inputCounter">Wort: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
 <!-- Set Auswahl -->
 <label for="setSelect">Choose a set:</label>
 <select id="setSelect">
@@ -21,26 +21,35 @@
 
 <!-- Bereich für die Vokabelabfrage -->
 <div id="vocabArea">
-    <h2 id="vocabWord"></h2>
+    <h3 id="vocabWord"></h3>
     <input type="text" id="userInput" placeholder="Gib die Übersetzung ein">
     <button id="submitAnswer" onclick="checkAnswer()">Antwort überprüfen</button>
 </div>
+<p id="feedback"></p> <!-- Feedback-Element hinzufügen -->
 
 
 <!--SKRIPT-->
 <script>
 let currentSet = [];
 let currentIndex = 0;
+let wrongAttempts = 0; // Variable für falsche Versuche
+let wrongAnswers = []; // Liste für falsche Antworten
 
+    
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
     const vocabWord = document.getElementById('vocabWord');
-    
+    const inputCounter = document.getElementById('inputCounter'); // Zähler-Element
+
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
         vocabWord.innerText = vocab.de; // Zeige das deutsche Wort an
+
+        // Aktualisiere den Zähler
+        inputCounter.innerText = `Wort: ${currentIndex + 1} / ${currentSet.length}`;
     }
 }
+
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
@@ -52,25 +61,50 @@ function updateVocabSet() {
 
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
-    const userInput = document.getElementById('userInput').value;
-    const correctAnswer = currentSet[currentIndex].ar; // Richtiges Wort in der Fremdsprache
+    const userInput = document.getElementById('userInput').value; // Eingabewert
+    const currentWord = currentSet[currentIndex]; // Aktuelles Wort
 
-    if (userInput.trim().toLowerCase() === correctAnswer.toLowerCase()) {
-        alert("Correct!");
-        currentIndex++; // Gehe zur nächsten Vokabel
-        document.getElementById('userInput').value = ""; // Leere das Eingabefeld
+    if (userInput.toLowerCase() === currentWord.ar.toLowerCase()) {
+        // Richtige Antwort
+        feedback.innerText = "Richtig!";
+        currentIndex++; // Gehe zur nächsten Karte
+
+        // Zurücksetzen der falschen Versuche
+        wrongAttempts = 0; 
 
         if (currentIndex < currentSet.length) {
-            displayVocabWord(); // Zeigt das nächste Wort an
+            displayFlashcard(); // Zeigt die nächste Karte an
         } else {
-            alert("Completed");
-            currentIndex = 0; // Setze den Index zurück
-            updateVocabSet(); // Optional: Set zurücksetzen
+            alert("Übung abgeschlossen!");
+            // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
         }
     } else {
-        alert("Try again");
+        // Falsche Antwort
+        wrongAttempts++; // Zähler erhöhen
+        feedback.innerText = "Falsch! Versuche es erneut.";
+
+        if (wrongAttempts === 2) {
+            // Lösung anzeigen, wenn 2 falsche Versuche
+            feedback.innerText = `Die richtige Antwort ist: ${currentWord.ar}`;
+            wrongAnswers.push(currentWord); // Füge das Wort zur Liste der falschen Antworten hinzu
+            currentIndex++; // Gehe zur nächsten Karte
+
+            // Zurücksetzen der falschen Versuche
+            wrongAttempts = 0; 
+
+            if (currentIndex < currentSet.length) {
+                displayVocabWord(); // Zeigt die nächste Wort an
+            } else {
+                alert("Übung abgeschlossen!");
+                // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
+            }
+        }
     }
+
+    // Eingabefeld zurücksetzen
+    document.getElementById('userInput').value = '';
 }
+
 
 // Initiales Set anzeigen
 window.onload = function() {
