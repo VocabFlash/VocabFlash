@@ -49,6 +49,8 @@ button:hover {
 /*PRACTISE*/
 
 .button-container button {
+    display: flex;
+    justify-content: center
     padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
     font-size: 16px; /* Verändert die Schriftgröße */
     width: 150px; /* Setzt eine feste Breite für die Buttons */
