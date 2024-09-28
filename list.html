@@ -28,7 +28,9 @@
                 function displayVocabSet(setName) {
                     const vocabList = vocabSets[setName]; // Zugriff auf das gewünschte Set
                     const listDiv = document.getElementById("vocabList");
-                
+
+                        // Leere den Inhalt des divs
+                    listDiv.innerHTML = "";
                     // Erstelle eine Tabelle
                     let table = "<table border='1'><tr><th>Deutsch</th><th>Arabisch</th></tr>";
                     vocabList.forEach(vocab => {
