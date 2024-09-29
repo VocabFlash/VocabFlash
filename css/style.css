@@ -50,6 +50,7 @@ h2 {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
     width: 300px; /* Breite der Box */
     text-align: center; /* Zentrierte Texte */
+    margin: 20px auto; /* Zentrierung und Abstand */
 }
 
 /* Menü-Styling */
@@ -116,6 +117,21 @@ button {
 
 button:hover {
     background-color: #45a049;
+}
+
+.confirm-button {
+    padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
+    margin-top: 10px; /* Abstand oben */
+    background-color: #007BFF; /* Setzt die Hintergrundfarbe auf Blau */
+    color: white; /* Weiße Schriftfarbe */
+    border: none; /* Entfernt den Rahmen */
+    border-radius: 15px; /* Einheitliche abgerundete Ecken */
+    cursor: pointer; /* Zeigt den Zeiger-Cursor an */
+    transition: background-color 0.3s; /* Übergangseffekt für den Hover-Zustand */
+}
+
+.confirm-button:hover {
+    background-color: #0056b3; /* Dunkleres Blau beim Hover */
 }
 
 /* Vokabelset Auswahl */
