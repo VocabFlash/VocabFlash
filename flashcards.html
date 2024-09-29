@@ -14,28 +14,36 @@
 <h2>Flashcards</h2>
 <div class="container">
     <h3 id="counter">Card: 1 / 10</h3> <!-- Die 10 sollte durch die Anzahl der Vokabeln ersetzt werden -->
-
-    <label for="setSelect">Choose a set:</label>
-    <select id="setSelect">
-        <option value="set1">Set 1</option>
-        <option value="set2">Set 2</option>
-        <option value="set3">Set 3</option>
-        <!-- Füge hier weitere Sets hinzu -->
-    </select>
-    <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
-    <!-- Zurück -->
-    <a href="javascript:history.back()">Return</a><br>
-    <a href="index.html">Return to homepage</a>
-</div>    
+</div>
+   
 
 <div id="flashcard" class="flashcard">
     <div id="vocabFront"></div>
     <div id="vocabBack"></div>
 </div>
 
-<button class="confirm-button" id="prevCard" onclick="prevFlashcard()">Previous</button>
-<button class="confirm-button" id="nextCard" onclick="nextFlashcard()">Next</button>
+<div class="button-container">
+    <button class="confirm-button" id="prevCard" onclick="prevFlashcard()">Previous</button>&nbsp;
+    <button class="confirm-button" id="nextCard" onclick="nextFlashcard()">Next</button>
+</div>
 
+    
+
+<div class="container">
+     <label for="setSelect">Choose a set:</label>
+        <select id="setSelect">
+            <option value="set1">Set 1</option>
+            <option value="set2">Set 2</option>
+            <option value="set3">Set 3</option>
+            <!-- Füge hier weitere Sets hinzu -->
+        </select>
+        <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
+        <!-- Zurück -->
+        <a href="javascript:history.back()">Return</a><br>
+        <a href="index.html">Return to homepage</a>
+    </div>
+
+    
 <script>
     let currentSet = [];
     let currentIndex = 0;
