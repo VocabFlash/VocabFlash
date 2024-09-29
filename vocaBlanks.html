@@ -22,7 +22,7 @@
 <!-- Bereich für die Vokabelabfrage -->
 <div id="vocabArea">
     <h3 id="vocabWord"></h3>
-    <input type="text" id="userInput" placeholder="Fill in the blank"> onkeydown="if(event.key === 'Enter') checkAnswer();">
+    <input type="text" id="userInput" placeholder="Fill in the blank" onkeydown="if(event.key === 'Enter') checkAnswer();">
     <button id="submitAnswer" onclick="checkAnswer()">Check</button>
     <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
 </div>
