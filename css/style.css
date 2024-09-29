@@ -1,24 +1,34 @@
-/*INDEX*/
+/* --- Farben und Variablen --- */
+:root {
+    --primary-color: #007BFF;
+    --hover-color: #0056b3;
+    --footer-bg-color: #333;
+    --footer-text-color: #fff;
+    --header-text-color: #4CAF50;
+}
+
+/* --- Allgemeine Styles --- */
 body {
     background-color: #1a1e24;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Volle Höhe des Viewports */
+    height: 100vh;
 }
 
+/* --- Container --- */
 .container {
     background-color: #fff;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-    width: 300px; /* Breite der Box */
+    width: 300px;
     text-align: center;
 }
 
-
+/* --- Überschriften --- */
 h1 {
-    color: #fff;
+    color: var(--header-text-color);
     font-size: 24px;
     margin-bottom: 20px;
     font-family: "Arial Black", sans-serif;
@@ -33,10 +43,26 @@ h2 {
     font-weight: bold;
 }
 
+/* --- Menü --- */
+.menu {
+    padding: 20px 0;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu ul li {
+    margin: 10px 0;
+}
+
 .menu ul li a {
     display: block;
     padding: 10px 20px;
-    background-color: #007BFF;
+    background-color: var(--primary-color);
     color: white;
     border-radius: 5px;
     text-decoration: none;
@@ -45,14 +71,41 @@ h2 {
 }
 
 .menu ul li a:hover {
-    background-color: #0056b3;
+    background-color: var(--hover-color);
 }
 
+/* --- Footer --- */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--footer-text-color);
+    font-size: 14px;
+    background-color: var(--footer-bg-color);
+    padding: 10px 0;
+}
 
+footer nav ul {
+    list-style-type: none;
+    padding: 0;
+}
 
-/*FLASHCARDS*/
+footer nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
 
-/* Flashcard Box Styling */
+footer nav ul li a {
+    color: var(--footer-text-color);
+    text-decoration: none;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+footer nav ul li a:hover {
+    text-decoration: underline;
+    color: var(--header-text-color);
+}
+
+/* --- Flashcards --- */
 .flashcard {
     width: 300px;
     height: 200px;
@@ -70,9 +123,7 @@ h2 {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Platzhalter für Animation */
-  
-/* Button Styling */
+/* --- Buttons --- */
 button {
     padding: 10px 20px;
     margin-top: 10px;
@@ -88,48 +139,53 @@ button:hover {
     background-color: #45a049;
 }
 
-/* Vokabelset Auswahl */
-#setSelect {
-    padding: 5px;
-    font-size: 16px;
-}
-
-
-
-
-/*PRACTISE*/
-
+/* --- Praktische Übungen --- */
 .button-container {
-    display: flex; /* Macht den Container zu einer Flexbox */
-    justify-content: center; /* Zentriert den Inhalt horizontal */
-    align-items: center; /* Zentriert den Inhalt vertikal, falls nötig */
-    margin-top: 20px; /* Optional: Abstand oben */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .button-container button {
-    padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
-    font-size: 16px; /* Verändert die Schriftgröße */
-    width: 150px; /* Setzt eine feste Breite für die Buttons */
-    margin: 0 10px; /* Abstand zwischen den Buttons */
-    cursor: pointer; /* Ändert den Mauszeiger beim Hover */
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 150px;
+    margin: 0 10px;
+    cursor: pointer;
 }
 
-/* Optional: Stil für Hover-Zustand */
 .button-container button:hover {
-    background-color: #f0f0f0; /* Ändert die Hintergrundfarbe beim Hover */
-    transition: background-color 0.2s; /* Fügt eine Übergangsanimation hinzu */
+    background-color: #f0f0f0;
+    transition: background-color 0.2s;
 }
 
+/* --- Vokabel Blanks --- */
+.correct {
+    color: green;
+}
 
-/*VOCABLANKS*/
-    .correct {
-        color: green;
+.wrong {
+    color: orange;
+}
+
+.solution {
+    color: red;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 10px;
     }
-    
-    .wrong {
-        color: orange;
+
+    h1, h2 {
+        font-size: 20px;
     }
-    
-    .solution {
-        color: red;
+
+    .menu ul li a {
+        font-size: 14px;
+        padding: 8px;
     }
+}
