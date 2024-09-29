@@ -92,13 +92,14 @@ h2 {
     width: 100%; /* Tabelle auf volle Breite */
     border-collapse: collapse; /* Entfernt doppelte Ränder */
     margin-top: 20px; /* Abstand zum oberen Element */
-    background-color: #f0f0f0; /* Hellgrauer Hintergrund für die Tabelle */
+    background-color: transparent; /* kein Hintergrund für die Tabelle */
 }
 
 #vocabList th, #vocabList td {
     padding: 10px; /* Innenabstand */
     border: 1px solid #ccc; /* Rand für die Zellen */
     text-align: left; /* Text linksbündig */
+    background-color: #f0f0f0; /* Hellgrauer Hintergrund für Zellen */
 }
 
 h1, h2, label {
@@ -110,6 +111,12 @@ h1, h2, label {
     margin-top: 20px; /* Abstand nach oben */
 }
 
+
+/* Optional: Stil für die Links */
+a {
+    display: inline-block; /* Macht die Links zu Block-Elementen */
+    margin-top: 20px; /* Abstand nach oben */
+}
 
 
 
