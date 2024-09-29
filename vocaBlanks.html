@@ -93,9 +93,11 @@ function updateVocabSet() {
 // Funktion für die Auswertung
 function showResults() {
     // Navigation zu einer Ergebnistabelle
-    window.location.href = "results.html";
+function showResults() {
     localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
+    window.location.href = "results.html"; // Weiterleitung zu results.html
 }
+
 
 
 // Funktion für den Skip-Button
