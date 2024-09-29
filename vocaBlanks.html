@@ -9,7 +9,7 @@
 <body>
 
 <h1>VocabFlash</h1>
-<h2 id="inputCounter">Word: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
+<h2 id="inputCounter">Word: 1 / 10</h2>
 <!-- Set Auswahl -->
 <label for="setSelect">Choose a set:</label>
 <select id="setSelect" onchange="updateVocabSet()">
@@ -26,42 +26,38 @@
            oninput="toggleCheckButton()" 
            onkeydown="handleKeyDown(event)">
     <button id="submitAnswer" onclick="checkAnswer()" style="display: none;">Check</button>
-    <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
+    <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button>
 </div>
 
 <!-- Feedback-Element -->
-<p id="feedback"></p> <!-- Feedback-Element hinzufügen -->
+<p id="feedback"></p>
 
-    
-<!--SKRIPT-->
+<!-- Skript -->
 <script>
 let currentSet = [];
 let currentIndex = 0;
 let wrongAttempts = 0; // Variable für falsche Versuche
 let wrongAnswers = []; // Liste für falsche Antworten
 let timer; // Variable für den Timer
-    
+
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
     const vocabWord = document.getElementById('vocabWord');
-    const inputCounter = document.getElementById('inputCounter'); // Zähler-Element
-    const submitButton = document.getElementById('submitAnswer'); // Check-Button
+    const inputCounter = document.getElementById('inputCounter');
+    const submitButton = document.getElementById('submitAnswer');
     
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
         vocabWord.innerText = vocab.de; // Zeige das deutsche Wort an
-        vocabWord.classList.remove('correct', 'wrong', 'solution'); // Entferne Farben
+        vocabWord.classList.remove('correct', 'wrong', 'solution');
 
         // Aktualisiere den Zähler
-        inputCounter.innerText = `Wort: ${currentIndex + 1} / ${currentSet.length}`;
+        inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
 
-
-    // Check-Button anzeigen, da eine neue Frage gestellt wird
-    submitButton.style.display = "none";
-
+        // Check-Button ausblenden, da eine neue Frage gestellt wird
+        submitButton.style.display = "none";
     }
 }
-
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
@@ -82,8 +78,6 @@ function skipToNext() {
     clearTimeout(timer); // Timer zurücksetzen
     nextWord(); // Gehe zur nächsten Karte
 }
-
-
 
 // Funktion, um das Feedback-Element zu löschen
 function clearFeedback() {
@@ -106,9 +100,9 @@ function nextWord() {
     if (currentIndex < currentSet.length) {
         displayVocabWord(); // Zeigt das nächste Wort an
     } else {
-        alert("Excercise completed!");
+        alert("Exercise completed!");
     }
-} // Diese Klammer schließt die Funktion nextWord
+}
 
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
@@ -152,12 +146,6 @@ function checkAnswer() {
     // Eingabefeld und Check-Button ausblenden
     document.getElementById('userInput').value = '';
     document.getElementById('submitAnswer').style.display = "block"; // Zeige den Check-Button wieder an
-} // Diese Klammer schließt die Funktion checkAnswer
-
-
-// Funktion, um den Timer zu starten
-function startTimer() {
-    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
 // Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
@@ -170,6 +158,11 @@ function toggleCheckButton() {
     } else {
         submitButton.style.display = "none"; // Blende den Check-Button aus
     }
+}
+
+// Funktion, um den Timer zu starten
+function startTimer() {
+    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
 // Funktion zur Behandlung der Tastenereignisse
@@ -189,13 +182,11 @@ function handleKeyDown(event) {
 window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
-
 </script>
-
 
 <!-- Zurück Links -->
 <br><a href="javascript:history.back()">Zurück</a><br>
 <a href="index.html">Zurück zur Homepage</a>
-<!--Ende HTML-->
+<!-- Ende HTML -->
 </body>
 </html>
