@@ -105,16 +105,13 @@ function nextWord() {
 
     if (currentIndex < currentSet.length) {
         displayVocabWord(); // Zeigt das nächste Wort an
-        submitButton.style.display = "block"; // Zeige den Check-Button
     } else {
         alert("Excercise completed!");
     }
-}
-
+} // Diese Klammer schließt die Funktion nextWord
 
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
- function checkAnswer() {
     const userInput = document.getElementById('userInput').value; // Eingabewert
     const currentWord = currentSet[currentIndex]; // Aktuelles Wort
     const feedback = document.getElementById('feedback'); // Feedback-Element
@@ -155,7 +152,7 @@ function checkAnswer() {
     // Eingabefeld und Check-Button ausblenden
     document.getElementById('userInput').value = '';
     document.getElementById('submitAnswer').style.display = "block"; // Zeige den Check-Button wieder an
-}
+} // Diese Klammer schließt die Funktion checkAnswer
 
 
 // Funktion, um den Timer zu starten
