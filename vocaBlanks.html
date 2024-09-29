@@ -112,14 +112,14 @@ function checkAnswer() {
     } else {
         // Falsche Antwort
         wrongAttempts++; // Zähler erhöhen
-        
-    if (wrongAttempts === 1) {
-        feedback.innerText = "Try again.";
-        feedback.classList.remove('correct', 'solution'); // Entferne vorherige Farben
-        feedback.classList.add('wrong'); // Setze orange Farbe
-        skipButton.style.display = "none"; // Blende den Skip-Button aus
 
-        if (wrongAttempts === 2) {
+        if (wrongAttempts === 1) {
+            feedback.innerText = "Try again.";
+            feedback.classList.remove('correct', 'solution'); // Entferne vorherige Farben
+            feedback.classList.add('wrong'); // Setze orange Farbe
+            skipButton.style.display = "none"; // Blende den Skip-Button aus
+        } 
+        else if (wrongAttempts === 2) {
             // Lösung anzeigen, wenn 2 falsche Versuche
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
             feedback.classList.remove('correct', 'wrong'); // Entferne vorherige Farben
@@ -133,7 +133,6 @@ function checkAnswer() {
     // Eingabefeld zurücksetzen
     document.getElementById('userInput').value = '';
 }
-
 
 // Funktion, um den Timer zu starten
 function startTimer() {
