@@ -101,7 +101,9 @@ function checkAnswer() {
 
     if (userInput.toLowerCase() === currentWord.ar.toLowerCase()) {
         // Richtige Antwort
-        feedback.innerText = "Richtig!";
+        feedback.innerText = "Correct!";
+        feedback.classList.remove('wrong', 'solution'); // Entferne vorherige Farben
+        feedback.classList.add('correct'); // Setze grüne Farbe
         skipButton.style.display = "block"; // Zeige den Skip-Button
         startTimer(); // Starte den Timer
 
@@ -110,12 +112,18 @@ function checkAnswer() {
     } else {
         // Falsche Antwort
         wrongAttempts++; // Zähler erhöhen
-        feedback.innerText = "Falsch! Versuche es erneut.";
+        
+    if (wrongAttempts === 1) {
+        feedback.innerText = "Try again.";
+        feedback.classList.remove('correct', 'solution'); // Entferne vorherige Farben
+        feedback.classList.add('wrong'); // Setze orange Farbe
         skipButton.style.display = "none"; // Blende den Skip-Button aus
 
         if (wrongAttempts === 2) {
             // Lösung anzeigen, wenn 2 falsche Versuche
-            feedback.innerText = `Die richtige Antwort ist: ${currentWord.ar}`;
+            feedback.innerText = `The correct answer is: ${currentWord.ar}`;
+            feedback.classList.remove('correct', 'wrong'); // Entferne vorherige Farben
+            feedback.classList.add('solution'); // Setze rote Farbe
             wrongAnswers.push(currentWord); // Füge das Wort zur Liste der falschen Antworten hinzu
             skipButton.style.display = "block"; // Zeige den Skip-Button
             startTimer(); // Starte den Timer
