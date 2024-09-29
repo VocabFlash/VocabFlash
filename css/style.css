@@ -81,6 +81,13 @@ h2 {
 }
 
 /*LIST*/ 
+
+#vocabList {
+    max-width: 100%; /* Begrenze die Breite auf 100% */
+    overflow-x: auto; /* Ermöglicht Scrollen bei Überlauf */
+    margin-top: 20px; /* Abstand zum oberen Element */
+}
+
 #vocabList table {
     width: 100%; /* Tabelle auf volle Breite */
     border-collapse: collapse; /* Entfernt doppelte Ränder */
