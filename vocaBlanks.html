@@ -22,8 +22,10 @@
 <!-- Bereich für die Vokabelabfrage -->
 <div id="vocabArea">
     <h3 id="vocabWord"></h3>
-    <input type="text" id="userInput" placeholder="Fill in the blank" onkeydown="if(event.key === 'Enter') checkAnswer();">
-    <button id="submitAnswer" onclick="checkAnswer()">Check</button>
+    <input type="text" id="userInput" placeholder="Fill in the blank" 
+           oninput="toggleCheckButton()" 
+           onkeydown="handleKeyDown(event)">
+    <button id="submitAnswer" onclick="checkAnswer()" style="display: none;">Check</button>
     <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
 </div>
 
@@ -43,7 +45,8 @@ let timer; // Variable für den Timer
 function displayVocabWord() {
     const vocabWord = document.getElementById('vocabWord');
     const inputCounter = document.getElementById('inputCounter'); // Zähler-Element
-
+    const submitButton = document.getElementById('submitAnswer'); // Check-Button
+    
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
         vocabWord.innerText = vocab.de; // Zeige das deutsche Wort an
@@ -54,6 +57,9 @@ function displayVocabWord() {
     }
 }
 
+    // Check-Button anzeigen, da eine neue Frage gestellt wird
+    submitButton.style.display = "none";
+}
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
@@ -149,10 +155,23 @@ function toggleCheckButton() {
     const userInput = document.getElementById('userInput').value;
     const submitButton = document.getElementById('submitAnswer');
 
-    if (userInput.trim() !== "") {
+    if (userInput.trim() !== "" && timer == null) {
         submitButton.style.display = "block"; // Zeige den Check-Button
     } else {
         submitButton.style.display = "none"; // Blende den Check-Button aus
+    }
+}
+
+// Funktion zur Behandlung der Tastenereignisse
+function handleKeyDown(event) {
+    const skipButton = document.getElementById('skipButton');
+    if (event.key === 'Enter') {
+        const checkButton = document.getElementById('submitAnswer');
+        if (checkButton.style.display !== 'none') {
+            checkAnswer(); // Wenn der Check-Button sichtbar ist, führt Enter die Überprüfung aus
+        } else if (skipButton.style.display !== 'none') {
+            skipToNext(); // Wenn der Skip-Button sichtbar ist, führt Enter das Skippen aus
+        }
     }
 }
 
