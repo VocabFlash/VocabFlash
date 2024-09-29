@@ -22,6 +22,20 @@ h1 {
     margin-bottom: 20px;
 }
 
+h2 {
+    background-color: #fff; /* Weiße Hintergrundfarbe */
+    color: black; /* Schwarze Schrift */
+    font-size: 20px;
+    padding: 15px; /* Abstand innerhalb der Box */
+    border-radius: 15px; /* Abgerundete Ecken */
+    text-align: center; /* Text zentrieren */
+    font-family: "Arial Black", sans-serif; /* Fette Schriftart */
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatteneffekt */
+    margin-bottom: 20px; /* Abstand nach unten */
+}
+
+
 .menu ul {
     list-style-type: none; /* Entfernt Aufzählungszeichen */
     padding: 0; /* Entfernt Padding */
