@@ -54,12 +54,14 @@ function displayVocabWord() {
 
         // Aktualisiere den Zähler
         inputCounter.innerText = `Wort: ${currentIndex + 1} / ${currentSet.length}`;
-    }
-}
+
 
     // Check-Button anzeigen, da eine neue Frage gestellt wird
     submitButton.style.display = "none";
+
+    }
 }
+
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
@@ -74,17 +76,14 @@ function updateVocabSet() {
         console.error("Set nicht gefunden: ", selectedSet);
     }
 }
-    const selectedSet = document.getElementById('setSelect').value;
-    currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
-    currentIndex = 0; // Startindex zurücksetzen
-    displayVocabWord(); // Zeigt das erste Wort an
-}
 
 // Funktion für den Skip-Button
 function skipToNext() {
     clearTimeout(timer); // Timer zurücksetzen
     nextWord(); // Gehe zur nächsten Karte
 }
+
+
 
 // Funktion, um das Feedback-Element zu löschen
 function clearFeedback() {
