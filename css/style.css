@@ -42,6 +42,28 @@ h2 {
     background-color: #0056b3;
 }
 
+.menu ul {
+    list-style-type: none; /* Entfernt Aufzählungszeichen */
+    padding: 0; /* Entfernt Padding */
+}
+
+.menu ul li {
+    margin-bottom: 10px; /* Abstand zwischen den Links */
+}
+
+.menu ul li a {
+    padding: 15px; /* Vergrößert den Abstand innerhalb des Links */
+    background-color: #007BFF; /* Hintergrundfarbe der Links */
+    color: white; /* Schriftfarbe */
+    border-radius: 8px; /* Ecken abrunden */
+    text-decoration: none; /* Entfernt Unterstreichung */
+    transition: background-color 0.3s ease; /* Übergangseffekt für die Hintergrundfarbe */
+}
+
+.menu ul li a:hover {
+    background-color: #0056b3; /* Hintergrundfarbe beim Hover */
+}
+
 /*FLASHCARDS*/
 
 /* Flashcard Box Styling */
