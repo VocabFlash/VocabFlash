@@ -18,7 +18,7 @@
     <option value="set2">Set 2</option>
     <!-- Weitere Sets hinzufügen -->
 </select>
-<button onclick="updateVocabSet()">Bestätigen</button>
+<button onclick="updateVocabSet()">Confirm</button>
 
 <!-- Bereich für die Vokabelabfrage -->
 <div id="vocabArea">
@@ -97,6 +97,7 @@ function checkAnswer() {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
+    const submitButton = document.getElementById('submitAnswer');
 
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
@@ -104,6 +105,7 @@ function checkAnswer() {
         feedback.classList.add('correct');
         vocabWord.classList.add('correct');
         skipButton.style.display = "block"; // Zeige den Skip-Button
+        submitButton.style.display = "none"; // Verberge den Check-Button
         startTimer();
         wrongAttempts = 0;
     } else {
@@ -136,6 +138,7 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.add('solution');
         wrongAnswers.push(currentWord);
         skipButton.style.display = "block"; // Zeige den Skip-Button
+        document.getElementById('submitAnswer').style.display = "none"; // Verberge den Check-Button
         startTimer(); // Starte den Timer
     }
 }
@@ -143,9 +146,15 @@ function handleWrongAnswer(currentWord) {
 // Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
 function toggleCheckButton() {
     const userInput = document.getElementById('userInput').value;
+    const submitButton = document.getElementById('submitAnswer');
+    const skipButton = document.getElementById('skipButton');
 
-    // Der Check-Button bleibt sichtbar, unabhängig von der Eingabe
-    document.getElementById('submitAnswer').style.display = "block"; // Zeige den Check-Button
+    // Der Check-Button soll nur sichtbar sein, wenn der Skip-Button nicht sichtbar ist
+    if (userInput.trim() !== "" && skipButton.style.display === "none") {
+        submitButton.style.display = "block"; // Zeige den Check-Button
+    } else {
+        submitButton.style.display = "none"; // Verberge den Check-Button, wenn der Skip-Button da ist
+    }
 }
 
 // Funktion, um den Timer zu starten
