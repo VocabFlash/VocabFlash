@@ -12,16 +12,20 @@
 <!-- Liste mit allen Vokabel Sets -->
 <h1>VocabFlash</h1>
 <h2>List</h2>
-
-<label for="setSelect">Choose a set:</label>
-    <select id="setSelect" onchange="updateVocabSet()">
-        <option value="set1">Set 1</option>
-        <option value="set2">Set 2</option>
-        <option value="set3">Set 3</option>
-         <!-- Füge hier weitere Sets hinzu -->
-    </select>
-    <button onclick="updateVocabSet()">Confirm</button>
+    
+<div class="container">
+    <label for="setSelect">Choose a set:</label>
+        <select id="setSelect" onchange="updateVocabSet()">
+            <option value="set1">Set 1</option>
+            <option value="set2">Set 2</option>
+            <option value="set3">Set 3</option>
+             <!-- Füge hier weitere Sets hinzu -->
+        </select>
+        <button onclick="updateVocabSet()">Confirm</button>
+    <div class="container">
+    
     <div id="vocabList"></div>
+    
     <script>
         
         // Hier wird der Code hinzugefügt, um die Vokabeln darzustellen
