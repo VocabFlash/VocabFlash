@@ -43,8 +43,6 @@ let secondRound = false; // Flag für die zweite Runde
 let timer;
 let results = [];
 
-
-
 // Funktion zum Zufälligmischen des Arrays
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -56,7 +54,6 @@ function shuffle(array) {
 
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
-        // Zufälliges Set falls erste Runde
     if (!secondRound && currentIndex === 0) {
         shuffle(currentSet);
     }
@@ -82,8 +79,8 @@ function updateVocabSet() {
     if (vocabSets[selectedSet]) {
         currentSet = vocabSets[selectedSet];
         currentIndex = 0;
-            wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
-            secondRound = false; // Zurücksetzen der zweiten Runde
+        wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
+        secondRound = false; // Zurücksetzen der zweiten Runde
         displayVocabWord();
     } else {
         console.error("Set not found: ", selectedSet);
@@ -92,13 +89,9 @@ function updateVocabSet() {
 
 // Funktion für die Auswertung
 function showResults() {
-    // Navigation zu einer Ergebnistabelle
-function showResults() {
     localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
     window.location.href = "results.html"; // Weiterleitung zu results.html
 }
-
-
 
 // Funktion für den Skip-Button
 function skipToNext() {
@@ -112,47 +105,16 @@ function nextWord() {
     wrongAttempts = 0;
 
     if (currentIndex < currentSet.length - 1) {
-        // Solange es noch Wörter im Set gibt
         currentIndex++;
         displayVocabWord();
     } else if (!secondRound && wrongAnswers.length > 0) {
-        // Starte die zweite Runde, wenn falsche Antworten vorliegen
         secondRound = true;
         currentSet = wrongAnswers;
         currentIndex = 0;
         displayVocabWord();
     } else if (secondRound && currentIndex >= currentSet.length - 1) {
-        // Wenn auch die zweite Runde abgeschlossen ist
         showResults();
     }
-}
-
-
- // Überprüfen, ob wir uns in der zweiten Runde befinden
-    if (secondRound) {
-        if (wrongAnswers.length > 0) {
-            currentSet = wrongAnswers; // Die falschen Antworten werden als neues Set verwendet
-            wrongAnswers = []; // Zurücksetzen des falschen Antworten-Arrays
-            currentIndex = 0; // Zurücksetzen des Index für die zweite Runde
-            secondRound = false; // Die zweite Runde wird zurückgesetzt
-            displayVocabWord(); // Zeige das erste Wort der zweiten Runde an
-        } else {
-             showResults(); // Alle Antworten sind korrekt, zur Ergebnistabelle weiterleiten
-        }
-    } else {
-        // Wenn es noch Wörter im aktuellen Set gibt
-        if (currentIndex < currentSet.length - 1) {
-            currentIndex++;
-            displayVocabWord();
-        } else {
-            // Ende des Sets: Wenn falsche Antworten vorliegen, starte die zweite Runde
-            if (wrongAnswers.length > 0) {
-                secondRound = true; // Setze das Flag für die zweite Runde
-                nextWord(); // Starte die nächste Runde
-            } else {
-                showResults(); // Übung abgeschlossen, zur Ergebnistabelle weiterleiten
-            }
-        }
 }
 
 // Funktion, um die Benutzerantwort zu überprüfen
@@ -175,12 +137,7 @@ function checkAnswer() {
         wrongAttempts = 0;
 
         // Ergebnisse aufzeichnen
-        if (wrongAttempts === 0) {
-            results.push({ word: currentWord.de, status: "correct-first" }); // Grün
-        } else {
-            results.push({ word: currentWord.de, status: "correct-second" }); // Orange
-        }
-
+        results.push({ word: currentWord.de, status: "correct-first" }); // Grün
     } else {
         handleWrongAnswer(currentWord);
     }
@@ -188,18 +145,6 @@ function checkAnswer() {
     // Eingabefeld zurücksetzen
     document.getElementById('userInput').value = '';
 }
-
-// // was verändert wurde: Der Bereich der Ergebnisse wurde innerhalb der Funktion checkAnswer platziert, damit currentWord korrekt definiert ist.
-
-// Ergebnisse aufzeichnen
-if (wrongAttempts === 0) {
-    results.push({ word: currentWord.de, status: "correct-first" }); // Grün
-} else {
-    results.push({ word: currentWord.de, status: "correct-second" }); // Orange
-}
-
-document.getElementById('userInput').value = '';
-
 
 // Funktion zur Behandlung falscher Antworten
 function handleWrongAnswer(currentWord) {
@@ -220,8 +165,8 @@ function handleWrongAnswer(currentWord) {
         feedback.classList.remove('correct', 'wrong');
         feedback.classList.add('solution');
         vocabWord.classList.add('solution');
-            wrongAnswers.push(currentWord); // Falsches Wort zur Liste hinzufügen
-                results.push({ word: currentWord.de, status: "second-round" }); // Rot
+        wrongAnswers.push(currentWord); // Falsches Wort zur Liste hinzufügen
+        results.push({ word: currentWord.de, status: "second-round" }); // Rot
         skipButton.style.display = "block"; // Zeige den Skip-Button
         document.getElementById('submitAnswer').style.display = "none"; // Verberge den Check-Button
         startTimer(); // Starte den Timer
