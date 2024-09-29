@@ -80,6 +80,31 @@ h2 {
     background-color: #0056b3; /* Dunkleres Blau beim Hover */
 }
 
+/*LIST*/ 
+#vocabList table {
+    width: 100%; /* Tabelle auf volle Breite */
+    border-collapse: collapse; /* Entfernt doppelte Ränder */
+    margin-top: 20px; /* Abstand zum oberen Element */
+    background-color: #f0f0f0; /* Hellgrauer Hintergrund für die Tabelle */
+}
+
+#vocabList th, #vocabList td {
+    padding: 10px; /* Innenabstand */
+    border: 1px solid #ccc; /* Rand für die Zellen */
+    text-align: left; /* Text linksbündig */
+}
+
+h1, h2, label {
+    margin-top: 20px; /* Abstand nach oben */
+    margin-bottom: 10px; /* Abstand nach unten */
+}
+
+.container {
+    margin-top: 20px; /* Abstand nach oben */
+}
+
+
+
 
 /*FLASHCARDS*/
 
