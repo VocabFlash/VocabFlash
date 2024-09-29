@@ -3,10 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Ergebnisse</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        .correct-first {
+            background-color: #a8e6cf; /* Grün */
+        }
+        .correct-second {
+            background-color: #ffecb3; /* Orange */
+        }
+        .second-round {
+            background-color: #ff8a80; /* Rot */
+        }
+    </style>
 </head>
 <body>
     <h1>Deine Ergebnisse</h1>
-    <div id="resultsContainer"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Wort</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="resultsContainer"></tbody>
+    </table>
     <a href="vocabBlanks.html">Zurück zu den Vokabeln</a>
     <script>
         // Ergebnisse aus localStorage abrufen und anzeigen
@@ -14,9 +42,18 @@
         const resultsContainer = document.getElementById('resultsContainer');
         
         results.forEach(result => {
-            const resultElement = document.createElement('p');
-            resultElement.innerText = `Wort: ${result.word}, Status: ${result.status}`;
-            resultsContainer.appendChild(resultElement);
+            const resultRow = document.createElement('tr');
+            resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+
+            const wordCell = document.createElement('td');
+            wordCell.innerText = result.word;
+            resultRow.appendChild(wordCell);
+
+            const statusCell = document.createElement('td');
+            statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+            resultRow.appendChild(statusCell);
+
+            resultsContainer.appendChild(resultRow);
         });
     </script>
 </body>
