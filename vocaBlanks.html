@@ -12,7 +12,7 @@
 <h2 id="inputCounter">Word: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
 <!-- Set Auswahl -->
 <label for="setSelect">Choose a set:</label>
-<select id="setSelect">
+<select id="setSelect" onchange="updateVocabSet()">
     <option value="set1">Set 1</option>
     <option value="set2">Set 2</option>
     <!-- Weitere Sets hinzufügen -->
@@ -22,7 +22,7 @@
 <!-- Bereich für die Vokabelabfrage -->
 <div id="vocabArea">
     <h3 id="vocabWord"></h3>
-    <input type="text" id="userInput" placeholder="Fill in the blank">
+    <input type="text" id="userInput" placeholder="Fill in the blank"> onkeydown="if(event.key === 'Enter') checkAnswer();">
     <button id="submitAnswer" onclick="checkAnswer()">Check</button>
     <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
 </div>
