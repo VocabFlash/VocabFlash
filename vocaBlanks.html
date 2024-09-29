@@ -107,8 +107,24 @@ function skipToNext() {
 // Funktion für den nächsten Wortwechsel
 function nextWord() {
     clearTimeout(timer);
-    currentIndex++;
     wrongAttempts = 0;
+
+    if (currentIndex < currentSet.length - 1) {
+        // Solange es noch Wörter im Set gibt
+        currentIndex++;
+        displayVocabWord();
+    } else if (!secondRound && wrongAnswers.length > 0) {
+        // Starte die zweite Runde, wenn falsche Antworten vorliegen
+        secondRound = true;
+        currentSet = wrongAnswers;
+        currentIndex = 0;
+        displayVocabWord();
+    } else if (secondRound && currentIndex >= currentSet.length - 1) {
+        // Wenn auch die zweite Runde abgeschlossen ist
+        showResults();
+    }
+}
+
 
  // Überprüfen, ob wir uns in der zweiten Runde befinden
     if (secondRound) {
