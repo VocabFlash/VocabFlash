@@ -64,6 +64,17 @@ function displayVocabWord() {
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
     const selectedSet = document.getElementById('setSelect').value;
+
+    // Überprüfe, ob das Set existiert
+    if (vocabSets[selectedSet]) {
+        currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+        currentIndex = 0; // Startindex zurücksetzen
+        displayVocabWord(); // Zeigt das erste Wort an
+    } else {
+        console.error("Set nicht gefunden: ", selectedSet);
+    }
+}
+    const selectedSet = document.getElementById('setSelect').value;
     currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
     currentIndex = 0; // Startindex zurücksetzen
     displayVocabWord(); // Zeigt das erste Wort an
