@@ -1,3 +1,4 @@
+/* Body Styling */
 body {
     background-color: #1a1e24; /* Dunkler Hintergrund */
     display: flex;
@@ -51,34 +52,31 @@ h2 {
     text-align: center; /* Zentrierte Texte */
 }
 
+/* Menü-Styling */
 .menu {
+    list-style-type: none; /* Entfernt Aufzählungszeichen */
     padding: 0;
     margin: 0;
 }
 
-.menu ul {
-    list-style-type: none; /* Entfernt Aufzählungszeichen */
-    padding: 0; /* Entfernt Padding */
-    margin: 0;
-}
-
-.menu ul li {
+/* Styling für die Link-Liste */
+.menu li {
     margin-bottom: 10px; /* Abstand zwischen den Links */
 }
 
-.menu ul li a {
-    display: block; /* Macht den Link zum Block-Element */
-    padding: 15px; /* Vergrößert den Abstand innerhalb des Links */
-    background-color: #007BFF; /* Dunkelblaue Hintergrundfarbe für die Links */
+.menu li a {
+    display: block; /* Link wird als Block angezeigt */
+    padding: 15px; /* Abstand innerhalb des Links */
+    background-color: #007BFF; /* Dunkelblaue Hintergrundfarbe */
     color: white; /* Weiße Schriftfarbe */
     border-radius: 15px; /* Abgerundete Ecken */
-    text-decoration: none; /* Entfernt Unterstreichung */
-    transition: background-color 0.3s ease; /* Übergangseffekt für die Hintergrundfarbe */
-    text-align: center; /* Zentriert den Text im Link */
+    text-decoration: none; /* Keine Unterstreichung */
+    transition: background-color 0.3s ease; /* Sanfter Übergang */
+    text-align: center; /* Text wird zentriert */
 }
 
-.menu ul li a:hover {
-    background-color: #0056b3; /* Hintergrundfarbe beim Hover */
+.menu li a:hover {
+    background-color: #0056b3; /* Dunkleres Blau beim Hover */
 }
 
 
