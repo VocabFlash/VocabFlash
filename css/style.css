@@ -7,6 +7,21 @@ body {
     font-family: "Arial Black", sans-serif; /* Schriftart für den gesamten Body */
 }
 
+.container {
+    background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
+    padding: 20px; /* Innenabstand */
+    border-radius: 15px; /* Abgerundete Ecken */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+    width: 300px; /* Breite der Box */
+    text-align: center; /* Zentrierte Texte */
+}
+
+h1 {
+    color: #fff; /* VocabFlash in weiß */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
 .menu ul {
     list-style-type: none; /* Entfernt Aufzählungszeichen */
     padding: 0; /* Entfernt Padding */
@@ -19,8 +34,8 @@ body {
 .menu ul li a {
     display: block; /* Macht den Link zum Block-Element */
     padding: 15px; /* Vergrößert den Abstand innerhalb des Links */
-    background-color: #007BFF; /* Hintergrundfarbe der Links */
-    color: white; /* Schriftfarbe */
+    background-color: #007BFF; /* Dunkelblaue Hintergrundfarbe für die Links */
+    color: white; /* Weiße Schriftfarbe */
     border-radius: 15px; /* Abgerundete Ecken */
     text-decoration: none; /* Entfernt Unterstreichung */
     transition: background-color 0.3s ease; /* Übergangseffekt für die Hintergrundfarbe */
