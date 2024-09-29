@@ -90,7 +90,8 @@ function updateVocabSet() {
 // Funktion für die Auswertung
 function showResults() {
     localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
-    window.location.href = "results.html"; // Weiterleitung zu results.html
+    window.location.href = "result.html"; // Weiterleitung zu results.html
+    <a href="result.html">Show results</a>
 }
 
 // Funktion für den Skip-Button
@@ -212,8 +213,8 @@ window.onload = function() {
 </script>
 
 <!-- Zurück Links -->
-<br><a href="javascript:history.back()">Zurück</a><br>
-<a href="index.html">Zurück zur Homepage</a>
+<br><a href="javascript:history.back()">Go back</a><br>
+<a href="index.html">Go back to homepage</a>
 <!-- Ende HTML -->
 </body>
 </html>
