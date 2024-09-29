@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h1>VocabFlash</h1>
+  <h2>Result</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Word</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody id="resultsTable">
+        <!-- Tabelle wird hier dynamisch befüllt -->
+    </tbody>
+</table>
+
+<script>
+window.onload = function() {
+    const results = JSON.parse(localStorage.getItem('results')) || [];
+    const tableBody = document.getElementById('resultsTable');
+
+    results.forEach(result => {
+        const row = document.createElement('tr');
+        const wordCell = document.createElement('td');
+        const statusCell = document.createElement('td');
+
+        wordCell.textContent = result.word;
+
+        // Status anzeigen und farblich hervorheben
+        if (result.status === "correct-first") {
+            statusCell.textContent = "Correct (first try)";
+            statusCell.style.color = "green";
+        } else if (result.status === "correct-second") {
+            statusCell.textContent = "Correct (second try)";
+            statusCell.style.color = "orange";
+        } else if (result.status === "second-round") {
+            statusCell.textContent = "Correct (second round)";
+            statusCell.style.color = "red";
+        }
+
+        row.appendChild(wordCell);
+        row.appendChild(statusCell);
+        tableBody.appendChild(row);
+    });
+};
+</script>
+
+<a href="index.html">Zurück zur Homepage</a>
+
+</body>
+</html>
