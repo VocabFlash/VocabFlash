@@ -54,8 +54,8 @@ function displayVocabWord() {
         vocabWord.classList.remove('correct', 'wrong', 'solution');
 
         inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-        submitButton.style.display = "block";
-        skipButton.style.display = "none";
+        submitButton.style.display = "block"; // Zeige den Check-Button
+        skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
     }
 }
 
@@ -103,15 +103,16 @@ function checkAnswer() {
         feedback.classList.remove('wrong', 'solution');
         feedback.classList.add('correct');
         vocabWord.classList.add('correct');
-        skipButton.style.display = "block";
+        skipButton.style.display = "block"; // Zeige den Skip-Button
         startTimer();
         wrongAttempts = 0;
     } else {
         handleWrongAnswer(currentWord);
     }
 
+    // Eingabefeld zurücksetzen, aber der Check-Button bleibt sichtbar
     document.getElementById('userInput').value = '';
-    toggleCheckButton();
+    // toggleCheckButton(); // Hier auskommentieren, um den Check-Button sichtbar zu halten
 }
 
 // Funktion zur Behandlung falscher Antworten
@@ -127,44 +128,47 @@ function handleWrongAnswer(currentWord) {
         feedback.classList.remove('correct', 'solution');
         feedback.classList.add('wrong');
         vocabWord.classList.add('wrong');
-        skipButton.style.display = "none";
+        skipButton.style.display = "none"; // Skip-Button ausblenden
     } else if (wrongAttempts === 2) {
         feedback.innerText = `The correct answer is: ${currentWord.ar}`;
         feedback.classList.remove('correct', 'wrong');
         feedback.classList.add('solution');
         vocabWord.classList.add('solution');
         wrongAnswers.push(currentWord);
-        skipButton.style.display = "block";
-        startTimer();
+        skipButton.style.display = "block"; // Zeige den Skip-Button
+        startTimer(); // Starte den Timer
     }
 }
 
 // Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
 function toggleCheckButton() {
     const userInput = document.getElementById('userInput').value;
-    const submitButton = document.getElementById('submitAnswer');
-    submitButton.style.display = userInput.trim() !== "" && !timer ? "block" : "none";
+
+    // Der Check-Button bleibt sichtbar, unabhängig von der Eingabe
+    document.getElementById('submitAnswer').style.display = "block"; // Zeige den Check-Button
 }
 
 // Funktion, um den Timer zu starten
 function startTimer() {
-    timer = setTimeout(nextWord, 4000);
+    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
 // Funktion zur Behandlung der Tastenereignisse
 function handleKeyDown(event) {
+    const skipButton = document.getElementById('skipButton');
     if (event.key === 'Enter') {
-        if (document.getElementById('submitAnswer').style.display !== 'none') {
-            checkAnswer();
-        } else if (document.getElementById('skipButton').style.display !== 'none') {
-            skipToNext();
+        const checkButton = document.getElementById('submitAnswer');
+        if (checkButton.style.display !== 'none') {
+            checkAnswer(); // Wenn der Check-Button sichtbar ist, führt Enter die Überprüfung aus
+        } else if (skipButton.style.display !== 'none') {
+            skipToNext(); // Wenn der Skip-Button sichtbar ist, führt Enter das Skippen aus
         }
     }
 }
 
 // Initiales Set anzeigen
 window.onload = function() {
-    updateVocabSet();
+    updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
 </script>
 
