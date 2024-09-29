@@ -98,7 +98,7 @@ const vocabSets= {
     { "de": "Gott", "ar": "الله" }
   ],
 
-set2: [
+  set2: [
 
     { "de": "Er aß Kartoffeln.", "ar": "أَكَلَ بَطاطا." },
     { "de": "Ich mag Tee.", "ar": "أُحِبُّ الشّاي." },
@@ -148,6 +148,33 @@ set2: [
     { "de": "Ein arabischer Wirtschaftsminister sprach mit einer wichtigen Person.", "ar": "تَكَلَّمَ وَزِير إِقْتِصَاد عَرَبِيّ مَعَ شَخْص مُهِمّ." },
     { "de": "Ein ausländischer Student wohnte in einem großen arabischen Haus.", "ar": "سَكَنَ طالِب أَجْنَبِيّ في بَيْت عَرَبِيّ كَبِير." },
     { "de": "Am Morgen eines schönen Tages besuchte der König den Minister und trank Kaffee und Tee mit viel Zucker.", "ar": "في صَباح يَوْم جَمِيل زارَ المَلِك الوَزِير فَشَرِبَ القَهْوَة وَالشّاي مَعَ سُكَّر كَثِير." }
+  ],
+
+  set3: [
+    { de: "eine Kathedrale", fr: "une cathédrale" },
+    { de: "ein/e Vertreter/in", fr: "un représentant / une représentante" },
+    { de: "europäisch", fr: "européen / européenne" },
+    { de: "eine Grenze", fr: "une frontière" },
+    { de: "eine Entdeckung", fr: "une découverte" },
+    { de: "Freizeit", fr: "le temps libre" },
+    { de: "eine Begegnung, ein Treffen", fr: "une rencontre" },
+    { de: "eine Unterkunft", fr: "un hébergement" },
+    { de: "super", fr: "top" },
+    { de: "kaputt, erschöpft", fr: "crevé/crevée" },
+    { de: "die Nacht", fr: "la nuit" },
+    { de: "sich langweilen", fr: "s'ennuyer" },
+    { de: "anfangen zu tun", fr: "commencer à faire qc" },
+    { de: "sich beeilen", fr: "se dépêcher" },
+    { de: "eine Großmutter", fr: "une grand-mère" },
+    { de: "eine Rolle", fr: "un rôle" },
+    { de: "eine Führung", fr: "une visite guidée" },
+    { de: "eine Stadt", fr: "une ville" },
+    { de: "der Süden", fr: "le sud" },
+    { de: "der Westen", fr: "l'ouest" },
+    { de: "der Norden", fr: "le nord" },
+    { de: "eine Ankunft", fr: "une arrivée" },
+    { de: "eine Abfahrt", fr: "le départ" },
+    { de: "eine Rolle spielen", fr: "jouer un rôle" },
   ]
 };
   
