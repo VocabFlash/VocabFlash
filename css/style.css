@@ -1,25 +1,31 @@
 body {
     background-color: #1a1e24; /* Dunkler Hintergrund */
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Volle Höhe des Viewports */
+    flex-direction: column; /* Inhalte werden vertikal ausgerichtet */
+    align-items: center; /* Inhalte zentrieren */
     font-family: "Arial Black", sans-serif; /* Schriftart für den gesamten Body */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Volle Höhe des Viewports */
+    justify-content: center; /* Vertikal in der Mitte ausrichten */
 }
 
-.container {
-    background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
-    padding: 20px; /* Innenabstand */
-    border-radius: 15px; /* Abgerundete Ecken */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
-    width: 300px; /* Breite der Box */
-    text-align: center; /* Zentrierte Texte */
+/* Header für Logo und Titel nebeneinander */
+.header {
+    display: flex;
+    align-items: center; /* Zentriert das Logo und den Titel vertikal */
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px; /* Abstand zwischen Logo und Titel */
 }
 
 h1 {
     color: #fff; /* VocabFlash in weiß */
     font-size: 24px;
-    margin-bottom: 20px;
+    margin: 0; /* Kein Abstand oberhalb und unterhalb des Titels */
 }
 
 h2 {
@@ -35,9 +41,20 @@ h2 {
     margin-bottom: 20px; /* Abstand nach unten */
 }
 
+/* Container für die Menü-Links */
+.container {
+    background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
+    padding: 20px; /* Innenabstand */
+    border-radius: 15px; /* Abgerundete Ecken */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+    width: 300px; /* Breite der Box */
+    text-align: center; /* Zentrierte Texte */
+}
+
 .menu ul {
     list-style-type: none; /* Entfernt Aufzählungszeichen */
     padding: 0; /* Entfernt Padding */
+    margin: 0;
 }
 
 .menu ul li {
