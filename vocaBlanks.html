@@ -47,6 +47,7 @@ function displayVocabWord() {
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
         vocabWord.innerText = vocab.de; // Zeige das deutsche Wort an
+        vocabWord.classList.remove('correct', 'wrong', 'solution'); // Entferne Farben
 
         // Aktualisiere den Zähler
         inputCounter.innerText = `Wort: ${currentIndex + 1} / ${currentSet.length}`;
@@ -78,19 +79,21 @@ function clearFeedback() {
 function nextWord() {
     clearTimeout(timer); // Timer zurücksetzen
     const skipButton = document.getElementById('skipButton');
+    const submitButton = document.getElementById('submitAnswer');
     skipButton.style.display = "none"; // Blende den Skip-Button aus
+    submitButton.style.display = "none"; // Blende den Check-Button aus
 
     clearFeedback(); // Lösche vorheriges Feedback
     currentIndex++; // Gehe zur nächsten Karte
-    // Zurücksetzen der falschen Versuche
-    wrongAttempts = 0; 
+    wrongAttempts = 0; // Zurücksetzen der falschen Versuche
+
     if (currentIndex < currentSet.length) {
         displayVocabWord(); // Zeigt das nächste Wort an
     } else {
-        alert("Übung abgeschlossen!");
-        // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
+        alert("Excercise completed!");
     }
 }
+
 
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
@@ -98,40 +101,42 @@ function checkAnswer() {
     const currentWord = currentSet[currentIndex]; // Aktuelles Wort
     const feedback = document.getElementById('feedback'); // Feedback-Element
     const skipButton = document.getElementById('skipButton'); // Skip-Button
+    const vocabWord = document.getElementById('vocabWord'); // Satz
 
-    if (userInput.toLowerCase() === currentWord.ar.toLowerCase()) {
+     if (userInput.toLowerCase() === currentWord.ar.toLowerCase()) {
         // Richtige Antwort
         feedback.innerText = "Correct!";
-        feedback.classList.remove('wrong', 'solution'); // Entferne vorherige Farben
-        feedback.classList.add('correct'); // Setze grüne Farbe
+        feedback.classList.remove('wrong', 'solution');
+        feedback.classList.add('correct');
+        vocabWord.classList.add('correct'); // Satz grün färben
         skipButton.style.display = "block"; // Zeige den Skip-Button
         startTimer(); // Starte den Timer
 
-        // Zurücksetzen der falschen Versuche
-        wrongAttempts = 0; 
+        wrongAttempts = 0;
     } else {
         // Falsche Antwort
-        wrongAttempts++; // Zähler erhöhen
-
+        wrongAttempts++;
+        
         if (wrongAttempts === 1) {
             feedback.innerText = "Try again.";
-            feedback.classList.remove('correct', 'solution'); // Entferne vorherige Farben
-            feedback.classList.add('wrong'); // Setze orange Farbe
+            feedback.classList.remove('correct', 'solution');
+            feedback.classList.add('wrong');
+            vocabWord.classList.add('wrong'); // Satz orange färben
             skipButton.style.display = "none"; // Blende den Skip-Button aus
-        } 
-        else if (wrongAttempts === 2) {
-            // Lösung anzeigen, wenn 2 falsche Versuche
+        } else if (wrongAttempts === 2) {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
-            feedback.classList.remove('correct', 'wrong'); // Entferne vorherige Farben
-            feedback.classList.add('solution'); // Setze rote Farbe
-            wrongAnswers.push(currentWord); // Füge das Wort zur Liste der falschen Antworten hinzu
+            feedback.classList.remove('correct', 'wrong');
+            feedback.classList.add('solution');
+            vocabWord.classList.add('solution'); // Satz rot färben
+            wrongAnswers.push(currentWord);
             skipButton.style.display = "block"; // Zeige den Skip-Button
             startTimer(); // Starte den Timer
         }
     }
 
-    // Eingabefeld zurücksetzen
+    // Eingabefeld und Check-Button ausblenden
     document.getElementById('userInput').value = '';
+    document.getElementById('submitAnswer').style.display = "none";
 }
 
 // Funktion, um den Timer zu starten
@@ -139,6 +144,17 @@ function startTimer() {
     timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
+// Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
+function toggleCheckButton() {
+    const userInput = document.getElementById('userInput').value;
+    const submitButton = document.getElementById('submitAnswer');
+
+    if (userInput.trim() !== "") {
+        submitButton.style.display = "block"; // Zeige den Check-Button
+    } else {
+        submitButton.style.display = "none"; // Blende den Check-Button aus
+    }
+}
 
 // Initiales Set anzeigen
 window.onload = function() {
