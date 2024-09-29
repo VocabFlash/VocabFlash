@@ -163,19 +163,15 @@ function checkAnswer() {
     // toggleCheckButton(); // Hier auskommentieren, um den Check-Button sichtbar zu halten
 }
 
-      // Ergebnisse aufzeichnen
-        if (wrongAttempts === 0) {
-            results.push({ word: currentWord.de, status: "correct-first" }); // Grün
-        } else {
-            results.push({ word: currentWord.de, status: "correct-second" }); // Orange
-        }
-        wrongAttempts = 0;
-    } else {
-        handleWrongAnswer(currentWord);
-    }
-
-    document.getElementById('userInput').value = '';
+// Ergebnisse aufzeichnen
+if (wrongAttempts === 0) {
+    results.push({ word: currentWord.de, status: "correct-first" }); // Grün
+} else {
+    results.push({ word: currentWord.de, status: "correct-second" }); // Orange
 }
+
+document.getElementById('userInput').value = '';
+
 
 // Funktion zur Behandlung falscher Antworten
 function handleWrongAnswer(currentWord) {
