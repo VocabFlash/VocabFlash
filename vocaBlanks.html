@@ -141,7 +141,7 @@ function nextWord() {
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
-    const currentWord = currentSet[currentIndex];
+    const currentWord = currentSet[currentIndex]; // Aktuelles Wort holen
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
@@ -156,14 +156,23 @@ function checkAnswer() {
         submitButton.style.display = "none"; // Verberge den Check-Button
         startTimer();
         wrongAttempts = 0;
+
+        // Ergebnisse aufzeichnen
+        if (wrongAttempts === 0) {
+            results.push({ word: currentWord.de, status: "correct-first" }); // Grün
+        } else {
+            results.push({ word: currentWord.de, status: "correct-second" }); // Orange
+        }
+
     } else {
         handleWrongAnswer(currentWord);
     }
 
-    // Eingabefeld zurücksetzen, aber der Check-Button bleibt sichtbar
+    // Eingabefeld zurücksetzen
     document.getElementById('userInput').value = '';
-    // toggleCheckButton(); // Hier auskommentieren, um den Check-Button sichtbar zu halten
 }
+
+// // was verändert wurde: Der Bereich der Ergebnisse wurde innerhalb der Funktion checkAnswer platziert, damit currentWord korrekt definiert ist.
 
 // Ergebnisse aufzeichnen
 if (wrongAttempts === 0) {
