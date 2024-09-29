@@ -68,3 +68,17 @@ button:hover {
     background-color: #f0f0f0; /* Ändert die Hintergrundfarbe beim Hover */
     transition: background-color 0.2s; /* Fügt eine Übergangsanimation hinzu */
 }
+
+
+/*VOCABLANKS*/
+    .correct {
+        color: green;
+    }
+    
+    .wrong {
+        color: orange;
+    }
+    
+    .solution {
+        color: red;
+    }
