@@ -7,10 +7,30 @@
     <script src="data/vocaBlanks.js" defer></script>
 </head>
 <body>
+    
 
 <h1>VocabFlash</h1>
-<h2 id="inputCounter">Word: 1 / 10</h2>
+<div class="container">
+    <h2 id="inputCounter">Word: 1 / 10</h2>
+</div>
 
+<div class="container">
+    <!-- Bereich für die Vokabelabfrage -->
+    <div id="vocabArea">
+        <h3 id="vocabWord"></h3>
+        <input type="text" id="userInput" placeholder="Fill in the blank" 
+               oninput="toggleCheckButton()" 
+               onkeydown="handleKeyDown(event)">
+        <button id="submitAnswer" class="confirm-button" onclick="checkAnswer()" style="display: none;">Check</button>
+        <button id="skipButton" class="confirm-button" onclick="skipToNext()" style="display: none;">Skip</button>
+
+    
+    <!-- Feedback-Element -->
+    <p id="feedback"></p>
+</div>    
+</div>
+    
+<div class="container">
 <!-- Set Auswahl -->
 <label for="setSelect">Choose a set:</label>
 <select id="setSelect" onchange="updateVocabSet()">
@@ -18,21 +38,14 @@
     <option value="set2">Set 2</option>
     <!-- Weitere Sets hinzufügen -->
 </select>
-<button onclick="updateVocabSet()">Confirm</button>
-
-<!-- Bereich für die Vokabelabfrage -->
-<div id="vocabArea">
-    <h3 id="vocabWord"></h3>
-    <input type="text" id="userInput" placeholder="Fill in the blank" 
-           oninput="toggleCheckButton()" 
-           onkeydown="handleKeyDown(event)">
-    <button id="submitAnswer" onclick="checkAnswer()" style="display: none;">Check</button>
-    <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button>
+<button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
+<!-- Zurück Links -->
+<br><a href="result.html">Show results</a><br>
+<a href="javascript:history.back()">Go back</a><br>
+<a href="index.html">Go back to homepage</a>
 </div>
 
-<!-- Feedback-Element -->
-<p id="feedback"></p>
-
+    
 <!-- Skript -->
 <script>
 let currentSet = [];
@@ -211,10 +224,6 @@ window.onload = function() {
 };
 </script>
 
-<!-- Zurück Links -->
-<br><a href="result.html">Show results</a><br>
-<a href="javascript:history.back()">Go back</a><br>
-<a href="index.html">Go back to homepage</a>
-<!-- Ende HTML -->
+
 </body>
 </html>
