@@ -44,30 +44,63 @@
 <a href="index.html">Return to homepage</a>
 </div>
 <!--JAVA SKRIPT--> 
-<script>
-        let currentSet = [];
-        let currentIndex = 0;
-        let wrongAnswers = []; // Neue Liste für falsche Antworten
-        
-        // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
-        function displayFlashcard() {
-        const vocabFront = document.getElementById('vocabFront');
-        const vocabBack = document.getElementById('vocabBack');
-        
-        if (currentSet.length > 0) {
-            const vocab = currentSet[currentIndex];
-            vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
-            vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
-    
-            // Rückseite ausblenden
-            vocabBack.style.display = 'none'; // Standardmäßig die Rückseite ausblenden
-    
-            // Aktualisiere den Zähler
-            document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
-        }
-    }
+let currentSet = [];
+let currentIndex = 0;
+let wrongAnswers = []; // Neue Liste für falsche Antworten
 
-        
+// Funktion, um das Array zu mischen (Fisher-Yates Shuffle)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Tauscht die Elemente
+    }
+}
+
+// Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
+function displayFlashcard() {
+    const vocabFront = document.getElementById('vocabFront');
+    const vocabBack = document.getElementById('vocabBack');
+    
+    if (currentSet.length > 0) {
+        const vocab = currentSet[currentIndex];
+        vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
+        vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
+
+        // Rückseite ausblenden
+        vocabBack.style.display = 'none'; // Standardmäßig die Rückseite ausblenden
+
+        // Aktualisiere den Zähler
+        document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
+    }
+}
+
+// Funktion, um das Set zu starten und die Karten zu mischen
+function startFlashcards(set) {
+    currentSet = set;
+    shuffleArray(currentSet); // Mische die Karten
+    currentIndex = 0; // Setze den Index zurück
+    displayFlashcard(); // Zeige die erste Karte an
+}
+
+// Funktion zum Anzeigen der nächsten Karte
+function nextFlashcard() {
+    if (currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayFlashcard();
+    }
+}
+
+// Funktion zum Markieren einer falschen Antwort
+function markWrong() {
+    wrongAnswers.push(currentSet[currentIndex]);
+    nextFlashcard();
+}
+
+// Funktion zum Markieren einer richtigen Antwort
+function markCorrect() {
+    nextFlashcard();
+}
+
 
     
   // Funktion für den "Wrong" Button
