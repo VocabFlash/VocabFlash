@@ -44,6 +44,7 @@
 <a href="index.html">Return to homepage</a>
 </div>
 <!--JAVA SKRIPT--> 
+<script>
 let currentSet = [];
 let currentIndex = 0;
 let wrongAnswers = []; // Neue Liste für falsche Antworten
@@ -101,62 +102,14 @@ function markCorrect() {
     nextFlashcard();
 }
 
-
-    
-  // Funktion für den "Wrong" Button
-    function markWrong() {
-        const vocabBack = document.getElementById('vocabBack');
-        vocabBack.style.display = 'block'; // Rückseite anzeigen
-        wrongAnswers.push(currentSet[currentIndex]); // Füge die falsche Antwort zur Liste hinzu
-        currentIndex++; // Gehe zur nächsten Karte
-        if (currentIndex < currentSet.length) {
-            displayFlashcard(); // Zeigt die nächste Karte an
-        } else {
-            alert("End of the set reached. Incorrect answers are displayed again.");
-            currentIndex = 0; // Setze den Index zurück
-            currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
-            wrongAnswers = []; // Leere die Liste für weitere Übungen
-            displayFlashcard(); // Zeigt die erste Karte der falschen Antworten an
-        }
-    }
-
-    // Funktion, um das ausgewählte Set zu aktualisieren
-    function updateVocabSet() {
-        const selectedSet = document.getElementById('setSelect').value;
-        currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
-        currentIndex = 0; // Startindex zurücksetzen
-        displayFlashcard(); // Zeigt die erste Karte an
-    }
-// Funktion für den "Correct" Button
-function markCorrect() {
-    currentIndex++; // Gehe zur nächsten Karte
-    if (currentIndex < currentSet.length) {
-        displayFlashcard(); // Zeigt die nächste Karte an
-    } else {
-        // Überprüfe, ob es noch falsche Antworten gibt
-        if (wrongAnswers.length > 0) {
-            alert("There are still incorrect answers. Those will now be requested.");
-            currentIndex = 0; // Setze den Index zurück
-            currentSet = wrongAnswers; // Verwende die Liste der falschen Antworten
-            wrongAnswers = []; // Leere die Liste für weitere Übungen
-            displayFlashcard(); // Zeigt die erste Karte der falschen Antworten an
-        } else {
-            alert("Practise completed");
-            currentIndex = 0; // Setze den Index zurück für die nächste Übung
-            updateVocabSet(); // Optional: Aktualisiere das Set, um wieder zu starten
-        }
-    }
+// Funktion, um das ausgewählte Set zu aktualisieren
+function updateVocabSet() {
+    const selectedSet = document.getElementById('setSelect').value;
+    currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+    shuffleArray(currentSet); // Mische das Set, wenn es aktualisiert wird
+    currentIndex = 0; // Startindex zurücksetzen
+    displayFlashcard(); // Zeigt die erste Karte an
 }
-
-
-      // Funktion zum Mischen eines Arrays
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]]; // Elemente vertauschen
-        }
-        return array;
-    }
 
 // Klick auf die Flashcard, um sie zu drehen
 document.getElementById('flashcard').addEventListener('click', function() {
@@ -173,11 +126,12 @@ document.getElementById('flashcard').addEventListener('click', function() {
     }
 });
 
-    // Initiales Set anzeigen
-    window.onload = function() {
-        updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
-    };
+// Initiales Set anzeigen
+window.onload = function() {
+    updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+};
 </script>
+
 
 
 </body>
