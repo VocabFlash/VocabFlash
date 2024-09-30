@@ -13,15 +13,18 @@
 
 
 <!-- Bereich für die Vokabelabfrage -->
-<div id="vocabArea">
-    <h3 id="vocabWord"></h3>
-    <input type="text" id="userInput" placeholder="Type translation">
-    <button id="submitAnswer" class="confirm-button onclick="checkAnswer()">Check</button>
-    <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
-</div>
-
+<div class="container">
+    <div id="vocabArea">
+        <h3 id="vocabWord"></h3>
+        <input type="text" id="userInput" placeholder="Type translation">
+        <button id="submitAnswer" class="confirm-button onclick="checkAnswer()">Check</button>
+        <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
+    </div>
 <!-- Feedback-Element -->
 <p id="feedback"></p> <!-- Feedback-Element hinzufügen -->
+</div>
+
+
 <div class="container">
     <!-- Set Auswahl -->
     <label for="setSelect">Choose a set:</label>
