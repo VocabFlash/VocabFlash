@@ -1,3 +1,35 @@
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .container {
+        width: 90%; /* Container Breite auf 90% setzen */
+        padding: 10px; /* Innenabstand verringern */
+    }
+
+    .flashcard {
+        width: 90%; /* Flashcard Breite auf 90% setzen */
+        height: auto; /* Höhe automatisch anpassen */
+        font-size: 20px; /* Schriftgröße reduzieren */
+    }
+
+    h1 {
+        font-size: 20px; /* Überschrift Schriftgröße reduzieren */
+    }
+
+    h2 {
+        font-size: 18px; /* Unterüberschrift Schriftgröße reduzieren */
+    }
+
+    button {
+        width: 100%; /* Buttons auf volle Breite setzen */
+        margin-top: 10px; /* Abstand nach oben */
+    }
+
+    .button-container {
+        flex-direction: column; /* Buttons untereinander anordnen */
+    }
+}
+
+
 /* Body Styling */
 body {
     background-color: #1a1e24; /* Dunkler Hintergrund */
