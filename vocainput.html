@@ -1,155 +1,228 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>vocaspelling</title>
+    <title>VocabFlash</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/vocabSets.js" defer></script>
 </head>
 <body>
+    
 
 <h1>VocabFlash</h1>
-<h2 id="inputCounter">Word: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
+    <h2 id="inputCounter">Word: 1 / 10</h2>
 
-
-<!-- Bereich für die Vokabelabfrage -->
 <div class="container">
+    <!-- Bereich für die Vokabelabfrage -->
     <div id="vocabArea">
         <h3 id="vocabWord"></h3>
-        <input type="text" id="userInput" placeholder="Type translation">
-        <button id="submitAnswer" class="confirm-button onclick="checkAnswer()">Check</button>
-        <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
-    </div>
-<!-- Feedback-Element -->
-<p id="feedback"></p> <!-- Feedback-Element hinzufügen -->
-</div>
+        <input type="text" id="userInput" placeholder="Fill in the blank" 
+               oninput="toggleCheckButton()" 
+               onkeydown="handleKeyDown(event)">
+        <div style="text-align: center;">
+            <button id="submitAnswer" class="confirm-button" onclick="checkAnswer()" style="display: none;">Check</button>
+            <button id="skipButton" class="confirm-button" onclick="skipToNext()" style="display: none;">Skip</button>
+        </div> 
+        <!-- Feedback-Element -->
+        <p id="feedback"></p>
+    </div> <!-- Schließendes div für vocabArea -->
+</div> <!-- Schließendes div für container -->
 
-
+    
 <div class="container">
-    <!-- Set Auswahl -->
-    <label for="setSelect">Choose a set:</label>
-    <select id="setSelect">
-        <option value="set1">Set 1</option>
-        <option value="set2">Set 2</option>
-        <option value="set3">Set 3</option>
-        <!-- Weitere Sets hinzufügen -->
-    </select>
-    <button class="confirm-button onclick="updateVocabSet()">Bestätigen</button>    
-        <!-- Zurück Links -->
-    <br><a href="javascript:history.back()">Zurück</a><br>
-    <a href="index.html">Zurück zur Homepage</a>
+<!-- Set Auswahl -->
+<label for="setSelect">Choose a set:</label>
+<select id="setSelect" onchange="updateVocabSet()">
+    <option value="set1">Set 1</option>
+    <option value="set2">Set 2</option>
+    <!-- Weitere Sets hinzufügen -->
+</select>
+<button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
+<!-- Zurück Links -->
+<br><a href="result.html">Show results</a><br>
+<a href="javascript:history.back()">Go back</a><br>
+<a href="index.html">Go back to homepage</a>
 </div>
-<!--SKRIPT-->
+
+    
+<!-- Skript -->
 <script>
 let currentSet = [];
 let currentIndex = 0;
-let wrongAttempts = 0; // Variable für falsche Versuche
-let wrongAnswers = []; // Liste für falsche Antworten
-let timer; // Variable für den Timer
-    
+let wrongAttempts = 0;
+let wrongAnswers = [];
+let secondRound = false; // Flag für die zweite Runde
+let timer;
+let results = [];
+
+// Funktion zum Zufälligmischen des Arrays
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
+    if (!secondRound && currentIndex === 0) {
+        shuffle(currentSet);
+    }
     const vocabWord = document.getElementById('vocabWord');
-    const inputCounter = document.getElementById('inputCounter'); // Zähler-Element
+    const inputCounter = document.getElementById('inputCounter');
+    const submitButton = document.getElementById('submitAnswer');
+    const skipButton = document.getElementById('skipButton');
 
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
-        vocabWord.innerText = vocab.de; // Zeige das deutsche Wort an
+        vocabWord.innerText = vocab.de;
+        vocabWord.classList.remove('correct', 'wrong', 'solution');
 
-        // Aktualisiere den Zähler
-        inputCounter.innerText = `Wort: ${currentIndex + 1} / ${currentSet.length}`;
+        inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
+        submitButton.style.display = "block"; // Zeige den Check-Button
+        skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
     }
 }
-
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
     const selectedSet = document.getElementById('setSelect').value;
-    currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
-    currentIndex = 0; // Startindex zurücksetzen
-    displayVocabWord(); // Zeigt das erste Wort an
+    if (vocabSets[selectedSet]) {
+        currentSet = vocabSets[selectedSet];
+        currentIndex = 0;
+        wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
+        secondRound = false; // Zurücksetzen der zweiten Runde
+        displayVocabWord();
+    } else {
+        console.error("Set not found: ", selectedSet);
+    }
+}
+
+// Funktion für die Auswertung
+function showResults() {
+    localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
+    window.location.href = "result.html"; // Weiterleitung zu results.html
 }
 
 // Funktion für den Skip-Button
 function skipToNext() {
-    clearTimeout(timer); // Timer zurücksetzen
-    nextWord(); // Gehe zur nächsten Karte
-}
-
-// Funktion, um das Feedback-Element zu löschen
-function clearFeedback() {
-    const feedback = document.getElementById('feedback');
-    feedback.innerText = ''; // Lösche den Text im Feedback-Element
+    clearTimeout(timer);
+    nextWord();
 }
 
 // Funktion für den nächsten Wortwechsel
 function nextWord() {
-    clearTimeout(timer); // Timer zurücksetzen
-    const skipButton = document.getElementById('skipButton');
-    skipButton.style.display = "none"; // Blende den Skip-Button aus
+    clearTimeout(timer);
+    wrongAttempts = 0;
 
-    clearFeedback(); // Lösche vorheriges Feedback
-    currentIndex++; // Gehe zur nächsten Karte
-    // Zurücksetzen der falschen Versuche
-    wrongAttempts = 0; 
-    if (currentIndex < currentSet.length) {
-        displayVocabWord(); // Zeigt das nächste Wort an
-    } else {
-        alert("Übung abgeschlossen!");
-        // Optional: Setze Index zurück oder gehe zu einem anderen Schritt
+    if (currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } else if (!secondRound && wrongAnswers.length > 0) {
+        secondRound = true;
+        currentSet = wrongAnswers;
+        currentIndex = 0;
+        displayVocabWord();
+    } else if (secondRound && currentIndex >= currentSet.length - 1) {
+        showResults();
     }
 }
 
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
-    const userInput = document.getElementById('userInput').value; // Eingabewert
-    const currentWord = currentSet[currentIndex]; // Aktuelles Wort
-    const feedback = document.getElementById('feedback'); // Feedback-Element
-    const skipButton = document.getElementById('skipButton'); // Skip-Button
+    const userInput = document.getElementById('userInput').value.toLowerCase();
+    const currentWord = currentSet[currentIndex]; // Aktuelles Wort holen
+    const feedback = document.getElementById('feedback');
+    const skipButton = document.getElementById('skipButton');
+    const vocabWord = document.getElementById('vocabWord');
+    const submitButton = document.getElementById('submitAnswer');
 
-    if (userInput.toLowerCase() === currentWord.ar.toLowerCase()) {
-        // Richtige Antwort
-        feedback.innerText = "Richtig!";
+    if (userInput === currentWord.ar.toLowerCase()) {
+        feedback.innerText = "Correct!";
+        feedback.classList.remove('wrong', 'solution');
+        feedback.classList.add('correct');
+        vocabWord.classList.add('correct');
         skipButton.style.display = "block"; // Zeige den Skip-Button
-        startTimer(); // Starte den Timer
+        submitButton.style.display = "none"; // Verberge den Check-Button
+        startTimer();
+        wrongAttempts = 0;
 
-        // Zurücksetzen der falschen Versuche
-        wrongAttempts = 0; 
+        // Ergebnisse aufzeichnen
+        results.push({ word: currentWord.de, status: "correct-first" }); // Grün
     } else {
-        // Falsche Antwort
-        wrongAttempts++; // Zähler erhöhen
-        feedback.innerText = "Falsch! Versuche es erneut.";
-        skipButton.style.display = "none"; // Blende den Skip-Button aus
-
-        if (wrongAttempts === 2) {
-            // Lösung anzeigen, wenn 2 falsche Versuche
-            feedback.innerText = `Die richtige Antwort ist: ${currentWord.ar}`;
-            wrongAnswers.push(currentWord); // Füge das Wort zur Liste der falschen Antworten hinzu
-            skipButton.style.display = "block"; // Zeige den Skip-Button
-            startTimer(); // Starte den Timer
-        }
+        handleWrongAnswer(currentWord);
     }
 
     // Eingabefeld zurücksetzen
     document.getElementById('userInput').value = '';
 }
 
+// Funktion zur Behandlung falscher Antworten
+function handleWrongAnswer(currentWord) {
+    const feedback = document.getElementById('feedback');
+    const skipButton = document.getElementById('skipButton');
+    const vocabWord = document.getElementById('vocabWord');
+
+    wrongAttempts++;
+
+    if (wrongAttempts === 1) {
+        feedback.innerText = "Try again.";
+        feedback.classList.remove('correct', 'solution');
+        feedback.classList.add('wrong');
+        vocabWord.classList.add('wrong');
+        skipButton.style.display = "none"; // Skip-Button ausblenden
+    } else if (wrongAttempts === 2) {
+        feedback.innerText = `The correct answer is: ${currentWord.ar}`;
+        feedback.classList.remove('correct', 'wrong');
+        feedback.classList.add('solution');
+        vocabWord.classList.add('solution');
+        wrongAnswers.push(currentWord); // Falsches Wort zur Liste hinzufügen
+        results.push({ word: currentWord.de, status: "second-round" }); // Rot
+        skipButton.style.display = "block"; // Zeige den Skip-Button
+        document.getElementById('submitAnswer').style.display = "none"; // Verberge den Check-Button
+        startTimer(); // Starte den Timer
+    }
+}
+
+// Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
+function toggleCheckButton() {
+    const userInput = document.getElementById('userInput').value;
+    const submitButton = document.getElementById('submitAnswer');
+    const skipButton = document.getElementById('skipButton');
+
+    // Der Check-Button soll nur sichtbar sein, wenn der Skip-Button nicht sichtbar ist
+    if (userInput.trim() !== "" && skipButton.style.display === "none") {
+        submitButton.style.display = "block"; // Zeige den Check-Button
+    } else {
+        submitButton.style.display = "none"; // Verberge den Check-Button, wenn der Skip-Button da ist
+    }
+}
 
 // Funktion, um den Timer zu starten
 function startTimer() {
     timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
+// Funktion zur Behandlung der Tastenereignisse
+function handleKeyDown(event) {
+    const skipButton = document.getElementById('skipButton');
+    if (event.key === 'Enter') {
+        const checkButton = document.getElementById('submitAnswer');
+        if (checkButton.style.display !== 'none') {
+            checkAnswer(); // Wenn der Check-Button sichtbar ist, führt Enter die Überprüfung aus
+        } else if (skipButton.style.display !== 'none') {
+            skipToNext(); // Wenn der Skip-Button sichtbar ist, führt Enter das Skippen aus
+        }
+    }
+}
 
 // Initiales Set anzeigen
 window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
-
 </script>
 
 
-
-<!--Ende HTML-->
 </body>
 </html>
