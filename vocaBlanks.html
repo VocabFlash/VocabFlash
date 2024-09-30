@@ -10,9 +10,7 @@
     
 
 <h1>VocabFlash</h1>
-<div class="container">
     <h2 id="inputCounter">Word: 1 / 10</h2>
-</div>
 
 <div class="container">
     <!-- Bereich für die Vokabelabfrage -->
@@ -21,9 +19,10 @@
         <input type="text" id="userInput" placeholder="Fill in the blank" 
                oninput="toggleCheckButton()" 
                onkeydown="handleKeyDown(event)">
+        <div style="text-align: center;">
         <button id="submitAnswer" class="confirm-button" onclick="checkAnswer()" style="display: none;">Check</button>
         <button id="skipButton" class="confirm-button" onclick="skipToNext()" style="display: none;">Skip</button>
-
+        </div> 
     
     <!-- Feedback-Element -->
     <p id="feedback"></p>
