@@ -10,28 +10,32 @@
 
 <h1>VocabFlash</h1>
 <h2 id="inputCounter">Word: 1 / 10</h2>  <!-- Zähler für die Eingabemethode -->
-<!-- Set Auswahl -->
-<label for="setSelect">Choose a set:</label>
-<select id="setSelect">
-    <option value="set1">Set 1</option>
-    <option value="set2">Set 2</option>
-    <option value="set3">Set 3</option>
-    <!-- Weitere Sets hinzufügen -->
-</select>
-<button onclick="updateVocabSet()">Bestätigen</button>
+
 
 <!-- Bereich für die Vokabelabfrage -->
 <div id="vocabArea">
     <h3 id="vocabWord"></h3>
-    <input type="text" id="userInput" placeholder="Gib die Übersetzung ein">
-    <button id="submitAnswer" onclick="checkAnswer()">Antwort überprüfen</button>
+    <input type="text" id="userInput" placeholder="Type translation">
+    <button id="submitAnswer" class="confirm-button onclick="checkAnswer()">Check</button>
     <button id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button> <!-- Skip-Button, standardmäßig unsichtbar -->
 </div>
 
 <!-- Feedback-Element -->
 <p id="feedback"></p> <!-- Feedback-Element hinzufügen -->
-
-    
+<div class="container">
+    <!-- Set Auswahl -->
+    <label for="setSelect">Choose a set:</label>
+    <select id="setSelect">
+        <option value="set1">Set 1</option>
+        <option value="set2">Set 2</option>
+        <option value="set3">Set 3</option>
+        <!-- Weitere Sets hinzufügen -->
+    </select>
+    <button class="confirm-button onclick="updateVocabSet()">Bestätigen</button>    
+        <!-- Zurück Links -->
+    <br><a href="javascript:history.back()">Zurück</a><br>
+    <a href="index.html">Zurück zur Homepage</a>
+</div>
 <!--SKRIPT-->
 <script>
 let currentSet = [];
@@ -142,9 +146,7 @@ window.onload = function() {
 </script>
 
 
-<!-- Zurück Links -->
-<br><a href="javascript:history.back()">Zurück</a><br>
-<a href="index.html">Zurück zur Homepage</a>
+
 <!--Ende HTML-->
 </body>
 </html>
