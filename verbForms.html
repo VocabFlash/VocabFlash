@@ -15,6 +15,7 @@
         <div id="vocabArea">
             <h3 id="vocabVerb"></h3>
             <p id="pronoun"></p> <!-- Zeigt das Pronomen an -->
+            <p id="selectedTenseDisplay"></p> <!-- Zeigt die ausgewählte Zeitform an -->
             <input type="text" id="userInput" placeholder="Fill in the blank" 
                    oninput="toggleCheckButton()" 
                    onkeydown="handleKeyDown(event)">
@@ -40,6 +41,7 @@
             <option value="present">Present</option>
             <option value="passeCompose">Passé Composé</option>
             <option value="imparfait">Imparfait</option>
+            <option value="random">Random Tense</option> <!-- Neue Option für Zufällige Zeitform -->
         </select>
 
         <button class="confirm-button" onclick="updateVerbSet()">Confirm</button>
@@ -56,15 +58,21 @@
         let wrongAnswers = [];
         let results = [];
         const pronouns = ["je", "tu", "il", "elle", "nous", "vous", "ils", "elles"];
+        const tenses = ["present", "passeCompose", "imparfait"]; // Liste der Zeitformen
 
         // Funktion, um Vokabeln und Pronomen anzuzeigen
         function displayVocabWord() {
             const vocabWord = document.getElementById('vocabVerb');
             const pronounElement = document.getElementById('pronoun');
+            const selectedTenseDisplay = document.getElementById('selectedTenseDisplay'); // Zeitform-Anzeige
             const inputCounter = document.getElementById('inputCounter');
             const submitButton = document.getElementById('submitAnswer');
             const skipButton = document.getElementById('skipButton');
-            const selectedTense = document.getElementById('tenseSelect').value;
+            let selectedTense = document.getElementById('tenseSelect').value;
+
+            if (selectedTense === 'random') {
+                selectedTense = tenses[Math.floor(Math.random() * tenses.length)]; // Zufällige Zeitform wählen
+            }
 
             if (currentSet.length > 0) {
                 const vocab = currentSet[currentIndex];
@@ -74,6 +82,9 @@
                 const randomPronoun = pronouns[Math.floor(Math.random() * pronouns.length)];
                 pronounElement.innerText = `${randomPronoun} ...`; // Pronomen anzeigen
                 
+                // Zeitform anzeigen
+                selectedTenseDisplay.innerText = `Tense: ${selectedTense}`;
+
                 inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
                 submitButton.style.display = "block"; // Check-Button anzeigen
                 skipButton.style.display = "none"; // Skip-Button ausblenden
@@ -93,8 +104,13 @@
             const userInput = document.getElementById('userInput').value.toLowerCase();
             const currentWord = currentSet[currentIndex]; 
             const feedback = document.getElementById('feedback');
-            const selectedTense = document.getElementById('tenseSelect').value;
+            let selectedTense = document.getElementById('tenseSelect').value;
             const pronounElement = document.getElementById('pronoun').innerText.split(" ")[0];
+
+            // Bei zufälliger Zeitform, wähle die gespeicherte Zeitform
+            if (selectedTense === 'random') {
+                selectedTense = document.getElementById('selectedTenseDisplay').innerText.split(": ")[1];
+            }
 
             // Nur der Verbstamm wird geprüft, Pronomen wird ignoriert
             const correctAnswer = currentWord[selectedTense][pronounElement].split(" ")[1]; // Nur das Verb
@@ -125,7 +141,6 @@
             }
         }
 
-        // Ergebnisse anzeigen und zu results.html weiterleiten
         function showResults() {
             localStorage.setItem("verbFormResults", JSON.stringify(results));
             window.location.href = "result.html";
@@ -146,7 +161,6 @@
             }
         }
 
-        // Funktion zur Erkennung der Enter-Taste für Check und Skip
         function handleKeyDown(event) {
             if (event.key === "Enter") {
                 const submitButton = document.getElementById('submitAnswer');
@@ -160,7 +174,6 @@
             }
         }
 
-        // Initialisiere das Set bei Seitenaufruf
         window.onload = function() {
             updateVerbSet();
         };
