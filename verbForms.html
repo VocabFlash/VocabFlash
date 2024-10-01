@@ -7,7 +7,7 @@
     <script src="data/verbForms.js" defer></script>
 </head>
 <body>
-    <h1>VocabFlash</h1>
+    <h1 class="title">VocabFlash</h1> <!-- Klasse "title" für die Farbsignalisierung -->
     <h2 id="inputCounter">Word: 1 / 10</h2>
 
     <div class="container">
@@ -41,7 +41,7 @@
             <option value="present">Present</option>
             <option value="passeCompose">Passé Composé</option>
             <option value="imparfait">Imparfait</option>
-            <option value="random">Random Tense</option> <!-- Neue Option für Zufällige Zeitform -->
+            <option value="random">Random Tense</option> <!-- Neue Option für zufällige Zeitform -->
         </select>
 
         <button class="confirm-button" onclick="updateVerbSet()">Confirm</button>
@@ -113,7 +113,7 @@
             }
 
             // Nur der Verbstamm wird geprüft, Pronomen wird ignoriert
-            const correctAnswer = currentWord[selectedTense][pronounElement].split(" ")[1]; // Nur das Verb
+            const correctAnswer = currentWord[selectedTense][pronounElement];
 
             if (userInput === correctAnswer.toLowerCase()) {
                 feedback.innerText = "Correct!";
@@ -138,6 +138,9 @@
                 wrongAnswers.push(currentWord);
                 results.push({ word: currentWord.de, pronoun: pronoun, status: "second-round" });
                 skipButton.style.display = "block";
+            } else {
+                feedback.innerText = "Wrong! Try again.";
+                feedback.className = 'feedback wrong'; // Stile hinzufügen
             }
         }
 
@@ -151,36 +154,4 @@
             if (currentIndex < currentSet.length - 1) {
                 currentIndex++;
                 displayVocabWord();
-            } else if (wrongAnswers.length > 0) {
-                currentSet = wrongAnswers;
-                currentIndex = 0;
-                wrongAnswers = [];
-                displayVocabWord();
-            } else {
-                showResults(); // Am Ende der Liste zu den Ergebnissen leiten
-            }
-        }
-
-        function handleKeyDown(event) {
-            if (event.key === "Enter") {
-                const submitButton = document.getElementById('submitAnswer');
-                const skipButton = document.getElementById('skipButton');
-
-                if (submitButton.style.display === "block") {
-                    checkAnswer();
-                } else if (skipButton.style.display === "block") {
-                    skipToNext();
-                }
-            }
-        }
-
-        window.onload = function() {
-            updateVerbSet();
-        };
-
-        function skipToNext() {
-            nextWord(); // Direkter Sprung zum nächsten Wort
-        }
-    </script>
-</body>
-</html>
+            } else
