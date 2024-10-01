@@ -96,7 +96,8 @@
             const selectedTense = document.getElementById('tenseSelect').value;
             const pronounElement = document.getElementById('pronoun').innerText.split(" ")[0];
 
-            const correctAnswer = currentWord[selectedTense][pronounElement]; // Antwort mit Pronomen
+            // Nur der Verbstamm wird geprüft, Pronomen wird ignoriert
+            const correctAnswer = currentWord[selectedTense][pronounElement].split(" ")[1]; // Nur das Verb
 
             if (userInput === correctAnswer.toLowerCase()) {
                 feedback.innerText = "Correct!";
@@ -145,10 +146,28 @@
             }
         }
 
+        // Funktion zur Erkennung der Enter-Taste für Check und Skip
+        function handleKeyDown(event) {
+            if (event.key === "Enter") {
+                const submitButton = document.getElementById('submitAnswer');
+                const skipButton = document.getElementById('skipButton');
+
+                if (submitButton.style.display === "block") {
+                    checkAnswer();
+                } else if (skipButton.style.display === "block") {
+                    skipToNext();
+                }
+            }
+        }
+
         // Initialisiere das Set bei Seitenaufruf
         window.onload = function() {
             updateVerbSet();
         };
+
+        function skipToNext() {
+            nextWord(); // Direkter Sprung zum nächsten Wort
+        }
     </script>
 </body>
 </html>
