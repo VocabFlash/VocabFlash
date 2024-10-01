@@ -13,26 +13,50 @@
 <h2 id="inputCounter">Verb: 1 / 10</h2>
 
 <div class="container">
-    <!-- Bereich für die Verb-Abfrage -->
-    <div id="verbArea">
-        <h3 id="verbQuestion"></h3>
-        <input type="text" id="userInput" placeholder="Fill in the blank" 
-               oninput="toggleCheckButton()" 
-               onkeydown="handleKeyDown(event)">
-        <div style="text-align: center;">
-            <button id="submitAnswer" class="confirm-button" onclick="checkAnswer()" style="display: none;">Check</button>
-            <button id="skipButton" class="confirm-button" onclick="skipToNext()" style="display: none;">Skip</button>
-        </div>
-        <!-- Feedback-Element -->
-        <p id="feedback"></p>
-    </div>
+       <table id="conjugationTable">
+        <thead>
+            <tr>
+                <th>Pronoun</th>
+                <th>Your Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>je</td>
+                <td><input type="text" id="inputJe"></td>
+            </tr>
+            <tr>
+                <td>tu</td>
+                <td><input type="text" id="inputTu"></td>
+            </tr>
+            <tr>
+                <td>il/elle</td>
+                <td><input type="text" id="inputIlElle"></td>
+            </tr>
+            <tr>
+                <td>nous</td>
+                <td><input type="text" id="inputNous"></td>
+            </tr>
+            <tr>
+                <td>vous</td>
+                <td><input type="text" id="inputVous"></td>
+            </tr>
+            <tr>
+                <td>ils/elles</td>
+                <td><input type="text" id="inputIlsElles"></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button id="submitConjugation" onclick="checkAnswers()">Submit Answers</button>
+    <div id="feedback"></div>
 </div>
 
 <div class="container">
     <!-- Set Auswahl -->
     <label for="setSelect">Choose a verb set:</label>
     <select id="setSelect" onchange="updateVerbSet()">
-        <option value="er">er-Verbs</option>
+        <option value="reg1">er-Verbs</option>
         <option value="cer">cer-Verbs</option>
         <option value="ger">ger-Verbs</option>
         <option value="doubl">doubl-Verbs</option>
@@ -66,170 +90,35 @@ let secondRound = false; // Flag für die zweite Runde
 let timer;
 let results = [];
 
-// Funktion zum Zufälligmischen des Arrays
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
+    // Funktion zur Überprüfung der Antworten
+function checkAnswers() {
+    const verb = "parler"; // Beispielverb, kann angepasst werden
+    const correctAnswers = {
+        je: conjugate({ verb: verb, group: "er" }, "present", "je"), // 'je parle'
+        tu: conjugate({ verb: verb, group: "er" }, "present", "tu"), // 'tu parles'
+        ilElle: conjugate({ verb: verb, group: "er" }, "present", "il"), // 'il/elle parle'
+        nous: conjugate({ verb: verb, group: "er" }, "present", "nous"), // 'nous parlons'
+        vous: conjugate({ verb: verb, group: "er" }, "present", "vous"), // 'vous parlez'
+        ilsElles: conjugate({ verb: verb, group: "er" }, "present", "ils") // 'ils/elles parlent'
+    };
 
-// Funktion, um die Verben des ausgewählten Sets anzuzeigen
-function displayVerbQuestion() {
-    if (!secondRound && currentIndex === 0) {
-        shuffle(currentSet);
-    }
-    
-    const verbQuestion = document.getElementById('verbQuestion');
-    const inputCounter = document.getElementById('inputCounter');
-    const submitButton = document.getElementById('submitAnswer');
-    const skipButton = document.getElementById('skipButton');
-    
-    if (currentSet.length > 0) {
-        const verb = currentSet[currentIndex];
-        verbQuestion.innerText = `${verb.pronoun} ${verb.verb}`; // Zeige Pronomen + Verbstamm
-        verbQuestion.classList.remove('correct', 'wrong', 'solution');
-        
-        inputCounter.innerText = `Verb: ${currentIndex + 1} / ${currentSet.length}`;
-        submitButton.style.display = "block"; // Zeige den Check-Button
-        skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
-    }
-}
+    let feedbackMessage = '';
 
-// Funktion, um das ausgewählte Set zu aktualisieren
-function updateVerbSet() {
-    const selectedSet = document.getElementById('setSelect').value;
-    const selectedTense = document.getElementById('tenseSelect').value;
-
-    if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
-        currentSet = verbSets[selectedSet][selectedTense];
-        currentIndex = 0;
-        wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
-        secondRound = false; // Zurücksetzen der zweiten Runde
-        displayVerbQuestion();
-    } else {
-        console.error("Set or tense not found.");
-    }
-}
-
-// Funktion für die Auswertung
-function showResults() {
-    localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
-    window.location.href = "result.html"; // Weiterleitung zu results.html
-}
-
-// Funktion für den Skip-Button
-function skipToNext() {
-    clearTimeout(timer);
-    nextWord();
-}
-
-// Funktion für den nächsten Verbwechsel
-function nextWord() {
-    clearTimeout(timer);
-    wrongAttempts = 0;
-
-    if (currentIndex < currentSet.length - 1) {
-        currentIndex++;
-        displayVerbQuestion();
-    } else if (!secondRound && wrongAnswers.length > 0) {
-        secondRound = true;
-        currentSet = wrongAnswers;
-        currentIndex = 0;
-        displayVerbQuestion();
-    } else if (secondRound && currentIndex >= currentSet.length - 1) {
-        showResults();
-    }
-}
-
-// Funktion, um die Benutzerantwort zu überprüfen
-function checkAnswer() {
-    const userInput = document.getElementById('userInput').value.toLowerCase();
-    const currentWord = currentSet[currentIndex]; // Aktuelles Verb holen
-    const feedback = document.getElementById('feedback');
-    const skipButton = document.getElementById('skipButton');
-    const verbQuestion = document.getElementById('verbQuestion');
-    const submitButton = document.getElementById('submitAnswer');
-
-    if (userInput === currentWord.correctForm.toLowerCase()) {
-        feedback.innerText = "Correct!";
-        feedback.classList.remove('wrong', 'solution');
-        feedback.classList.add('correct');
-        verbQuestion.classList.add('correct');
-        skipButton.style.display = "block"; // Zeige den Skip-Button
-        submitButton.style.display = "none"; // Verberge den Check-Button
-        startTimer();
-        wrongAttempts = 0;
-
-        // Ergebnisse aufzeichnen
-        results.push({ verb: `${currentWord.pronoun} ${currentWord.verb}`, status: "correct-first" }); // Grün
-    } else {
-        handleWrongAnswer(currentWord);
-    }
-
-    // Eingabefeld zurücksetzen
-    document.getElementById('userInput').value = '';
-}
-
-// Funktion zur Behandlung falscher Antworten
-function handleWrongAnswer(currentWord) {
-    const feedback = document.getElementById('feedback');
-    const skipButton = document.getElementById('skipButton');
-    const verbQuestion = document.getElementById('verbQuestion');
-
-    wrongAttempts++;
-
-    if (wrongAttempts === 1) {
-        feedback.innerText = "Try again.";
-        feedback.classList.remove('correct', 'solution');
-        feedback.classList.add('wrong');
-        verbQuestion.classList.add('wrong');
-        skipButton.style.display = "none"; // Skip-Button ausblenden
-    } else if (wrongAttempts === 2) {
-        feedback.innerText = `The correct answer is: ${currentWord.correctForm}`;
-        feedback.classList.remove('correct', 'wrong');
-        feedback.classList.add('solution');
-        verbQuestion.classList.add('solution');
-        wrongAnswers.push(currentWord); // Falsches Verb zur Liste hinzufügen
-        results.push({ verb: `${currentWord.pronoun} ${currentWord.verb}`, status: "second-round" }); // Rot
-        skipButton.style.display = "block"; // Zeige den Skip-Button
-        document.getElementById('submitAnswer').style.display = "none"; // Verberge den Check-Button
-        startTimer(); // Starte den Timer
-    }
-}
-
-// Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
-function toggleCheckButton() {
-    const userInput = document.getElementById('userInput').value;
-    const submitButton = document.getElementById('submitAnswer');
-    const skipButton = document.getElementById('skipButton');
-
-    // Der Check-Button soll nur sichtbar sein, wenn der Skip-Button nicht sichtbar ist
-    if (userInput.trim() !== "" && skipButton.style.display === "none") {
-        submitButton.style.display = "block"; // Zeige den Check-Button
-    } else {
-        submitButton.style.display = "none"; // Verberge den Check-Button, wenn der Skip-Button da ist
-    }
-}
-
-// Funktion, um den Timer zu starten
-function startTimer() {
-    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Verb
-}
-
-// Funktion zur Behandlung der Tastenereignisse
-function handleKeyDown(event) {
-    const skipButton = document.getElementById('skipButton');
-    if (event.key === 'Enter') {
-        const checkButton = document.getElementById('submitAnswer');
-        if (checkButton.style.display !== 'none') {
-            checkAnswer(); // Wenn der Check-Button sichtbar ist, Check auslösen
-        } else if (skipButton.style.display !== 'none') {
-            skipToNext(); // Wenn der Skip-Button sichtbar ist, Skip auslösen
+    // Überprüfen der Antworten
+    for (const pronoun in correctAnswers) {
+        const userInput = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
+        if (userInput === correctAnswers[pronoun]) {
+            feedbackMessage += `Correct for ${pronoun}: ${userInput}<br>`;
+        } else {
+            feedbackMessage += `Incorrect for ${pronoun}: ${userInput}. Correct answer: ${correctAnswers[pronoun]}<br>`;
         }
     }
+
+    // Feedback anzeigen
+    document.getElementById('feedback').innerHTML = feedbackMessage;
 }
+
+
 </script>
 </body>
 </html>
