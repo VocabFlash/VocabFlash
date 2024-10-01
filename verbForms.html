@@ -54,7 +54,6 @@
 </div>
 
 <div class="container">
-    <!-- Set Auswahl -->
     <label for="setSelect">Choose a verb set:</label>
     <select id="setSelect" onchange="updateVerbSet()">
         <option value="reg1">er-Verbs</option>
@@ -96,24 +95,24 @@ function loadVerbForConjugation() {
     const selectedSet = document.getElementById('setSelect').value;
     const selectedTense = document.getElementById('tenseSelect').value;
 
-    console.log(`loadVerbForConjugation called with selectedSet: ${selectedSet}, selectedTense: ${selectedTense}`);
-
     // Überprüfe, ob das ausgewählte Set und die Zeitform existieren
     if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
         const randomIndex = Math.floor(Math.random() * verbSets[selectedSet][selectedTense].length);
         const verb = verbSets[selectedSet][selectedTense][randomIndex];
 
-        console.log(`Loaded verb: ${verb.verb}, group: ${verb.group}`);
-
         // Setze die Verbbezeichnung in der Tabelle
-        document.getElementById('selectedVerb').innerText = `Selected Verb: ${verb.verb}`;
+        const verbName = verb.verb; 
         
-        // Leere die Eingabefelder
+        // Zeige das ausgewählte Verb an
+        document.getElementById('selectedVerb').innerText = `Selected Verb: ${verbName}`;
+        
+        // Fülle die Tabelle mit den Pronomen
         for (const pronoun of ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles']) {
-            document.getElementById(`input${pronoun}`).value = '';
-            console.log(`Cleared input field for: ${pronoun}`);
+            document.getElementById(`input${pronoun}`).value = ''; // Leere die Eingabefelder
         }
 
+        // Feedback zur aktuellen Verbbezeichnung (optional)
+        console.log(`Loaded verb: ${verbName} for conjugation`);
     } else {
         console.error(`Set or tense not found for ${selectedSet}, ${selectedTense}`);
         alert(`Das ausgewählte Set oder die Zeitform wurde nicht gefunden: ${selectedSet}, ${selectedTense}`);
@@ -122,35 +121,29 @@ function loadVerbForConjugation() {
 
 // Funktion zur Überprüfung der Antworten
 function checkAnswers() {
-    console.log('checkAnswers called');
-
+    // Hier wird das korrekte Verb verwendet, basierend auf dem aktuellen Set und der Zeitform
     const selectedSet = document.getElementById('setSelect').value;
     const selectedTense = document.getElementById('tenseSelect').value;
 
-    console.log(`Checking answers for selectedSet: ${selectedSet}, selectedTense: ${selectedTense}`);
+    console.log(`Checking answers for selected set: ${selectedSet}, tense: ${selectedTense}`);
 
     if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
         const verb = verbSets[selectedSet][selectedTense][currentIndex]; // Aktuelles Verb
-        console.log(`Current verb: ${verb.verb}`);
-
         const correctAnswers = {
-            je: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "je"),
-            tu: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "tu"),
-            ilElle: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "il"),
-            nous: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "nous"),
-            vous: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "vous"),
-            ilsElles: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "ils")
+            je: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "je"), // 'je parle'
+            tu: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "tu"), // 'tu parles'
+            ilElle: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "il"), // 'il/elle parle'
+            nous: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "nous"), // 'nous parlons'
+            vous: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "vous"), // 'vous parlez'
+            ilsElles: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "ils") // 'ils/elles parlent'
         };
-
-        console.log('Correct answers:', correctAnswers);
 
         let feedbackMessage = '';
 
         // Überprüfen der Antworten
         for (const pronoun in correctAnswers) {
             const userInput = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
-            console.log(`User input for ${pronoun}: ${userInput}`);
-
+            console.log(`User input for ${pronoun}: ${userInput}, Correct answer: ${correctAnswers[pronoun]}`);
             if (userInput === correctAnswers[pronoun]) {
                 feedbackMessage += `Correct for ${pronoun}: ${userInput}<br>`;
             } else {
@@ -160,7 +153,6 @@ function checkAnswers() {
 
         // Feedback anzeigen
         document.getElementById('feedback').innerHTML = feedbackMessage;
-
     } else {
         console.error(`Set or tense not found for ${selectedSet}, ${selectedTense}`);
         alert(`Das ausgewählte Set oder die Zeitform wurde nicht gefunden: ${selectedSet}, ${selectedTense}`);
@@ -169,11 +161,10 @@ function checkAnswers() {
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVerbSet() {
-    console.log('updateVerbSet called');
-
     const selectedSet = document.getElementById('setSelect').value;
     const selectedTense = document.getElementById('tenseSelect').value;
 
+    console.log(`updateVerbSet called: verbForms.html:172:13`);
     console.log(`Updating verb set to: ${selectedSet}, tense: ${selectedTense}`);
 
     // Überprüfe, ob das ausgewählte Set und die Zeitform existieren
