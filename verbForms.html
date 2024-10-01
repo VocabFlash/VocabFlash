@@ -91,86 +91,92 @@ let secondRound = false; // Flag für die zweite Runde
 let timer;
 let results = [];
 
-    // Funktion zum Laden des Verbs in die Tabelle
+// Funktion zum Laden des Verbs in die Tabelle
 function loadVerbForConjugation() {
     const selectedSet = document.getElementById('setSelect').value;
     const selectedTense = document.getElementById('tenseSelect').value;
 
+    // Überprüfe, ob das ausgewählte Set und die Zeitform existieren
     if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
         const randomIndex = Math.floor(Math.random() * verbSets[selectedSet][selectedTense].length);
         const verb = verbSets[selectedSet][selectedTense][randomIndex];
-        
-        // Setze die Verbbezeichnung in der Tabelle
-        const verbName = verb.verb; // oder wie auch immer dein Verb benannt ist
-        const pronounMapping = {
-            je: 'je',
-            tu: 'tu',
-            il: 'il/elle',
-            nous: 'nous',
-            vous: 'vous',
-            ils: 'ils/elles'
-        };
 
+        // Setze die Verbbezeichnung in der Tabelle
+        const verbName = verb.verb; 
+        
+        // Zeige das ausgewählte Verb an
+        document.getElementById('selectedVerb').innerText = `Selected Verb: ${verbName}`;
+        
         // Fülle die Tabelle mit den Pronomen
-        for (const pronoun in pronounMapping) {
-            document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value = ''; // Leere die Eingabefelder
+        for (const pronoun of ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles']) {
+            document.getElementById(`input${pronoun}`).value = ''; // Leere die Eingabefelder
         }
 
         // Feedback zur aktuellen Verbbezeichnung (optional)
         console.log(`Loaded verb: ${verbName} for conjugation`);
     } else {
-        console.error("Set or tense not found.");
+        console.error(`Set or tense not found for ${selectedSet}, ${selectedTense}`);
+        alert(`Das ausgewählte Set oder die Zeitform wurde nicht gefunden: ${selectedSet}, ${selectedTense}`);
     }
 }
 
-    // Funktion zur Überprüfung der Antworten
+// Funktion zur Überprüfung der Antworten
 function checkAnswers() {
-    const verb = "parler"; // Beispielverb, kann angepasst werden
-    const correctAnswers = {
-        je: conjugate({ verb: verb, group: "er" }, "present", "je"), // 'je parle'
-        tu: conjugate({ verb: verb, group: "er" }, "present", "tu"), // 'tu parles'
-        ilElle: conjugate({ verb: verb, group: "er" }, "present", "il"), // 'il/elle parle'
-        nous: conjugate({ verb: verb, group: "er" }, "present", "nous"), // 'nous parlons'
-        vous: conjugate({ verb: verb, group: "er" }, "present", "vous"), // 'vous parlez'
-        ilsElles: conjugate({ verb: verb, group: "er" }, "present", "ils") // 'ils/elles parlent'
-    };
+    // Hier wird das korrekte Verb verwendet, basierend auf dem aktuellen Set und der Zeitform
+    const selectedSet = document.getElementById('setSelect').value;
+    const selectedTense = document.getElementById('tenseSelect').value;
 
-    let feedbackMessage = '';
+    if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
+        const verb = verbSets[selectedSet][selectedTense][currentIndex]; // Aktuelles Verb
+        const correctAnswers = {
+            je: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "je"), // 'je parle'
+            tu: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "tu"), // 'tu parles'
+            ilElle: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "il"), // 'il/elle parle'
+            nous: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "nous"), // 'nous parlons'
+            vous: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "vous"), // 'vous parlez'
+            ilsElles: conjugate({ verb: verb.verb, group: verb.group }, selectedTense, "ils") // 'ils/elles parlent'
+        };
 
-    // Überprüfen der Antworten
-    for (const pronoun in correctAnswers) {
-        const userInput = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
-        if (userInput === correctAnswers[pronoun]) {
-            feedbackMessage += `Correct for ${pronoun}: ${userInput}<br>`;
-        } else {
-            feedbackMessage += `Incorrect for ${pronoun}: ${userInput}. Correct answer: ${correctAnswers[pronoun]}<br>`;
+        let feedbackMessage = '';
+
+        // Überprüfen der Antworten
+        for (const pronoun in correctAnswers) {
+            const userInput = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
+            if (userInput === correctAnswers[pronoun]) {
+                feedbackMessage += `Correct for ${pronoun}: ${userInput}<br>`;
+            } else {
+                feedbackMessage += `Incorrect for ${pronoun}: ${userInput}. Correct answer: ${correctAnswers[pronoun]}<br>`;
+            }
         }
-    }
 
-    // Feedback anzeigen
-    document.getElementById('feedback').innerHTML = feedbackMessage;
+        // Feedback anzeigen
+        document.getElementById('feedback').innerHTML = feedbackMessage;
+    } else {
+        console.error(`Set or tense not found for ${selectedSet}, ${selectedTense}`);
+        alert(`Das ausgewählte Set oder die Zeitform wurde nicht gefunden: ${selectedSet}, ${selectedTense}`);
+    }
 }
 
-    // Funktion, um das ausgewählte Set zu aktualisieren
+// Funktion, um das ausgewählte Set zu aktualisieren
 function updateVerbSet() {
     const selectedSet = document.getElementById('setSelect').value;
     const selectedTense = document.getElementById('tenseSelect').value;
 
+    // Überprüfe, ob das ausgewählte Set und die Zeitform existieren
     if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
         currentSet = verbSets[selectedSet][selectedTense];
         currentIndex = 0;
         wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
         secondRound = false; // Zurücksetzen der zweiten Runde
-        displayVerbQuestion();
         
         // Lade das Verb für die Konjugation
         loadVerbForConjugation(); // Füge diese Zeile hinzu
     } else {
-        console.error("Set or tense not found.");
+        console.error(`Set or tense not found for ${selectedSet}, ${selectedTense}`);
+        alert(`Das ausgewählte Set oder die Zeitform wurde nicht gefunden: ${selectedSet}, ${selectedTense}`);
     }
 }
-
-
 </script>
+
 </body>
 </html>
