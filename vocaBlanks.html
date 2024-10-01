@@ -2,55 +2,49 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>VerbForms - VocabFlash</title>
+    <title>VocabFlash</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="data/verbForms.js" defer></script>
+    <script src="data/vocaBlanks.js" defer></script>
 </head>
 <body>
+    
 
 <h1>VocabFlash</h1>
-<h2 id="inputCounter">Verb: 1 / 10</h2>
+    <h2 id="inputCounter">Word: 1 / 10</h2>
 
 <div class="container">
-    <!-- Bereich für die Verb-Abfrage -->
-    <div id="verbArea">
-        <h3 id="verbQuestion"></h3>
+    <!-- Bereich für die Vokabelabfrage -->
+    <div id="vocabArea">
+        <h3 id="vocabWord"></h3>
         <input type="text" id="userInput" placeholder="Fill in the blank" 
                oninput="toggleCheckButton()" 
                onkeydown="handleKeyDown(event)">
         <div style="text-align: center;">
             <button id="submitAnswer" class="confirm-button" onclick="checkAnswer()" style="display: none;">Check</button>
             <button id="skipButton" class="confirm-button" onclick="skipToNext()" style="display: none;">Skip</button>
-        </div>
+        </div> 
         <!-- Feedback-Element -->
         <p id="feedback"></p>
-    </div>
-</div>
+    </div> <!-- Schließendes div für vocabArea -->
+</div> <!-- Schließendes div für container -->
 
+    
 <div class="container">
-    <!-- Set Auswahl -->
-    <label for="setSelect">Choose a verb set:</label>
-    <select id="setSelect" onchange="updateVerbSet()">
-        <option value="set1">Set 1</option>
-        <option value="set2">Set 2</option>
-        <!-- Weitere Sets hinzufügen -->
-    </select>
-
-    <label for="tenseSelect">Choose a tense:</label>
-    <select id="tenseSelect" onchange="updateVerbSet()">
-        <option value="present">Present</option>
-        <option value="passe">Passé Composé</option>
-        <option value="imparfait">Imparfait</option>
-    </select>
-    
-    <button class="confirm-button" onclick="updateVerbSet()">Confirm</button>
-    
-    <!-- Zurück Links -->
-    <br><a href="result.html">Show results</a><br>
-    <a href="javascript:history.back()">Go back</a><br>
-    <a href="index.html">Go back to homepage</a>
+<!-- Set Auswahl -->
+<label for="setSelect">Choose a set:</label>
+<select id="setSelect" onchange="updateVocabSet()">
+    <option value="set1">Set 1</option>
+    <option value="set2">Set 2</option>
+    <!-- Weitere Sets hinzufügen -->
+</select>
+<button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
+<!-- Zurück Links -->
+<br><a href="result.html">Show results</a><br>
+<a href="javascript:history.back()">Go back</a><br>
+<a href="index.html">Go back to homepage</a>
 </div>
 
+    
 <!-- Skript -->
 <script>
 let currentSet = [];
@@ -70,41 +64,38 @@ function shuffle(array) {
     return array;
 }
 
-// Funktion, um die Verben des ausgewählten Sets anzuzeigen
-function displayVerbQuestion() {
+// Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
+function displayVocabWord() {
     if (!secondRound && currentIndex === 0) {
         shuffle(currentSet);
     }
-    
-    const verbQuestion = document.getElementById('verbQuestion');
+    const vocabWord = document.getElementById('vocabWord');
     const inputCounter = document.getElementById('inputCounter');
     const submitButton = document.getElementById('submitAnswer');
     const skipButton = document.getElementById('skipButton');
-    
+
     if (currentSet.length > 0) {
-        const verb = currentSet[currentIndex];
-        verbQuestion.innerText = `${verb.pronoun} ${verb.verb}`; // Zeige Pronomen + Verbstamm
-        verbQuestion.classList.remove('correct', 'wrong', 'solution');
-        
-        inputCounter.innerText = `Verb: ${currentIndex + 1} / ${currentSet.length}`;
+        const vocab = currentSet[currentIndex];
+        vocabWord.innerText = vocab.de;
+        vocabWord.classList.remove('correct', 'wrong', 'solution');
+
+        inputCounter.innerText = Word: ${currentIndex + 1} / ${currentSet.length};
         submitButton.style.display = "block"; // Zeige den Check-Button
         skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
     }
 }
 
 // Funktion, um das ausgewählte Set zu aktualisieren
-function updateVerbSet() {
+function updateVocabSet() {
     const selectedSet = document.getElementById('setSelect').value;
-    const selectedTense = document.getElementById('tenseSelect').value;
-
-    if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
-        currentSet = verbSets[selectedSet][selectedTense];
+    if (vocabSets[selectedSet]) {
+        currentSet = vocabSets[selectedSet];
         currentIndex = 0;
         wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
         secondRound = false; // Zurücksetzen der zweiten Runde
-        displayVerbQuestion();
+        displayVocabWord();
     } else {
-        console.error("Set or tense not found.");
+        console.error("Set not found: ", selectedSet);
     }
 }
 
@@ -120,19 +111,19 @@ function skipToNext() {
     nextWord();
 }
 
-// Funktion für den nächsten Verbwechsel
+// Funktion für den nächsten Wortwechsel
 function nextWord() {
     clearTimeout(timer);
     wrongAttempts = 0;
 
     if (currentIndex < currentSet.length - 1) {
         currentIndex++;
-        displayVerbQuestion();
+        displayVocabWord();
     } else if (!secondRound && wrongAnswers.length > 0) {
         secondRound = true;
         currentSet = wrongAnswers;
         currentIndex = 0;
-        displayVerbQuestion();
+        displayVocabWord();
     } else if (secondRound && currentIndex >= currentSet.length - 1) {
         showResults();
     }
@@ -141,24 +132,24 @@ function nextWord() {
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
-    const currentWord = currentSet[currentIndex]; // Aktuelles Verb holen
+    const currentWord = currentSet[currentIndex]; // Aktuelles Wort holen
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
-    const verbQuestion = document.getElementById('verbQuestion');
+    const vocabWord = document.getElementById('vocabWord');
     const submitButton = document.getElementById('submitAnswer');
 
-    if (userInput === currentWord.correctForm.toLowerCase()) {
+    if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
         feedback.classList.add('correct');
-        verbQuestion.classList.add('correct');
+        vocabWord.classList.add('correct');
         skipButton.style.display = "block"; // Zeige den Skip-Button
         submitButton.style.display = "none"; // Verberge den Check-Button
         startTimer();
         wrongAttempts = 0;
 
         // Ergebnisse aufzeichnen
-        results.push({ verb: `${currentWord.pronoun} ${currentWord.verb}`, status: "correct-first" }); // Grün
+        results.push({ word: currentWord.de, status: "correct-first" }); // Grün
     } else {
         handleWrongAnswer(currentWord);
     }
@@ -171,7 +162,7 @@ function checkAnswer() {
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
-    const verbQuestion = document.getElementById('verbQuestion');
+    const vocabWord = document.getElementById('vocabWord');
 
     wrongAttempts++;
 
@@ -179,15 +170,15 @@ function handleWrongAnswer(currentWord) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
         feedback.classList.add('wrong');
-        verbQuestion.classList.add('wrong');
+        vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; // Skip-Button ausblenden
     } else if (wrongAttempts === 2) {
-        feedback.innerText = `The correct answer is: ${currentWord.correctForm}`;
+        feedback.innerText = The correct answer is: ${currentWord.ar};
         feedback.classList.remove('correct', 'wrong');
         feedback.classList.add('solution');
-        verbQuestion.classList.add('solution');
-        wrongAnswers.push(currentWord); // Falsches Verb zur Liste hinzufügen
-        results.push({ verb: `${currentWord.pronoun} ${currentWord.verb}`, status: "second-round" }); // Rot
+        vocabWord.classList.add('solution');
+        wrongAnswers.push(currentWord); // Falsches Wort zur Liste hinzufügen
+        results.push({ word: currentWord.de, status: "second-round" }); // Rot
         skipButton.style.display = "block"; // Zeige den Skip-Button
         document.getElementById('submitAnswer').style.display = "none"; // Verberge den Check-Button
         startTimer(); // Starte den Timer
@@ -210,7 +201,7 @@ function toggleCheckButton() {
 
 // Funktion, um den Timer zu starten
 function startTimer() {
-    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Verb
+    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
 }
 
 // Funktion zur Behandlung der Tastenereignisse
@@ -219,4 +210,19 @@ function handleKeyDown(event) {
     if (event.key === 'Enter') {
         const checkButton = document.getElementById('submitAnswer');
         if (checkButton.style.display !== 'none') {
-            checkAnswer(); // Wenn
+            checkAnswer(); // Wenn der Check-Button sichtbar ist, führt Enter die Überprüfung aus
+        } else if (skipButton.style.display !== 'none') {
+            skipToNext(); // Wenn der Skip-Button sichtbar ist, führt Enter das Skippen aus
+        }
+    }
+}
+
+// Initiales Set anzeigen
+window.onload = function() {
+    updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+};
+</script>
+
+
+</body>
+</html>
