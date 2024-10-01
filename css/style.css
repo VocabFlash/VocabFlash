@@ -29,6 +29,36 @@
     }
 }
 
+/* Allgemeine Einstellungen für alle Geräte */
+body {
+    font-size: 16px; /* Standardgröße */
+}
+
+/* Für Bildschirme kleiner als 768px (typisch für mobile Geräte) */
+@media only screen and (max-width: 768px) {
+    body {
+        font-size: 14px; /* Kleinere Schriftgröße für Mobilgeräte */
+    }
+
+    h1 {
+        font-size: 20px; /* Kleinere Überschrift auf mobilen Geräten */
+    }
+
+    h2 {
+        font-size: 18px; /* Kleinere Unterüberschrift auf mobilen Geräten */
+    }
+
+    .container {
+        width: 90%; /* Passt die Containerbreite an */
+        padding: 10px; /* Verringert den Innenabstand */
+    }
+
+    .confirm-button, .flashcard, .button-container button {
+        width: 100%; /* Buttons nehmen die volle Breite ein */
+        font-size: 14px; /* Kleinere Schriftgröße für Buttons */
+    }
+}
+
 
 /* Body Styling */
 body {
