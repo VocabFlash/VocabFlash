@@ -90,6 +90,38 @@ let secondRound = false; // Flag für die zweite Runde
 let timer;
 let results = [];
 
+    // Funktion zum Laden des Verbs in die Tabelle
+function loadVerbForConjugation() {
+    const selectedSet = document.getElementById('setSelect').value;
+    const selectedTense = document.getElementById('tenseSelect').value;
+
+    if (verbSets[selectedSet] && verbSets[selectedSet][selectedTense]) {
+        const randomIndex = Math.floor(Math.random() * verbSets[selectedSet][selectedTense].length);
+        const verb = verbSets[selectedSet][selectedTense][randomIndex];
+        
+        // Setze die Verbbezeichnung in der Tabelle
+        const verbName = verb.verb; // oder wie auch immer dein Verb benannt ist
+        const pronounMapping = {
+            je: 'je',
+            tu: 'tu',
+            il: 'il/elle',
+            nous: 'nous',
+            vous: 'vous',
+            ils: 'ils/elles'
+        };
+
+        // Fülle die Tabelle mit den Pronomen
+        for (const pronoun in pronounMapping) {
+            document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value = ''; // Leere die Eingabefelder
+        }
+
+        // Feedback zur aktuellen Verbbezeichnung (optional)
+        console.log(`Loaded verb: ${verbName} for conjugation`);
+    } else {
+        console.error("Set or tense not found.");
+    }
+}
+
     // Funktion zur Überprüfung der Antworten
 function checkAnswers() {
     const verb = "parler"; // Beispielverb, kann angepasst werden
