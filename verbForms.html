@@ -54,11 +54,10 @@
         let currentIndex = 0;
         let wrongAttempts = 0;
         let wrongAnswers = [];
-        let secondRound = false;
         let results = [];
-        const pronouns = ["je", "tu", "il/elle", "nous", "vous", "ils/elles"];
+        const pronouns = ["je", "tu", "il", "elle", "nous", "vous", "ils", "elles"];
 
-        // Funktion, um Pronomen anzuzeigen
+        // Funktion, um Vokabeln und Pronomen anzuzeigen
         function displayVocabWord() {
             const vocabWord = document.getElementById('vocabVerb');
             const pronounElement = document.getElementById('pronoun');
@@ -66,7 +65,7 @@
             const submitButton = document.getElementById('submitAnswer');
             const skipButton = document.getElementById('skipButton');
             const selectedTense = document.getElementById('tenseSelect').value;
-            
+
             if (currentSet.length > 0) {
                 const vocab = currentSet[currentIndex];
                 vocabWord.innerText = vocab.de; // Verb anzeigen
@@ -81,11 +80,19 @@
             }
         }
 
+        function updateVerbSet() {
+            const selectedSet = document.getElementById('setSelect').value;
+
+            // Aktualisiere das aktuelle Set basierend auf der Auswahl
+            currentSet = verbSets[selectedSet]; // verbSets muss definiert sein
+            currentIndex = 0; // Zurück zum ersten Wort
+            displayVocabWord(); // Zeige das erste Wort an
+        }
+
         function checkAnswer() {
             const userInput = document.getElementById('userInput').value.toLowerCase();
             const currentWord = currentSet[currentIndex]; 
             const feedback = document.getElementById('feedback');
-            const skipButton = document.getElementById('skipButton');
             const selectedTense = document.getElementById('tenseSelect').value;
             const pronounElement = document.getElementById('pronoun').innerText.split(" ")[0];
 
@@ -93,7 +100,7 @@
 
             if (userInput === correctAnswer.toLowerCase()) {
                 feedback.innerText = "Correct!";
-                feedback.classList.add('correct');
+                feedback.className = 'feedback correct'; // Stile hinzufügen
                 results.push({ word: currentWord.de, pronoun: pronounElement, status: "correct-first" });
                 nextWord();
             } else {
@@ -110,7 +117,7 @@
             wrongAttempts++;
             if (wrongAttempts === 2) {
                 feedback.innerText = `The correct answer is: ${correctAnswer}`;
-                feedback.classList.add('solution');
+                feedback.className = 'feedback solution'; // Stile hinzufügen
                 wrongAnswers.push(currentWord);
                 results.push({ word: currentWord.de, pronoun: pronoun, status: "second-round" });
                 skipButton.style.display = "block";
