@@ -2,7 +2,6 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VocabFlash</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/verbForms.js" defer></script>
@@ -15,6 +14,7 @@
         <!-- Bereich für die Vokabelabfrage -->
         <div id="vocabArea">
             <h3 id="vocabVerb"></h3>
+            <p id="pronoun"></p> <!-- Zeigt das Pronomen an -->
             <input type="text" id="userInput" placeholder="Fill in the blank" 
                    oninput="toggleCheckButton()" 
                    onkeydown="handleKeyDown(event)">
@@ -33,7 +33,6 @@
         <select id="setSelect" onchange="updateVerbSet()">
             <option value="set1">Set 1</option>
             <option value="set2">Set 2</option>
-            <!-- Weitere Sets hinzufügen -->
         </select>
 
         <label for="tenseSelect">Choose a tense:</label>
@@ -44,175 +43,102 @@
         </select>
 
         <button class="confirm-button" onclick="updateVerbSet()">Confirm</button>
-        <!-- Links für die Navigation -->
         <br><a href="result.html">Show results</a><br>
         <a href="javascript:history.back()">Go back</a><br>
         <a href="index.html">Go back to homepage</a>
     </div>
 
+    <!-- Skript -->
     <script>
         let currentSet = [];
         let currentIndex = 0;
         let wrongAttempts = 0;
         let wrongAnswers = [];
         let secondRound = false;
-        let timer;
         let results = [];
+        const pronouns = ["je", "tu", "il/elle", "nous", "vous", "ils/elles"];
 
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
+        // Funktion, um Pronomen anzuzeigen
         function displayVocabWord() {
-            if (!secondRound && currentIndex === 0) {
-                shuffle(currentSet);
-            }
             const vocabWord = document.getElementById('vocabVerb');
+            const pronounElement = document.getElementById('pronoun');
             const inputCounter = document.getElementById('inputCounter');
             const submitButton = document.getElementById('submitAnswer');
             const skipButton = document.getElementById('skipButton');
             const selectedTense = document.getElementById('tenseSelect').value;
-
+            
             if (currentSet.length > 0) {
                 const vocab = currentSet[currentIndex];
-                vocabWord.innerText = vocab.de;
-                vocabWord.classList.remove('correct', 'wrong', 'solution');
+                vocabWord.innerText = vocab.de; // Verb anzeigen
 
+                // Zufälliges Pronomen auswählen
+                const randomPronoun = pronouns[Math.floor(Math.random() * pronouns.length)];
+                pronounElement.innerText = `${randomPronoun} ...`; // Pronomen anzeigen
+                
                 inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-                submitButton.style.display = "block";
-                skipButton.style.display = "none";
-            }
-        }
-
-        function updateVerbSet() {
-            const selectedSet = document.getElementById('setSelect').value;
-            const selectedTense = document.getElementById('tenseSelect').value;
-
-            if (verbSets[selectedSet]) {
-                currentSet = verbSets[selectedSet];
-                currentIndex = 0;
-                wrongAnswers = [];
-                secondRound = false;
-                displayVocabWord();
-            } else {
-                console.error("Set not found: ", selectedSet);
-            }
-        }
-
-        function showResults() {
-            localStorage.setItem("results", JSON.stringify(results));
-            window.location.href = "result.html";
-        }
-
-        function skipToNext() {
-            clearTimeout(timer);
-            nextWord();
-        }
-
-        function nextWord() {
-            clearTimeout(timer);
-            wrongAttempts = 0;
-
-            if (currentIndex < currentSet.length - 1) {
-                currentIndex++;
-                displayVocabWord();
-            } else if (!secondRound && wrongAnswers.length > 0) {
-                secondRound = true;
-                currentSet = wrongAnswers;
-                currentIndex = 0;
-                displayVocabWord();
-            } else if (secondRound && currentIndex >= currentSet.length - 1) {
-                showResults();
+                submitButton.style.display = "block"; // Check-Button anzeigen
+                skipButton.style.display = "none"; // Skip-Button ausblenden
             }
         }
 
         function checkAnswer() {
             const userInput = document.getElementById('userInput').value.toLowerCase();
-            const currentWord = currentSet[currentIndex];
+            const currentWord = currentSet[currentIndex]; 
             const feedback = document.getElementById('feedback');
             const skipButton = document.getElementById('skipButton');
-            const vocabWord = document.getElementById('vocabVerb');
-            const submitButton = document.getElementById('submitAnswer');
             const selectedTense = document.getElementById('tenseSelect').value;
+            const pronounElement = document.getElementById('pronoun').innerText.split(" ")[0];
 
-            const correctAnswer = currentWord[selectedTense].je; 
+            const correctAnswer = currentWord[selectedTense][pronounElement]; // Antwort mit Pronomen
 
             if (userInput === correctAnswer.toLowerCase()) {
                 feedback.innerText = "Correct!";
-                feedback.classList.remove('wrong', 'solution');
                 feedback.classList.add('correct');
-                vocabWord.classList.add('correct');
-                skipButton.style.display = "block";
-                submitButton.style.display = "none";
-                startTimer();
-                wrongAttempts = 0;
-
-                results.push({ word: currentWord.de, status: "correct-first" });
+                results.push({ word: currentWord.de, pronoun: pronounElement, status: "correct-first" });
+                nextWord();
             } else {
-                handleWrongAnswer(currentWord);
+                handleWrongAnswer(currentWord, pronounElement, correctAnswer);
             }
 
-            document.getElementById('userInput').value = '';
+            document.getElementById('userInput').value = ''; // Eingabe zurücksetzen
         }
 
-        function handleWrongAnswer(currentWord) {
+        function handleWrongAnswer(currentWord, pronoun, correctAnswer) {
             const feedback = document.getElementById('feedback');
             const skipButton = document.getElementById('skipButton');
-            const vocabWord = document.getElementById('vocabVerb');
 
             wrongAttempts++;
-
-            if (wrongAttempts === 1) {
-                feedback.innerText = "Try again.";
-                feedback.classList.remove('correct', 'solution');
-                feedback.classList.add('wrong');
-                vocabWord.classList.add('wrong');
-                skipButton.style.display = "none";
-            } else if (wrongAttempts === 2) {
-                feedback.innerText = `The correct answer is: ${currentWord[selectedTense].je}`;
-                feedback.classList.remove('correct', 'wrong');
+            if (wrongAttempts === 2) {
+                feedback.innerText = `The correct answer is: ${correctAnswer}`;
                 feedback.classList.add('solution');
-                vocabWord.classList.add('solution');
                 wrongAnswers.push(currentWord);
-                results.push({ word: currentWord.de, status: "second-round" });
+                results.push({ word: currentWord.de, pronoun: pronoun, status: "second-round" });
                 skipButton.style.display = "block";
-                document.getElementById('submitAnswer').style.display = "none";
-                startTimer();
             }
         }
 
-        function toggleCheckButton() {
-            const userInput = document.getElementById('userInput').value;
-            const submitButton = document.getElementById('submitAnswer');
-            const skipButton = document.getElementById('skipButton');
+        // Ergebnisse anzeigen und zu results.html weiterleiten
+        function showResults() {
+            localStorage.setItem("verbFormResults", JSON.stringify(results));
+            window.location.href = "result.html";
+        }
 
-            if (userInput.trim() !== "" && skipButton.style.display === "none") {
-                submitButton.style.display = "block";
+        function nextWord() {
+            wrongAttempts = 0;
+            if (currentIndex < currentSet.length - 1) {
+                currentIndex++;
+                displayVocabWord();
+            } else if (wrongAnswers.length > 0) {
+                currentSet = wrongAnswers;
+                currentIndex = 0;
+                wrongAnswers = [];
+                displayVocabWord();
             } else {
-                submitButton.style.display = "none";
+                showResults(); // Am Ende der Liste zu den Ergebnissen leiten
             }
         }
 
-        function startTimer() {
-            timer = setTimeout(nextWord, 4000);
-        }
-
-        function handleKeyDown(event) {
-            const skipButton = document.getElementById('skipButton');
-            if (event.key === 'Enter') {
-                const checkButton = document.getElementById('submitAnswer');
-                if (checkButton.style.display !== 'none') {
-                    checkAnswer();
-                } else if (skipButton.style.display !== 'none') {
-                    skipToNext();
-                }
-            }
-        }
-
+        // Initialisiere das Set bei Seitenaufruf
         window.onload = function() {
             updateVerbSet();
         };
