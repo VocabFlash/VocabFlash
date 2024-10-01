@@ -6,6 +6,12 @@
     <title>VerbForms - VocabFlash</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/verbForms.js" defer></script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        // Beispielaufruf nach dem Laden des DOMs
+                        console.log(conjugate({ verb: "se lever", group: "doubl" }, "present", "je")); // Erwartet: "je me lève"
+                    });
+                </script>
 </head>
 <body>
 
