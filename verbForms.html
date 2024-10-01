@@ -31,8 +31,11 @@
     <!-- Set Auswahl -->
     <label for="setSelect">Choose a verb set:</label>
     <select id="setSelect" onchange="updateVerbSet()">
-        <option value="set1">Set 1</option>
-        <option value="set2">Set 2</option>
+        <option value="er">er-Verbs</option>
+        <option value="cer">cer-Verbs</option>
+        <option value="ger">ger-Verbs</option>
+        <option value="doubl">doubl-Verbs</option>
+        <option value="irreguler">Irregular Verbs</option>
         <!-- Weitere Sets hinzufügen -->
     </select>
 
@@ -41,6 +44,7 @@
         <option value="present">Present</option>
         <option value="passe">Passé Composé</option>
         <option value="imparfait">Imparfait</option>
+        <option value="mixed">mixed</option>
     </select>
     
     <button class="confirm-button" onclick="updateVerbSet()">Confirm</button>
