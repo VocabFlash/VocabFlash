@@ -6,10 +6,7 @@
     <title>Ergebnisse</title>
     <style>
         body {
-        background-color: #1a1e24; /* Dunkler Hintergrund */
-}
-
-        body {
+            background-color: #1a1e24; /* Dunkler Hintergrund */
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -21,11 +18,10 @@
         h1 {
             font-size: 2.5rem;
             margin-top: 20px;
-            color: #333;
+            color: #fff; /* Weiße Schrift für den Titel */
             display: flex;
             align-items: center;
         }
-
 
         table {
             width: auto; /* Passt die Breite der Tabelle an den Inhalt an */
@@ -56,12 +52,12 @@
             background-color: #a8e6cf; /* Grün */
         }
 
-        .correct-second {
-            background-color: #ffecb3; /* Orange */
-        }
-
         .second-round {
             background-color: #ff8a80; /* Rot */
+        }
+
+        .correct-second {
+            background-color: #ffecb3; /* Orange */
         }
 
         a {
@@ -100,41 +96,78 @@
     </style>
 </head>
 <body>
-    <h1>VocabFlash</h1> <!-- Einheitlicher Titel auf allen Seiten -->
-    
+    <h1>VocabFlash Ergebnisse</h1> <!-- Einheitlicher Titel auf allen Seiten -->
+
     <!-- Tabelle für die Ergebnisse -->
-    <table>
-        <thead>
-            <tr>
-                <th>Wort</th>
-                <th>Status</th>
-            </tr>
+    <table id="vocabResultsTable">
+        <thead id="tableHeader">
+            <!-- Dynamische Kopfzeile basierend auf Lernmodus -->
         </thead>
         <tbody id="resultsContainer"></tbody>
     </table>
-    
+
     <!-- Link zurück zur Homepage -->
     <a href="index.html">Go back to Homepage</a>
 
     <script>
         // Ergebnisse aus localStorage abrufen und in der Tabelle anzeigen
         const results = JSON.parse(localStorage.getItem("results")) || [];
+        const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
         const resultsContainer = document.getElementById('resultsContainer');
-        
-        results.forEach(result => {
-            const resultRow = document.createElement('tr');
-            resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+        const tableHeader = document.getElementById('tableHeader');
 
-            const wordCell = document.createElement('td');
-            wordCell.innerText = result.word;
-            resultRow.appendChild(wordCell);
+        if (verbFormResults.length > 0) {
+            // Wenn verbForms benutzt wurde, erstelle die spezielle Tabelle
+            tableHeader.innerHTML = `
+                <tr>
+                    <th>Verb</th>
+                    <th>Pronoun</th>
+                    <th>Status</th>
+                </tr>
+            `;
 
-            const statusCell = document.createElement('td');
-            statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
-            resultRow.appendChild(statusCell);
+            verbFormResults.forEach(result => {
+                const resultRow = document.createElement('tr');
+                resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
 
-            resultsContainer.appendChild(resultRow);
-        });
+                const wordCell = document.createElement('td');
+                wordCell.innerText = result.word;
+                resultRow.appendChild(wordCell);
+
+                const pronounCell = document.createElement('td');
+                pronounCell.innerText = result.pronoun;
+                resultRow.appendChild(pronounCell);
+
+                const statusCell = document.createElement('td');
+                statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+                resultRow.appendChild(statusCell);
+
+                resultsContainer.appendChild(resultRow);
+            });
+        } else {
+            // Standardtabelle für andere Modi
+            tableHeader.innerHTML = `
+                <tr>
+                    <th>Wort</th>
+                    <th>Status</th>
+                </tr>
+            `;
+
+            results.forEach(result => {
+                const resultRow = document.createElement('tr');
+                resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+
+                const wordCell = document.createElement('td');
+                wordCell.innerText = result.word;
+                resultRow.appendChild(wordCell);
+
+                const statusCell = document.createElement('td');
+                statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+                resultRow.appendChild(statusCell);
+
+                resultsContainer.appendChild(resultRow);
+            });
+        }
     </script>
 </body>
 </html>
