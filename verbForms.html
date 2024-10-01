@@ -154,4 +154,36 @@
             if (currentIndex < currentSet.length - 1) {
                 currentIndex++;
                 displayVocabWord();
-            } else
+            } else if (wrongAnswers.length > 0) {
+                currentSet = wrongAnswers;
+                currentIndex = 0;
+                wrongAnswers = [];
+                displayVocabWord();
+            } else {
+                showResults(); // Am Ende der Liste zu den Ergebnissen leiten
+            }
+        }
+
+        function handleKeyDown(event) {
+            if (event.key === "Enter") {
+                const submitButton = document.getElementById('submitAnswer');
+                const skipButton = document.getElementById('skipButton');
+
+                if (submitButton.style.display === "block") {
+                    checkAnswer();
+                } else if (skipButton.style.display === "block") {
+                    skipToNext();
+                }
+            }
+        }
+
+        window.onload = function() {
+            updateVerbSet();
+        };
+
+        function skipToNext() {
+            nextWord(); // Direkter Sprung zum nächsten Wort
+        }
+    </script>
+</body>
+</html>
