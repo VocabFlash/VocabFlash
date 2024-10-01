@@ -79,7 +79,7 @@ function displayVocabWord() {
         vocabWord.innerText = vocab.de;
         vocabWord.classList.remove('correct', 'wrong', 'solution');
 
-        inputCounter.innerText = Word: ${currentIndex + 1} / ${currentSet.length};
+        inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
         submitButton.style.display = "block"; // Zeige den Check-Button
         skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
     }
