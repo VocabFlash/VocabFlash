@@ -55,7 +55,8 @@
         let currentSet = [];
         let currentIndex = 0;
         let wrongAttempts = 0;
-        let wrongAnswers = [];
+        let wrongAnswers = []; // Speichert die falschen Antworten
+        let secondRound = false; // Indikator für den zweiten Durchgang
         let results = [];
         const pronouns = ["je", "tu", "il", "elle", "nous", "vous", "ils", "elles"];
         const tenses = ["present", "passeCompose", "imparfait"]; // Liste der Zeitformen
@@ -97,6 +98,8 @@
             // Aktualisiere das aktuelle Set basierend auf der Auswahl
             currentSet = verbSets[selectedSet]; // verbSets muss definiert sein
             currentIndex = 0; // Zurück zum ersten Wort
+            secondRound = false; // "Second Round" zurücksetzen
+            wrongAnswers = []; // Falsche Antworten zurücksetzen
             displayVocabWord(); // Zeige das erste Wort an
         }
 
@@ -112,7 +115,6 @@
                 selectedTense = document.getElementById('selectedTenseDisplay').innerText.split(": ")[1];
             }
 
-            // Nur der Verbstamm wird geprüft, Pronomen wird ignoriert
             const correctAnswer = currentWord[selectedTense][pronounElement];
 
             if (userInput === correctAnswer.toLowerCase()) {
@@ -135,7 +137,7 @@
             if (wrongAttempts === 2) {
                 feedback.innerText = `The correct answer is: ${correctAnswer}`;
                 feedback.className = 'feedback solution'; // Stile hinzufügen
-                wrongAnswers.push(currentWord);
+                wrongAnswers.push(currentWord); // Falsche Antwort speichern
                 results.push({ word: currentWord.de, pronoun: pronoun, status: "second-round" });
                 skipButton.style.display = "block";
             } else {
@@ -144,20 +146,17 @@
             }
         }
 
-        function showResults() {
-            localStorage.setItem("verbFormResults", JSON.stringify(results));
-            window.location.href = "result.html";
-        }
-
         function nextWord() {
             wrongAttempts = 0;
             if (currentIndex < currentSet.length - 1) {
                 currentIndex++;
                 displayVocabWord();
-            } else if (wrongAnswers.length > 0) {
+            } else if (!secondRound && wrongAnswers.length > 0) {
+                // Zweiter Durchlauf mit den falschen Antworten
+                secondRound = true; // Indikator, dass es der zweite Durchlauf ist
                 currentSet = wrongAnswers;
                 currentIndex = 0;
-                wrongAnswers = [];
+                wrongAnswers = []; // Setze die Liste der falschen Antworten zurück
                 displayVocabWord();
             } else {
                 showResults(); // Am Ende der Liste zu den Ergebnissen leiten
@@ -177,13 +176,18 @@
             }
         }
 
-        window.onload = function() {
-            updateVerbSet();
-        };
-
         function skipToNext() {
             nextWord(); // Direkter Sprung zum nächsten Wort
         }
+
+        function showResults() {
+            localStorage.setItem("verbFormResults", JSON.stringify(results));
+            window.location.href = "result.html";
+        }
+
+        window.onload = function() {
+            updateVerbSet();
+        };
     </script>
 </body>
 </html>
