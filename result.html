@@ -93,6 +93,15 @@
                 margin-right: 10px;
             }
         }
+        .container {
+    width: 80%;
+    margin: 0 auto; /* Zentriert den Container */
+    padding: 20px;  /* Fügt innen etwas Platz hinzu */
+    background-color: #f9f9f9; /* Beispielhintergrundfarbe */
+    border-radius: 10px; /* Abgerundete Ecken */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für mehr Tiefe */
+}
+
     </style>
 </head>
 <body>
@@ -107,7 +116,7 @@
     </table>
 
 <div class="container">
-        <label for="sourceSelect">Choose the result type:</label>
+    <label for="sourceSelect">Choose the result type:</label>
     <select id="sourceSelect">
         <option value="flashcards">Flashcards Practise</option>
         <option value="vocablanks">Spelling</option>
@@ -116,14 +125,19 @@
         <!-- Weitere Optionen hinzufügen -->
     </select>
     
+    <!-- Select Button hinzufügen -->
+    <button id="selectButton" onclick="showResults()">Select</button> <!-- Neuer Button -->
+
+    <br>
     <a href="index.html">Go back to Homepage</a>
 </div>
-    <script>
+<script>
     // Ergebnisse aus localStorage abrufen und in der Tabelle anzeigen
     const results = JSON.parse(localStorage.getItem("results")) || [];
     const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
+    const dropdown = document.getElementById('resultDropdown'); // Dropdown-Element für die Ergebnisse
 
     // Überprüfen, ob verbForms benutzt wurde
     if (verbFormResults.length > 0) {
@@ -179,12 +193,9 @@
         });
     }
 
-    // Dropdown-Menü automatisch basierend auf dem Redirect aktualisieren // Neu hinzugefügt
-    const dropdown = document.getElementById('resultDropdown'); // Das Dropdown-Element
-
-    // Funktion, um den Dropdown-Wert je nach Quelle zu setzen
+    // Dropdown-Menü automatisch basierend auf dem Redirect aktualisieren
     function updateDropdown() {
-        const source = localStorage.getItem("source"); // Die Quelle des Redirects abrufen
+        const source = new URLSearchParams(window.location.search).get("source"); // Quelle des Redirects aus URL
         if (source === "verbForms") {
             dropdown.value = "verbForms"; // Dropdown auf "verbForms" setzen
         } else {
@@ -193,9 +204,9 @@
     }
 
     // Initial Dropdown-Wert einstellen
-    updateDropdown(); // Neu hinzugefügt
+    updateDropdown();
 
-    // Event-Listener für das Dropdown, um die angezeigten Ergebnisse zu aktualisieren // Neu hinzugefügt
+    // Event-Listener für das Dropdown, um die angezeigten Ergebnisse zu aktualisieren
     dropdown.addEventListener('change', function() {
         const selectedMode = dropdown.value;
         if (selectedMode === "verbForms") {
@@ -254,6 +265,7 @@
         }
     });
 </script>
+
 
 </body>
 </html>
