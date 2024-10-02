@@ -101,6 +101,19 @@
             border-radius: 10px; /* Abgerundete Ecken */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für mehr Tiefe */
         }
+
+        .correct-first {
+            background-color: #4caf50; /* Grün */
+        }
+        
+        .second-round {
+            background-color: #f44336; /* Rot */
+        }
+        
+        .correct-second {
+            background-color: #ff9800; /* Orange */
+        }
+
     </style>
 </head>
 <body>
@@ -118,15 +131,13 @@
         <label for="sourceSelect">Choose the result type:</label>
         <select id="resultDropdown">
             <option value="practise">Practise Flashcards</option>
-            <option value="verbForms">Verb Forms</option>
-            <option value="vocaBlanks">Voca Blanks</option>
-            <option value="vocaInput">Voca Input</option>
+            <option value="verbForms">Verbs</option>
+            <option value="vocaBlanks">Blanks</option>
+            <option value="vocaInput">Spelling</option>
         </select>
-        <button onclick="navigateToPage()">Go</button>
     
         <!-- Select Button hinzufügen -->
-        <button id="selectButton" onclick="showResults()">Select</button> <!-- Neuer Button -->
-
+<button onclick="navigateToPage()">Go</button>
         <br>
         <a href="index.html">Go back to Homepage</a>
     </div>
