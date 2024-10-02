@@ -94,14 +94,13 @@
             }
         }
         .container {
-    width: 80%;
-    margin: 0 auto; /* Zentriert den Container */
-    padding: 20px;  /* Fügt innen etwas Platz hinzu */
-    background-color: #f9f9f9; /* Beispielhintergrundfarbe */
-    border-radius: 10px; /* Abgerundete Ecken */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für mehr Tiefe */
-}
-
+            width: 80%;
+            margin: 0 auto; /* Zentriert den Container */
+            padding: 20px;  /* Fügt innen etwas Platz hinzu */
+            background-color: #f9f9f9; /* Beispielhintergrundfarbe */
+            border-radius: 10px; /* Abgerundete Ecken */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für mehr Tiefe */
+        }
     </style>
 </head>
 <body>
@@ -115,127 +114,34 @@
         <tbody id="resultsContainer"></tbody>
     </table>
 
-<div class="container">
-    <label for="sourceSelect">Choose the result type:</label>
-       <select id="resultDropdown">
-        <option value="practise">Practise Flashcards</option>
-        <option value="verbForms">Verb Forms</option>
-        <option value="vocaBlanks">Voca Blanks</option>
-        <option value="vocaInput">Voca Input</option>
-    </select>
-    <button onclick="navigateToPage()">Go</button>
+    <div class="container">
+        <label for="sourceSelect">Choose the result type:</label>
+        <select id="resultDropdown">
+            <option value="practise">Practise Flashcards</option>
+            <option value="verbForms">Verb Forms</option>
+            <option value="vocaBlanks">Voca Blanks</option>
+            <option value="vocaInput">Voca Input</option>
+        </select>
+        <button onclick="navigateToPage()">Go</button>
     
-    <!-- Select Button hinzufügen -->
-    <button id="selectButton" onclick="showResults()">Select</button> <!-- Neuer Button -->
+        <!-- Select Button hinzufügen -->
+        <button id="selectButton" onclick="showResults()">Select</button> <!-- Neuer Button -->
 
-    <br>
-    <a href="index.html">Go back to Homepage</a>
-</div>
-<script>
-<script>
-    // Ergebnisse aus localStorage abrufen und in der Tabelle anzeigen
-    const results = JSON.parse(localStorage.getItem("results")) || [];
-    const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
-    const resultsContainer = document.getElementById('resultsContainer');
-    const tableHeader = document.getElementById('tableHeader');
-    const dropdown = document.getElementById('resultDropdown'); // Dropdown-Element für die Ergebnisse
+        <br>
+        <a href="index.html">Go back to Homepage</a>
+    </div>
 
-    // Überprüfen, ob verbForms benutzt wurde
-    if (verbFormResults.length > 0) {
-        // Wenn verbForms benutzt wurde, erstelle die spezielle Tabelle
-        tableHeader.innerHTML = `
-            <tr>
-                <th>Verb</th>
-                <th>Pronoun</th>
-                <th>Status</th>
-            </tr>
-        `;
+    <script>
+        // Ergebnisse aus localStorage abrufen und in der Tabelle anzeigen
+        const results = JSON.parse(localStorage.getItem("results")) || [];
+        const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
+        const resultsContainer = document.getElementById('resultsContainer');
+        const tableHeader = document.getElementById('tableHeader');
+        const dropdown = document.getElementById('resultDropdown'); // Dropdown-Element für die Ergebnisse
 
-        verbFormResults.forEach(result => {
-            const resultRow = document.createElement('tr');
-            resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
-
-            const wordCell = document.createElement('td');
-            wordCell.innerText = result.word;
-            resultRow.appendChild(wordCell);
-
-            const pronounCell = document.createElement('td');
-            pronounCell.innerText = result.pronoun;
-            resultRow.appendChild(pronounCell);
-
-            const statusCell = document.createElement('td');
-            statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
-            resultRow.appendChild(statusCell);
-
-            resultsContainer.appendChild(resultRow);
-        });
-    } else {
-        // Standardtabelle für andere Modi
-        tableHeader.innerHTML = `
-            <tr>
-                <th>Wort</th>
-                <th>Status</th>
-            </tr>
-        `;
-
-        results.forEach(result => {
-            const resultRow = document.createElement('tr');
-            resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
-
-            const wordCell = document.createElement('td');
-            wordCell.innerText = result.word;
-            resultRow.appendChild(wordCell);
-
-            const statusCell = document.createElement('td');
-            statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
-            resultRow.appendChild(statusCell);
-
-            resultsContainer.appendChild(resultRow);
-        });
-    }
-
-    // Dropdown-Menü automatisch basierend auf dem Redirect aktualisieren
-    function updateDropdown() {
-        const source = new URLSearchParams(window.location.search).get("source"); // Quelle des Redirects aus URL
-        if (source === "verbForms") {
-            dropdown.value = "verbForms"; // Dropdown auf "verbForms" setzen
-        } else {
-            dropdown.value = "standard"; // Standardmodus im Dropdown setzen
-        }
-    }
-
-    // Funktion zum Navigieren zu anderen Seiten basierend auf Dropdown-Auswahl
-function navigateToPage() {
-    const dropdown = document.getElementById('resultDropdown');
-    const selectedMode = dropdown.value;
-
-    switch(selectedMode) {
-        case 'practise':
-            window.location.href = 'practise.html';
-            break;
-        case 'verbForms':
-            window.location.href = 'verbForms.html';
-            break;
-        case 'vocaBlanks':
-            window.location.href = 'vocaBlanks.html';
-            break;
-        case 'vocaInput':
-            window.location.href = 'vocaInput.html';
-            break;
-        default:
-            console.error('Unknown mode selected.');
-    }
-}
-
-    // Initial Dropdown-Wert einstellen
-    updateDropdown();
-
-    // Event-Listener für das Dropdown, um die angezeigten Ergebnisse zu aktualisieren
-    dropdown.addEventListener('change', function() {
-        const selectedMode = dropdown.value;
-        if (selectedMode === "verbForms") {
-            // Ergebnisse für verbForms anzeigen
-            resultsContainer.innerHTML = ""; // Tabelle zurücksetzen
+        // Überprüfen, ob verbForms benutzt wurde
+        if (verbFormResults.length > 0) {
+            // Wenn verbForms benutzt wurde, erstelle die spezielle Tabelle
             tableHeader.innerHTML = `
                 <tr>
                     <th>Verb</th>
@@ -246,7 +152,7 @@ function navigateToPage() {
 
             verbFormResults.forEach(result => {
                 const resultRow = document.createElement('tr');
-                resultRow.classList.add(result.status);
+                resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
 
                 const wordCell = document.createElement('td');
                 wordCell.innerText = result.word;
@@ -257,14 +163,13 @@ function navigateToPage() {
                 resultRow.appendChild(pronounCell);
 
                 const statusCell = document.createElement('td');
-                statusCell.innerText = result.status.replace("-", " ");
+                statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
                 resultRow.appendChild(statusCell);
 
                 resultsContainer.appendChild(resultRow);
             });
         } else {
-            // Standard-Ergebnisse anzeigen
-            resultsContainer.innerHTML = ""; // Tabelle zurücksetzen
+            // Standardtabelle für andere Modi
             tableHeader.innerHTML = `
                 <tr>
                     <th>Wort</th>
@@ -274,23 +179,123 @@ function navigateToPage() {
 
             results.forEach(result => {
                 const resultRow = document.createElement('tr');
-                resultRow.classList.add(result.status);
+                resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
 
                 const wordCell = document.createElement('td');
                 wordCell.innerText = result.word;
                 resultRow.appendChild(wordCell);
 
                 const statusCell = document.createElement('td');
-                statusCell.innerText = result.status.replace("-", " ");
+                statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
                 resultRow.appendChild(statusCell);
 
                 resultsContainer.appendChild(resultRow);
             });
         }
-    });
-</script>
 
+        // Dropdown-Menü automatisch basierend auf dem Redirect aktualisieren
+        function updateDropdown() {
+            const source = new URLSearchParams(window.location.search).get("source"); // Quelle des Redirects aus URL
+            if (source === "verbForms") {
+                dropdown.value = "verbForms"; // Dropdown auf "verbForms" setzen
+            } else {
+                dropdown.value = "standard"; // Standardmodus im Dropdown setzen
+            }
+        }
 
+        // Funktion zum Navigieren zu anderen Seiten basierend auf Dropdown-Auswahl
+        function navigateToPage() {
+            const selectedMode = dropdown.value;
 
+            switch(selectedMode) {
+                case 'practise':
+                    window.location.href = 'practise.html';
+                    break;
+                case 'verbForms':
+                    window.location.href = 'verbForms.html';
+                    break;
+                case 'vocaBlanks':
+                    window.location.href = 'vocaBlanks.html';
+                    break;
+                case 'vocaInput':
+                    window.location.href = 'vocaInput.html';
+                    break;
+                default:
+                    console.error('Unknown mode selected.');
+            }
+        }
+
+        // Initial Dropdown-Wert einstellen
+        updateDropdown();
+
+        // Event-Listener für das Dropdown, um die angezeigten Ergebnisse zu aktualisieren
+        dropdown.addEventListener('change', function() {
+            const selectedMode = dropdown.value;
+            if (selectedMode === "verbForms") {
+                // Ergebnisse für verbForms anzeigen
+                resultsContainer.innerHTML = ""; // Tabelle zurücksetzen
+                tableHeader.innerHTML = `
+                    <tr>
+                        <th>Verb</th>
+                        <th>Pronoun</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+
+                verbFormResults.forEach(result => {
+                    const resultRow = document.createElement('tr');
+                    resultRow.classList.add(result.status);
+
+                    const wordCell = document.createElement('td');
+                    wordCell.innerText = result.word;
+                    resultRow.appendChild(wordCell);
+
+                    const pronounCell = document.createElement('td');
+                    pronounCell.innerText = result.pronoun;
+                    resultRow.appendChild(pronounCell);
+
+                    const statusCell = document.createElement('td');
+                    statusCell.innerText = result.status.replace("-", " ");
+                    resultRow.appendChild(statusCell);
+
+                    resultsContainer.appendChild(resultRow);
+                });
+            } else {
+                // Standard-Ergebnisse anzeigen
+                resultsContainer.innerHTML = ""; // Tabelle zurücksetzen
+                tableHeader.innerHTML = `
+                    <tr>
+                        <th>Wort</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+
+                results.forEach(result => {
+                    const resultRow = document.createElement('tr');
+                    resultRow.classList.add(result.status);
+
+                    const wordCell = document.createElement('td');
+                    wordCell.innerText = result.word;
+                    resultRow.appendChild(wordCell);
+
+                    const statusCell = document.createElement('td');
+                    statusCell.innerText = result.status.replace("-", " ");
+                    resultRow.appendChild(statusCell);
+
+                    resultsContainer.appendChild(resultRow);
+                });
+            }
+        });
+
+        // Ergebnisse anzeigen lassen, wenn der Button geklickt wird
+        function showResults() {
+            const selectedMode = dropdown.value;
+            if (selectedMode === "verbForms") {
+                alert("Verb Form results shown!");
+            } else {
+                alert("Standard results shown!");
+            }
+        }
+    </script>
 </body>
 </html>
