@@ -117,13 +117,13 @@
 
 <div class="container">
     <label for="sourceSelect">Choose the result type:</label>
-    <select id="sourceSelect">
-        <option value="flashcards">Flashcards Practise</option>
-        <option value="vocablanks">Spelling</option>
-        <option value="vocablanks">VocaBlanks</option>
+       <select id="resultDropdown">
+        <option value="practise">Practise Flashcards</option>
         <option value="verbForms">Verb Forms</option>
-        <!-- Weitere Optionen hinzufügen -->
+        <option value="vocaBlanks">Voca Blanks</option>
+        <option value="vocaInput">Voca Input</option>
     </select>
+    <button onclick="navigateToPage()">Go</button>
     
     <!-- Select Button hinzufügen -->
     <button id="selectButton" onclick="showResults()">Select</button> <!-- Neuer Button -->
@@ -203,6 +203,29 @@
             dropdown.value = "standard"; // Standardmodus im Dropdown setzen
         }
     }
+
+    // Funktion zum Navigieren zu anderen Seiten basierend auf Dropdown-Auswahl
+function navigateToPage() {
+    const dropdown = document.getElementById('resultDropdown');
+    const selectedMode = dropdown.value;
+
+    switch(selectedMode) {
+        case 'practise':
+            window.location.href = 'practise.html';
+            break;
+        case 'verbForms':
+            window.location.href = 'verbForms.html';
+            break;
+        case 'vocaBlanks':
+            window.location.href = 'vocaBlanks.html';
+            break;
+        case 'vocaInput':
+            window.location.href = 'vocaInput.html';
+            break;
+        default:
+            console.error('Unknown mode selected.');
+    }
+}
 
     // Initial Dropdown-Wert einstellen
     updateDropdown();
