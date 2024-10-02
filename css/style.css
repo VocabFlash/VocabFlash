@@ -137,9 +137,6 @@ h2 {
     text-align: center; /* Text wird zentriert */
 }
 
-.menu li a:hover {
-    background-color: #0056b3; /* Dunkleres Blau beim Hover */
-}
 
 /*LIST*/ 
 
@@ -214,10 +211,6 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
 .confirm-button {
     padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
     margin-top: 10px; /* Abstand oben */
@@ -226,12 +219,8 @@ button:hover {
     border: none; /* Entfernt den Rahmen */
     border-radius: 15px; /* Einheitliche abgerundete Ecken */
     cursor: pointer; /* Zeigt den Zeiger-Cursor an */
-    transition: background-color 0.3s; /* Übergangseffekt für den Hover-Zustand */
 }
 
-.confirm-button:hover {
-    background-color: #0056b3; /* Dunkleres Blau beim Hover */
-}
 
 /* Vokabelset Auswahl */
 #setSelect {
@@ -256,15 +245,7 @@ button:hover {
     font-size: 16px; /* Verändert die Schriftgröße */
     width: 150px; /* Setzt eine feste Breite für die Buttons */
     margin: 0 10px; /* Abstand zwischen den Buttons */
-    cursor: pointer; /* Ändert den Mauszeiger beim Hover */
 }
-
-/* Optional: Stil für Hover-Zustand */
-.button-container button:hover {
-    background-color: #f0f0f0; /* Ändert die Hintergrundfarbe beim Hover */
-    transition: background-color 0.2s; /* Fügt eine Übergangsanimation hinzu */
-}
-
 
 /*VOCABLANKS*/
     .correct {
