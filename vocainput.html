@@ -131,14 +131,9 @@ function nextWord() {
         currentIndex = 0;
         displayVocabWord();
     } 
-    // Wenn die zweite Runde abgeschlossen ist oder keine weiteren Wörter da sind
-    else if (secondRound && currentIndex >= currentSet.length - 1) {
-        showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
-    } 
-    // Standardfall: Weiter zum nächsten Wort
+    // Wenn keine weiteren Wörter da sind (egal ob erste oder zweite Runde)
     else {
-        currentIndex++;
-        displayVocabWord();
+        showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
     }
 }
 
