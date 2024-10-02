@@ -175,7 +175,7 @@ const vocabSets= {
     { de: "eine Ankunft", ar: "une arrivée" },
     { de: "eine Abfahrt", ar: "le départ" },
     { de: "eine Rolle spielen", ar: "jouer un rôle" },
-  ]
+  ],
 
    set4: [
 
