@@ -50,6 +50,7 @@ let currentSet = [];
 let currentIndex = 0;
 let wrongAnswers = []; // Neue Liste für falsche Antworten
 let showingBack = false;
+let flashcardResults = []; // Liste, um Ergebnisse zu speichern
 
 // Funktion, um das Array zu mischen (Fisher-Yates Shuffle)
 function shuffleArray(array) {
@@ -72,7 +73,7 @@ function displayFlashcard() {
         // Rückseite ausblenden
         vocabBack.style.display = 'none'; // Standardmäßig die Rückseite ausblenden
 
-         // Always start by showing the front
+        // Always start by showing the front
         vocabFront.style.display = 'block';
         vocabBack.style.display = 'none';
         showingBack = false; // Reset the state to showing front
@@ -90,6 +91,11 @@ function startFlashcards(set) {
     displayFlashcard(); // Zeige die erste Karte an
 }
 
+// Funktion zum Speichern der Flashcard-Ergebnisse
+function saveFlashcardResult(word, status) {
+    flashcardResults.push({ word: word.de, status: status });
+}
+
 // Funktion zum Anzeigen der nächsten Karte
 function nextFlashcard() {
     if (currentIndex < currentSet.length - 1) {
@@ -101,22 +107,25 @@ function nextFlashcard() {
         wrongAnswers = [];
         currentIndex = 0;
         displayFlashcard();
-            } else {
+    } else {
         // Wenn alle Runden beendet und alle Antworten richtig sind, leite zu result.html weiter
-        // Nach Abschluss des Flashcard-Trainings
-window.location.href = "result.html?source=flashcards";
-
+        localStorage.setItem("results", JSON.stringify(flashcardResults)); // Ergebnisse speichern
+        window.location.href = "result.html?source=flashcards"; // Weiterleitung zu Result-Seite
     }
 }
 
 // Funktion zum Markieren einer falschen Antwort
 function markWrong() {
-    wrongAnswers.push(currentSet[currentIndex]);
+    const vocab = currentSet[currentIndex];
+    saveFlashcardResult(vocab, 'wrong');
+    wrongAnswers.push(vocab); // Falsche Antwort in Liste speichern
     nextFlashcard();
 }
 
 // Funktion zum Markieren einer richtigen Antwort
 function markCorrect() {
+    const vocab = currentSet[currentIndex];
+    saveFlashcardResult(vocab, 'correct');
     nextFlashcard();
 }
 
@@ -127,6 +136,7 @@ function updateVocabSet() {
     shuffleArray(currentSet); // Mische das Set, wenn es aktualisiert wird
     currentIndex = 0; // Startindex zurücksetzen
     wrongAnswers = []; // Reset wrong answers
+    flashcardResults = []; // Reset results
     displayFlashcard(); // Zeigt die erste Karte an
 }
 
@@ -152,8 +162,8 @@ window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
 
-    
 </script>
+
 
 
 
