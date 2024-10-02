@@ -76,17 +76,13 @@
             }
         }
 
-@media (max-width: 600px) {
-    .container {
-        width: 90%; /* Container Breite auf 90% setzen */
-        padding: 10px; /* Innenabstand verringern */
-    }
         .container {
             background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
             padding: 20px; /* Innenabstand */
             border-radius: 15px; /* Abgerundete Ecken */
             box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
-            width: 300px; /* Breite der Box */
+            width: 90%; /* Container Breite auf 90% setzen */
+            max-width: 600px; /* Maximale Breite für größere Bildschirme */
             text-align: center; /* Zentrierte Texte */
             margin: 10px auto; /* Zentrierung und Abstand */
         }
@@ -142,39 +138,47 @@
         let loadedResults = [];
         let headerHTML = '';
         
-        if (selectedType === 'practise') {
-            loadedResults = flashcardResults;
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-        } else if (selectedType === 'verbForms') {
-            loadedResults = verbFormResults;
-            headerHTML = `
-                <tr>
-                    <th>Verb</th>
-                    <th>Pronoun</th>
-                    <th>Status</th>
-                </tr>
-            `;
-        } else if (selectedType === 'vocaBlanks') {
-            loadedResults = vocaBlanksResults;
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-        } else if (selectedType === 'vocaInput') {
-            loadedResults = vocaInputResults;
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
+        switch (selectedType) {
+            case 'practise':
+                loadedResults = flashcardResults;
+                headerHTML = `
+                    <tr>
+                        <th>Wort</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+                break;
+            case 'verbForms':
+                loadedResults = verbFormResults;
+                headerHTML = `
+                    <tr>
+                        <th>Verb</th>
+                        <th>Pronoun</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+                break;
+            case 'vocaBlanks':
+                loadedResults = vocaBlanksResults;
+                headerHTML = `
+                    <tr>
+                        <th>Wort</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+                break;
+            case 'vocaInput':
+                loadedResults = vocaInputResults;
+                headerHTML = `
+                    <tr>
+                        <th>Wort</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+                break;
+            default:
+                console.error('Unbekannter Typ ausgewählt:', selectedType);
+                return; // Keine Ergebnisse laden, wenn der Typ unbekannt ist
         }
 
         // Header der Tabelle setzen
@@ -256,7 +260,6 @@
         }
     }
 </script>
-
 
 </body>
 </html>
