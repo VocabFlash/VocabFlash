@@ -36,8 +36,6 @@
 <select id="setSelect" onchange="updateVocabSet()">
     <option value="set1">Set 1</option>
     <option value="set2">Set 2</option>
-    <option value="set3">Set 3</option>
-    <option value="set4">Set 4</option>
     <!-- Weitere Sets hinzufügen -->
 </select>
 <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
@@ -103,15 +101,10 @@ function updateVocabSet() {
         secondRound = false; // Zurücksetzen der zweiten Runde
         displayVocabWord();
     } else {
-        console.error("Set not found: ", selectedSet);
+        console.error("Set not found: ", selectedSet); // Überprüfen, ob das Set vorhanden ist
     }
 }
 
-// Funktion für die Auswertung
-function showResults() {
-    localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
-    window.location.href = "result.html"; // Weiterleitung zu results.html
-}
 
 // Funktion für den Skip-Button
 function skipToNext() {
@@ -132,12 +125,13 @@ function nextWord() {
         currentSet = wrongAnswers;
         currentIndex = 0;
         displayVocabWord();
-    } else if (secondRound && currentIndex >= currentSet.length - 1) {
-        showResults();
+    } else {
+        // Wenn alle Runden beendet und alle Antworten richtig sind, leite zu result.html weiter
+        localStorage.setItem("results", JSON.stringify(flashcardResults)); // Ergebnisse speichern
+        window.location.href = "result.html?source=vocaBlanks"; // Weiterleitung zu Result-Seite
     }
 }
 
-// Benutzerantwort überprüfen
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
     const currentWord = currentSet[currentIndex]; // Aktuelles Wort holen
@@ -150,7 +144,8 @@ function checkAnswer() {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
         feedback.classList.add('correct');
-        vocabWord.classList.add('correct');
+        vocabWord.classList.remove('wrong'); // Entferne 'wrong' Klasse, falls sie gesetzt war
+        vocabWord.classList.add('correct'); // Setze 'correct' Klasse
         skipButton.style.display = "block"; // Zeige den Skip-Button
         submitButton.style.display = "none"; // Verberge den Check-Button
         startTimer();
@@ -167,7 +162,7 @@ function checkAnswer() {
 }
 
 
-// Funktion zur Behandlung falscher Antworten
+
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
@@ -179,14 +174,15 @@ function handleWrongAnswer(currentWord) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
         feedback.classList.add('wrong');
-        vocabWord.classList.add('wrong');
+        vocabWord.classList.add('wrong'); // Hier wird die Klasse 'wrong' hinzugefügt
         skipButton.style.display = "none"; // Skip-Button ausblenden
     } else if (wrongAttempts === 2) {
         // Verwende Backticks für den Template-String
         feedback.innerText = `The correct answer is: ${currentWord.ar}`;
         feedback.classList.remove('correct', 'wrong');
         feedback.classList.add('solution');
-        vocabWord.classList.add('solution');
+        vocabWord.classList.remove('wrong'); // Entferne die Klasse 'wrong'
+        vocabWord.classList.add('solution'); // Setze 'solution' Klasse
         wrongAnswers.push(currentWord); // Falsches Wort zur Liste hinzufügen
         results.push({ word: currentWord.de, status: "second-round" }); // Rot
         skipButton.style.display = "block"; // Zeige den Skip-Button
@@ -194,6 +190,7 @@ function handleWrongAnswer(currentWord) {
         startTimer(); // Starte den Timer
     }
 }
+
 
 
 // Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
