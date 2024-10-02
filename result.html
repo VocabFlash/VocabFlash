@@ -112,14 +112,14 @@
 
     <div class="container">
         <label for="resultDropdown">Choose the result type:</label>
-        <select id="resultDropdown" aria-label="Choose the result type">
+        <select id="resultDropdown" aria-label="Choose the result type"> onchange="navigateToPage()">
             <option value="practise">Practise Flashcards</option>
             <option value="verbForms">Verbs</option>
             <option value="vocaBlanks">Blanks</option>
             <option value="vocaInput">Spelling</option>
         </select>
     
-        <button onclick="navigateToPage()">Go</button>
+        <button onclick="navigateToPage()">Select</button>
         <br>
         <a href="index.html">Go back to Homepage</a>
     </div>
@@ -202,25 +202,26 @@
             loadResults();
         };
 
-        function navigateToPage() {
-            const selectedMode = dropdown.value;
-            switch(selectedMode) {
-                case 'practise':
-                    window.location.href = 'practise.html';
-                    break;
-                case 'verbForms':
-                    window.location.href = 'verbForms.html';
-                    break;
-                case 'vocaBlanks':
-                    window.location.href = 'vocaBlanks.html';
-                    break;
-                case 'vocaInput':
-                    window.location.href = 'vocaInput.html';
-                    break;
-                default:
-                    console.error('Unknown mode selected.');
-            }
-        }
+ function navigateToPage() {
+    const selectedMode = dropdown.value;
+    switch(selectedMode) {
+        case 'practise':
+            window.location.href = 'practise.html?source=practise'; // Parameter hinzufügen
+            break;
+        case 'verbForms':
+            window.location.href = 'verbForms.html?source=verbForms'; // Parameter hinzufügen
+            break;
+        case 'vocaBlanks':
+            window.location.href = 'vocaBlanks.html?source=vocaBlanks'; // Parameter hinzufügen
+            break;
+        case 'vocaInput':
+            window.location.href = 'result.html?source=vocaInput'; // Direkt zu result.html mit dem entsprechenden Parameter
+            break;
+        default:
+            console.error('Unknown mode selected.');
+    }
+}
+
 
         dropdown.addEventListener('change', function() {
             resultsContainer.innerHTML = ""; 
