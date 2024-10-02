@@ -307,6 +307,19 @@
                 alert("Standard results shown!");
             }
         }
+
+        // Funktion zum Laden der Ergebnisse auf result.html
+function loadResults() {
+    const results = localStorage.getItem("results");
+    if (results) {
+        const flashcardResults = JSON.parse(results);
+        // Ergebnisse hier anzeigen oder in die Tabelle einfügen
+    }
+}
+
+// Stelle sicher, dass diese Funktion aufgerufen wird, wenn die Seite geladen wird
+window.onload = loadResults;
+
     </script>
 </body>
 </html>
