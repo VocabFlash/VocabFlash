@@ -176,5 +176,9 @@ const vocabSets= {
     { de: "eine Abfahrt", ar: "le départ" },
     { de: "eine Rolle spielen", ar: "jouer un rôle" },
   ]
+
+   set4: [
+
+    { "de": "Test Deutsch.", "ar": "Test Fremdsprache" },
 };
   
