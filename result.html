@@ -76,15 +76,19 @@
             }
         }
 
+@media (max-width: 600px) {
+    .container {
+        width: 90%; /* Container Breite auf 90% setzen */
+        padding: 10px; /* Innenabstand verringern */
+    }
         .container {
-            max-width: 80%; /* Maximalbreite des Containers */
-            margin: 0 auto; /* Zentriert den Container */
-            padding: 20px; /* Fügt innen etwas Platz hinzu */
-            background-color: #f9f9f9; /* Beispielhintergrundfarbe */
+            background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
+            padding: 20px; /* Innenabstand */
             border-radius: 15px; /* Abgerundete Ecken */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für mehr Tiefe */
-            text-align: center; /* Inhalte im Container zentriert */
-            margin-bottom: 20px; /* Abstand zwischen Tabelle und unterem Container */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+            width: 300px; /* Breite der Box */
+            text-align: center; /* Zentrierte Texte */
+            margin: 10px auto; /* Zentrierung und Abstand */
         }
 
     </style>
@@ -122,6 +126,8 @@
     const results = JSON.parse(localStorage.getItem("results")) || [];
     const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
     const flashcardResults = JSON.parse(localStorage.getItem("flashcardResults")) || []; // Flashcard Ergebnisse hinzufügen
+    const vocaBlanksResults = JSON.parse(localStorage.getItem("vocaBlanksResults")) || []; // Ergebnisse für vocaBlanks
+    const vocaInputResults = JSON.parse(localStorage.getItem("vocaInputResults")) || []; // Ergebnisse für vocaInput
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
@@ -153,8 +159,16 @@
                     <th>Status</th>
                 </tr>
             `;
-        } else {
-            loadedResults = results;
+        } else if (selectedType === 'vocaBlanks') {
+            loadedResults = vocaBlanksResults;
+            headerHTML = `
+                <tr>
+                    <th>Wort</th>
+                    <th>Status</th>
+                </tr>
+            `;
+        } else if (selectedType === 'vocaInput') {
+            loadedResults = vocaInputResults;
             headerHTML = `
                 <tr>
                     <th>Wort</th>
@@ -242,6 +256,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>
