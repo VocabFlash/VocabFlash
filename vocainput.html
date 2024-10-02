@@ -105,8 +105,10 @@ function updateVocabSet() {
 // Funktion für die Auswertung
 function showResults() {
     localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
-    window.location.href = "result.html"; // Weiterleitung zu results.html
+    const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
+    window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
 }
+
 
 // Funktion für den Skip-Button
 function skipToNext() {
