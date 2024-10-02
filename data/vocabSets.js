@@ -180,5 +180,6 @@ const vocabSets= {
    set4: [
 
     { "de": "Test Deutsch.", "ar": "Test Fremdsprache" },
+  ]
 };
   
