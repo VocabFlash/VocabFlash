@@ -118,8 +118,10 @@
 </div>
 
 <script>
+    // Ergebnisse aus localStorage abrufen
     const results = JSON.parse(localStorage.getItem("results")) || [];
     const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
+    const flashcardResults = JSON.parse(localStorage.getItem("flashcardResults")) || []; // Flashcard Ergebnisse hinzufügen
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
@@ -128,36 +130,47 @@
         console.log('Lade Ergebnisse...'); // Console Log
         resultsContainer.innerHTML = ""; // Vorherige Ergebnisse löschen
 
-        if (verbFormResults.length > 0) {
-            console.log('Verben Ergebnisse gefunden:', verbFormResults); // Console Log
+        const selectedType = dropdown.value; // Aktuelle Auswahl im Dropdown
 
-            tableHeader.innerHTML = `
+        // Lade die entsprechenden Ergebnisse basierend auf der Dropdown-Auswahl
+        let loadedResults = [];
+        let headerHTML = '';
+        
+        if (selectedType === 'practise') {
+            loadedResults = flashcardResults;
+            headerHTML = `
+                <tr>
+                    <th>Wort</th>
+                    <th>Status</th>
+                </tr>
+            `;
+        } else if (selectedType === 'verbForms') {
+            loadedResults = verbFormResults;
+            headerHTML = `
                 <tr>
                     <th>Verb</th>
                     <th>Pronoun</th>
                     <th>Status</th>
                 </tr>
             `;
-
-            verbFormResults.forEach(result => {
-                const resultRow = createResultRow(result.word, result.pronoun, result.status);
-                resultsContainer.appendChild(resultRow);
-            });
         } else {
-            console.log('Normale Ergebnisse gefunden:', results); // Console Log
-
-            tableHeader.innerHTML = `
+            loadedResults = results;
+            headerHTML = `
                 <tr>
                     <th>Wort</th>
                     <th>Status</th>
                 </tr>
             `;
-
-            results.forEach(result => {
-                const resultRow = createResultRow(result.word, null, result.status);
-                resultsContainer.appendChild(resultRow);
-            });
         }
+
+        // Header der Tabelle setzen
+        tableHeader.innerHTML = headerHTML;
+
+        // Ergebniszeilen hinzufügen
+        loadedResults.forEach(result => {
+            const resultRow = createResultRow(result.word, result.pronoun || null, result.status);
+            resultsContainer.appendChild(resultRow);
+        });
     }
 
     function createResultRow(word, pronoun, status) {
@@ -200,6 +213,9 @@
         loadResults(); // Ergebnisse neu laden, wenn Dropdown geändert wird
     }
 
+    // Event-Listener für Dropdown
+    dropdown.addEventListener('change', updateResults);
+
     window.onload = function() {
         console.log('Seite wird geladen...'); // Console Log
         updateDropdown();
@@ -226,5 +242,6 @@
         }
     }
 </script>
+
 </body>
 </html>
