@@ -49,6 +49,7 @@
 let currentSet = [];
 let currentIndex = 0;
 let wrongAnswers = []; // Neue Liste für falsche Antworten
+let showingBack = false;
 
 // Funktion, um das Array zu mischen (Fisher-Yates Shuffle)
 function shuffleArray(array) {
@@ -71,6 +72,11 @@ function displayFlashcard() {
         // Rückseite ausblenden
         vocabBack.style.display = 'none'; // Standardmäßig die Rückseite ausblenden
 
+         // Always start by showing the front
+        vocabFront.style.display = 'block';
+        vocabBack.style.display = 'none';
+        showingBack = false; // Reset the state to showing front
+        
         // Aktualisiere den Zähler
         document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
     }
@@ -89,6 +95,15 @@ function nextFlashcard() {
     if (currentIndex < currentSet.length - 1) {
         currentIndex++;
         displayFlashcard();
+    } else if (wrongAnswers.length > 0) {
+        // Start a second round with incorrect answers
+        currentSet = [...wrongAnswers];
+        wrongAnswers = [];
+        currentIndex = 0;
+        displayFlashcard();
+            } else {
+        // Wenn alle Runden beendet und alle Antworten richtig sind, leite zu result.html weiter
+        window.location.href = "result.html";
     }
 }
 
@@ -109,6 +124,7 @@ function updateVocabSet() {
     currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
     shuffleArray(currentSet); // Mische das Set, wenn es aktualisiert wird
     currentIndex = 0; // Startindex zurücksetzen
+    wrongAnswers = []; // Reset wrong answers
     displayFlashcard(); // Zeigt die erste Karte an
 }
 
@@ -121,9 +137,11 @@ document.getElementById('flashcard').addEventListener('click', function() {
     if (vocabBack.style.display === 'none') {
         vocabBack.style.display = 'block'; // Rückseite anzeigen
         vocabFront.style.display = 'none'; // Vorderseite ausblenden
+        showingBack = true;
     } else {
         vocabBack.style.display = 'none'; // Rückseite ausblenden
         vocabFront.style.display = 'block'; // Vorderseite anzeigen
+        showingBack = false;
     }
 });
 
