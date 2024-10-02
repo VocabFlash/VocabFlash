@@ -91,10 +91,6 @@ function startFlashcards(set) {
     displayFlashcard(); // Zeige die erste Karte an
 }
 
-// Funktion zum Speichern der Flashcard-Ergebnisse
-function saveFlashcardResult(word, status) {
-    flashcardResults.push({ word: word.de, status: status });
-}
 
 // Funktion zum Anzeigen der nächsten Karte
 function nextFlashcard() {
@@ -156,6 +152,14 @@ document.getElementById('flashcard').addEventListener('click', function() {
         showingBack = false;
     }
 });
+    
+    // Funktion zum Speichern der Flashcard-Ergebnisse
+function saveFlashcardResult(word, status) {
+    flashcardResults.push({ word: word.de, status: status });
+    console.log('Ergebnisse gespeichert:', flashcardResults); // Debugging-Log
+}
+
+
 
 // Initiales Set anzeigen
 window.onload = function() {
