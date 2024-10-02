@@ -36,6 +36,8 @@
 <select id="setSelect" onchange="updateVocabSet()">
     <option value="set1">Set 1</option>
     <option value="set2">Set 2</option>
+    <option value="set3">Set 3</option>
+    <option value="set4">Set 4</option>
     <!-- Weitere Sets hinzufügen -->
 </select>
 <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
@@ -74,6 +76,10 @@ function displayVocabWord() {
     const inputCounter = document.getElementById('inputCounter');
     const submitButton = document.getElementById('submitAnswer');
     const skipButton = document.getElementById('skipButton');
+    const feedback = document.getElementById('feedback'); // Feedback-Element
+
+    // Setze das Feedback zurück, wenn ein neues Wort angezeigt wird
+    feedback.innerText = '';
 
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
@@ -85,6 +91,7 @@ function displayVocabWord() {
         skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
     }
 }
+
 
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
@@ -130,7 +137,7 @@ function nextWord() {
     }
 }
 
-// Funktion, um die Benutzerantwort zu überprüfen
+// Benutzerantwort überprüfen
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
     const currentWord = currentSet[currentIndex]; // Aktuelles Wort holen
@@ -159,6 +166,7 @@ function checkAnswer() {
     document.getElementById('userInput').value = '';
 }
 
+
 // Funktion zur Behandlung falscher Antworten
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
@@ -174,7 +182,8 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; // Skip-Button ausblenden
     } else if (wrongAttempts === 2) {
-        feedback.innerText = The correct answer is: ${currentWord.ar};
+        // Verwende Backticks für den Template-String
+        feedback.innerText = `The correct answer is: ${currentWord.ar}`;
         feedback.classList.remove('correct', 'wrong');
         feedback.classList.add('solution');
         vocabWord.classList.add('solution');
@@ -185,6 +194,7 @@ function handleWrongAnswer(currentWord) {
         startTimer(); // Starte den Timer
     }
 }
+
 
 // Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
 function toggleCheckButton() {
