@@ -103,7 +103,9 @@ function nextFlashcard() {
         displayFlashcard();
             } else {
         // Wenn alle Runden beendet und alle Antworten richtig sind, leite zu result.html weiter
-        window.location.href = "result.html";
+        // Nach Abschluss des Flashcard-Trainings
+window.location.href = "result.html?source=flashcards";
+
     }
 }
 
@@ -149,6 +151,8 @@ document.getElementById('flashcard').addEventListener('click', function() {
 window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
+
+    
 </script>
 
 
