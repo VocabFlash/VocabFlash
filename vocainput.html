@@ -119,18 +119,29 @@ function nextWord() {
     clearTimeout(timer);
     wrongAttempts = 0;
 
-    if (currentIndex < currentSet.length - 1) {
+    // Wenn es noch nicht die zweite Runde ist und es gibt noch Wörter im Set
+    if (!secondRound && currentIndex < currentSet.length - 1) {
         currentIndex++;
         displayVocabWord();
-    } else if (!secondRound && wrongAnswers.length > 0) {
+    } 
+    // Falls die erste Runde zu Ende ist und es gibt falsche Antworten
+    else if (!secondRound && wrongAnswers.length > 0) {
         secondRound = true;
         currentSet = wrongAnswers;
         currentIndex = 0;
         displayVocabWord();
-    } else if (secondRound && currentIndex >= currentSet.length - 1) {
-        showResults();
+    } 
+    // Wenn die zweite Runde abgeschlossen ist oder keine weiteren Wörter da sind
+    else if (secondRound && currentIndex >= currentSet.length - 1) {
+        showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
+    } 
+    // Standardfall: Weiter zum nächsten Wort
+    else {
+        currentIndex++;
+        displayVocabWord();
     }
 }
+
 
 // Funktion, um die Benutzerantwort zu überprüfen
 function checkAnswer() {
