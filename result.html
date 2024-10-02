@@ -96,7 +96,7 @@
     </style>
 </head>
 <body>
-    <h1>VocabFlash Ergebnisse</h1> <!-- Einheitlicher Titel auf allen Seiten -->
+    <h1>VocabFlash Results</h1> <!-- Einheitlicher Titel auf allen Seiten -->
 
     <!-- Tabelle für die Ergebnisse -->
     <table id="vocabResultsTable">
@@ -106,18 +106,101 @@
         <tbody id="resultsContainer"></tbody>
     </table>
 
-    <!-- Link zurück zur Homepage -->
+<div class="container">
+        <label for="sourceSelect">Choose the result type:</label>
+    <select id="sourceSelect">
+        <option value="flashcards">Flashcards Practise</option>
+        <option value="vocablanks">Spelling</option>
+        <option value="vocablanks">VocaBlanks</option>
+        <option value="verbForms">Verb Forms</option>
+        <!-- Weitere Optionen hinzufügen -->
+    </select>
+    
     <a href="index.html">Go back to Homepage</a>
-
+</div>
     <script>
-        // Ergebnisse aus localStorage abrufen und in der Tabelle anzeigen
-        const results = JSON.parse(localStorage.getItem("results")) || [];
-        const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
-        const resultsContainer = document.getElementById('resultsContainer');
-        const tableHeader = document.getElementById('tableHeader');
+    // Ergebnisse aus localStorage abrufen und in der Tabelle anzeigen
+    const results = JSON.parse(localStorage.getItem("results")) || [];
+    const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
+    const resultsContainer = document.getElementById('resultsContainer');
+    const tableHeader = document.getElementById('tableHeader');
 
-        if (verbFormResults.length > 0) {
-            // Wenn verbForms benutzt wurde, erstelle die spezielle Tabelle
+    // Überprüfen, ob verbForms benutzt wurde
+    if (verbFormResults.length > 0) {
+        // Wenn verbForms benutzt wurde, erstelle die spezielle Tabelle
+        tableHeader.innerHTML = `
+            <tr>
+                <th>Verb</th>
+                <th>Pronoun</th>
+                <th>Status</th>
+            </tr>
+        `;
+
+        verbFormResults.forEach(result => {
+            const resultRow = document.createElement('tr');
+            resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+
+            const wordCell = document.createElement('td');
+            wordCell.innerText = result.word;
+            resultRow.appendChild(wordCell);
+
+            const pronounCell = document.createElement('td');
+            pronounCell.innerText = result.pronoun;
+            resultRow.appendChild(pronounCell);
+
+            const statusCell = document.createElement('td');
+            statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+            resultRow.appendChild(statusCell);
+
+            resultsContainer.appendChild(resultRow);
+        });
+    } else {
+        // Standardtabelle für andere Modi
+        tableHeader.innerHTML = `
+            <tr>
+                <th>Wort</th>
+                <th>Status</th>
+            </tr>
+        `;
+
+        results.forEach(result => {
+            const resultRow = document.createElement('tr');
+            resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+
+            const wordCell = document.createElement('td');
+            wordCell.innerText = result.word;
+            resultRow.appendChild(wordCell);
+
+            const statusCell = document.createElement('td');
+            statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+            resultRow.appendChild(statusCell);
+
+            resultsContainer.appendChild(resultRow);
+        });
+    }
+
+    // Dropdown-Menü automatisch basierend auf dem Redirect aktualisieren // Neu hinzugefügt
+    const dropdown = document.getElementById('resultDropdown'); // Das Dropdown-Element
+
+    // Funktion, um den Dropdown-Wert je nach Quelle zu setzen
+    function updateDropdown() {
+        const source = localStorage.getItem("source"); // Die Quelle des Redirects abrufen
+        if (source === "verbForms") {
+            dropdown.value = "verbForms"; // Dropdown auf "verbForms" setzen
+        } else {
+            dropdown.value = "standard"; // Standardmodus im Dropdown setzen
+        }
+    }
+
+    // Initial Dropdown-Wert einstellen
+    updateDropdown(); // Neu hinzugefügt
+
+    // Event-Listener für das Dropdown, um die angezeigten Ergebnisse zu aktualisieren // Neu hinzugefügt
+    dropdown.addEventListener('change', function() {
+        const selectedMode = dropdown.value;
+        if (selectedMode === "verbForms") {
+            // Ergebnisse für verbForms anzeigen
+            resultsContainer.innerHTML = ""; // Tabelle zurücksetzen
             tableHeader.innerHTML = `
                 <tr>
                     <th>Verb</th>
@@ -128,7 +211,7 @@
 
             verbFormResults.forEach(result => {
                 const resultRow = document.createElement('tr');
-                resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+                resultRow.classList.add(result.status);
 
                 const wordCell = document.createElement('td');
                 wordCell.innerText = result.word;
@@ -139,13 +222,14 @@
                 resultRow.appendChild(pronounCell);
 
                 const statusCell = document.createElement('td');
-                statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+                statusCell.innerText = result.status.replace("-", " ");
                 resultRow.appendChild(statusCell);
 
                 resultsContainer.appendChild(resultRow);
             });
         } else {
-            // Standardtabelle für andere Modi
+            // Standard-Ergebnisse anzeigen
+            resultsContainer.innerHTML = ""; // Tabelle zurücksetzen
             tableHeader.innerHTML = `
                 <tr>
                     <th>Wort</th>
@@ -155,19 +239,21 @@
 
             results.forEach(result => {
                 const resultRow = document.createElement('tr');
-                resultRow.classList.add(result.status); // Füge die Statusklasse hinzu
+                resultRow.classList.add(result.status);
 
                 const wordCell = document.createElement('td');
                 wordCell.innerText = result.word;
                 resultRow.appendChild(wordCell);
 
                 const statusCell = document.createElement('td');
-                statusCell.innerText = result.status.replace("-", " "); // Optional: Status leserfreundlicher machen
+                statusCell.innerText = result.status.replace("-", " ");
                 resultRow.appendChild(statusCell);
 
                 resultsContainer.appendChild(resultRow);
             });
         }
-    </script>
+    });
+</script>
+
 </body>
 </html>
