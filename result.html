@@ -57,7 +57,6 @@
             background-color: #ff9800; /* Orange */
         }
 
-
         @media (max-width: 600px) {
             table, th, td {
                 width: 100%;
@@ -82,8 +81,10 @@
             margin: 0 auto; /* Zentriert den Container */
             padding: 20px;  /* Fügt innen etwas Platz hinzu */
             background-color: #f9f9f9; /* Beispielhintergrundfarbe */
-            border-radius: 10px; /* Abgerundete Ecken */
+            border-radius: 15px; /* Abgerundete Ecken */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ein leichter Schatten für mehr Tiefe */
+            text-align: center; /* Inhalte im Container zentriert */
+            margin-bottom: 20px; /* Abstand zwischen Tabelle und unterem Container */
         }
     </style>
 </head>
@@ -93,128 +94,136 @@
     <h2>Results</h2>
 </div>
     
-    <table id="vocabResultsTable">
-        <thead id="tableHeader"></thead>
-        <tbody id="resultsContainer"></tbody><br>
-    
+<table id="vocabResultsTable">
+    <thead id="tableHeader"></thead>
+    <tbody id="resultsContainer"></tbody>
 </table>
 
-    <br>
+<br>
     
-    <div class="container">
-        <label for="resultDropdown">Choose the result type:</label>
-        <select id="resultDropdown" aria-label="Choose the result type" onchange="updateResults()">
-            <option value="practise">Practise Flashcards</option>
-            <option value="verbForms">Verbs</option>
-            <option value="vocaBlanks">Blanks</option>
-            <option value="vocaInput">Spelling</option>
-        </select>
+<div class="container">
+    <label for="resultDropdown">Choose the result type:</label>
+    <select id="resultDropdown" aria-label="Choose the result type" onchange="updateResults()">
+        <option value="practise">Practise Flashcards</option>
+        <option value="verbForms">Verbs</option>
+        <option value="vocaBlanks">Blanks</option>
+        <option value="vocaInput">Spelling</option>
+    </select>
 
-        <br>
-        <button onclick="updateResults()">Select</button>
-        <br>
-        <a href="index.html">Go back to Homepage</a>
-    </div>
+    <br>
+    <button onclick="updateResults()">Select</button>
+    <br>
+    <a href="index.html">Go back to Homepage</a>
+</div>
 
-    <script>
-        const results = JSON.parse(localStorage.getItem("results")) || [];
-        const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
-        const resultsContainer = document.getElementById('resultsContainer');
-        const tableHeader = document.getElementById('tableHeader');
-        const dropdown = document.getElementById('resultDropdown'); 
+<script>
+    const results = JSON.parse(localStorage.getItem("results")) || [];
+    const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
+    const resultsContainer = document.getElementById('resultsContainer');
+    const tableHeader = document.getElementById('tableHeader');
+    const dropdown = document.getElementById('resultDropdown'); 
 
-        function loadResults() {
-            resultsContainer.innerHTML = ""; // Vorherige Ergebnisse löschen
+    function loadResults() {
+        console.log('Lade Ergebnisse...'); // Console Log
+        resultsContainer.innerHTML = ""; // Vorherige Ergebnisse löschen
 
-            if (verbFormResults.length > 0) {
-                tableHeader.innerHTML = `
-                    <tr>
-                        <th>Verb</th>
-                        <th>Pronoun</th>
-                        <th>Status</th>
-                    </tr>
-                `;
+        if (verbFormResults.length > 0) {
+            console.log('Verben Ergebnisse gefunden:', verbFormResults); // Console Log
 
-                verbFormResults.forEach(result => {
-                    const resultRow = createResultRow(result.word, result.pronoun, result.status);
-                    resultsContainer.appendChild(resultRow);
-                });
-            } else {
-                tableHeader.innerHTML = `
-                    <tr>
-                        <th>Wort</th>
-                        <th>Status</th>
-                    </tr>
-                `;
+            tableHeader.innerHTML = `
+                <tr>
+                    <th>Verb</th>
+                    <th>Pronoun</th>
+                    <th>Status</th>
+                </tr>
+            `;
 
-                results.forEach(result => {
-                    const resultRow = createResultRow(result.word, null, result.status);
-                    resultsContainer.appendChild(resultRow);
-                });
-            }
+            verbFormResults.forEach(result => {
+                const resultRow = createResultRow(result.word, result.pronoun, result.status);
+                resultsContainer.appendChild(resultRow);
+            });
+        } else {
+            console.log('Normale Ergebnisse gefunden:', results); // Console Log
+
+            tableHeader.innerHTML = `
+                <tr>
+                    <th>Wort</th>
+                    <th>Status</th>
+                </tr>
+            `;
+
+            results.forEach(result => {
+                const resultRow = createResultRow(result.word, null, result.status);
+                resultsContainer.appendChild(resultRow);
+            });
+        }
+    }
+
+    function createResultRow(word, pronoun, status) {
+        const resultRow = document.createElement('tr');
+        resultRow.classList.add(status);
+
+        const wordCell = document.createElement('td');
+        wordCell.innerText = word;
+        resultRow.appendChild(wordCell);
+
+        if (pronoun) {
+            const pronounCell = document.createElement('td');
+            pronounCell.innerText = pronoun;
+            resultRow.appendChild(pronounCell);
         }
 
-        function createResultRow(word, pronoun, status) {
-            const resultRow = document.createElement('tr');
-            resultRow.classList.add(status);
+        const statusCell = document.createElement('td');
+        statusCell.innerText = status.replace("-", " ");
+        resultRow.appendChild(statusCell);
 
-            const wordCell = document.createElement('td');
-            wordCell.innerText = word;
-            resultRow.appendChild(wordCell);
+        console.log('Ergebniszeile erstellt:', resultRow); // Console Log
+        return resultRow;
+    }
 
-            if (pronoun) {
-                const pronounCell = document.createElement('td');
-                pronounCell.innerText = pronoun;
-                resultRow.appendChild(pronounCell);
-            }
-
-            const statusCell = document.createElement('td');
-            statusCell.innerText = status.replace("-", " ");
-            resultRow.appendChild(statusCell);
-
-            return resultRow;
-        }
-
-        function updateDropdown() {
-            const source = new URLSearchParams(window.location.search).get("source");
-            if (source) {
-                for (let i = 0; i < dropdown.options.length; i++) {
-                    if (dropdown.options[i].value === source) {
-                        dropdown.selectedIndex = i;
-                        break;
-                    }
+    function updateDropdown() {
+        const source = new URLSearchParams(window.location.search).get("source");
+        if (source) {
+            console.log('Quelle aus der URL:', source); // Console Log
+            for (let i = 0; i < dropdown.options.length; i++) {
+                if (dropdown.options[i].value === source) {
+                    dropdown.selectedIndex = i;
+                    break;
                 }
             }
         }
+    }
 
-        function updateResults() {
-            loadResults(); // Ergebnisse neu laden, wenn Dropdown geändert wird
+    function updateResults() {
+        console.log('Aktualisiere Ergebnisse...'); // Console Log
+        loadResults(); // Ergebnisse neu laden, wenn Dropdown geändert wird
+    }
+
+    window.onload = function() {
+        console.log('Seite wird geladen...'); // Console Log
+        updateDropdown();
+        loadResults();
+    };
+
+    function navigateToPage() {
+        const selectedMode = dropdown.value;
+        switch(selectedMode) {
+            case 'practise':
+                window.location.href = 'practise.html?source=practise'; // Parameter hinzufügen
+                break;
+            case 'verbForms':
+                window.location.href = 'verbForms.html?source=verbForms'; // Parameter hinzufügen
+                break;
+            case 'vocaBlanks':
+                window.location.href = 'vocaBlanks.html?source=vocaBlanks'; // Parameter hinzufügen
+                break;
+            case 'vocaInput':
+                window.location.href = 'result.html?source=vocaInput'; // Direkt zu result.html mit dem entsprechenden Parameter
+                break;
+            default:
+                console.error('Unbekannter Modus ausgewählt.'); // Console Log
         }
-
-        window.onload = function() {
-            updateDropdown();
-            loadResults();
-        };
-
-        function navigateToPage() {
-            const selectedMode = dropdown.value;
-            switch(selectedMode) {
-                case 'practise':
-                    window.location.href = 'practise.html?source=practise'; // Parameter hinzufügen
-                    break;
-                case 'verbForms':
-                    window.location.href = 'verbForms.html?source=verbForms'; // Parameter hinzufügen
-                    break;
-                case 'vocaBlanks':
-                    window.location.href = 'vocaBlanks.html?source=vocaBlanks'; // Parameter hinzufügen
-                    break;
-                case 'vocaInput':
-                    window.location.href = 'result.html?source=vocaInput'; // Direkt zu result.html mit dem entsprechenden Parameter
-                    break;
-                default:
-                    console.error('Unknown mode selected.');
-            }
-        }
-    </script>
+    }
+</script>
 </body>
 </html>
