@@ -76,16 +76,18 @@
             }
         }
 
-        .container {
-            background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
-            padding: 20px; /* Innenabstand */
-            border-radius: 15px; /* Abgerundete Ecken */
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
-            width: 90%; /* Container Breite auf 90% setzen */
-            max-width: 600px; /* Maximale Breite für größere Bildschirme */
-            text-align: center; /* Zentrierte Texte */
-            margin: 10px auto; /* Zentrierung und Abstand */
-        }
+.container {
+    background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
+    padding: 20px; /* Innenabstand */
+    border-radius: 15px; /* Abgerundete Ecken */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+    max-width: 600px; /* Maximale Breite für größere Bildschirme */
+    min-width: 300px; /* Minimale Breite, um zu kleine Container zu vermeiden */
+    text-align: center; /* Zentrierte Texte */
+    margin: 10px auto; /* Zentrierung und Abstand */
+    display: inline-block; /* Automatische Breite basierend auf dem Inhalt */
+}
+
 
     </style>
 </head>
@@ -118,12 +120,27 @@
 </div>
 
 <script>
-    // Ergebnisse aus localStorage abrufen
-    const results = JSON.parse(localStorage.getItem("results")) || [];
-    const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
-    const flashcardResults = JSON.parse(localStorage.getItem("flashcardResults")) || []; // Flashcard Ergebnisse hinzufügen
-    const vocaBlanksResults = JSON.parse(localStorage.getItem("vocaBlanksResults")) || []; // Ergebnisse für vocaBlanks
-    const vocaInputResults = JSON.parse(localStorage.getItem("vocaInputResults")) || []; // Ergebnisse für vocaInput
+    // Ergebnisse aus localStorage abrufen und überprüfen
+    function getFromLocalStorage(key) {
+        const data = localStorage.getItem(key);
+        if (!data) {
+            console.error(`Keine Daten im localStorage für ${key} gefunden.`);
+            return [];
+        }
+        try {
+            return JSON.parse(data);
+        } catch (e) {
+            console.error(`Fehler beim Parsen von ${key}:`, e);
+            return [];
+        }
+    }
+
+    const results = getFromLocalStorage("results");
+    const verbFormResults = getFromLocalStorage("verbFormResults");
+    const flashcardResults = getFromLocalStorage("flashcardResults");
+    const vocaBlanksResults = getFromLocalStorage("vocaBlanksResults");
+    const vocaInputResults = getFromLocalStorage("vocaInputResults");
+
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
@@ -179,6 +196,13 @@
             default:
                 console.error('Unbekannter Typ ausgewählt:', selectedType);
                 return; // Keine Ergebnisse laden, wenn der Typ unbekannt ist
+        }
+
+        // Wenn keine Ergebnisse geladen wurden
+        if (loadedResults.length === 0) {
+            console.warn('Keine Ergebnisse verfügbar für', selectedType);
+            resultsContainer.innerHTML = "<tr><td colspan='3'>Keine Ergebnisse verfügbar.</td></tr>";
+            return;
         }
 
         // Header der Tabelle setzen
