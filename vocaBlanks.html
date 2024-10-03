@@ -106,6 +106,10 @@ function nextWord() {
     clearTimeout(timer);
     wrongAttempts = 0;
 
+      // Feedback entfernen
+    const feedback = document.getElementById('feedback'); // Ersetze 'feedback' durch die ID deines Feedback-Elements
+    feedback.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+    
     if (currentIndex < currentSet.length - 1) {
         currentIndex++;
         displayVocabWord();
@@ -119,6 +123,7 @@ function nextWord() {
         console.log('Ergebnisse vor dem Speichern:', results); // Zeige die Ergebnisse vor dem Speichern an
         localStorage.setItem("results", JSON.stringify(results));
         console.log("Ergebnisse wurden in localStorage gespeichert."); // Bestätige die Speicherung
+        showResults();
     }
 }
 
