@@ -136,11 +136,12 @@
     }
 
     const results = getFromLocalStorage("results");
-    const verbFormResults = getFromLocalStorage("verbFormResults");
-    const flashcardResults = getFromLocalStorage("flashcardResults");
-    const vocaBlanksResults = getFromLocalStorage("vocaBlanksResults");
+    const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
+    const vocaBlanksResults = JSON.parse(localStorage.getItem("vocaBlanksResults")) || [];
     const vocaInputResults =  JSON.parse(localStorage.getItem("vocaInputResults")) || [];
+    const practiseFlashcardResults = JSON.parse(localStorage.getItem("practiseFlashcardResults")) || []; // Ergebnisse für flashcard practise
 
+    
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
