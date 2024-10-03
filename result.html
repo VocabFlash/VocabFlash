@@ -141,7 +141,6 @@
     const vocaInputResults =  JSON.parse(localStorage.getItem("vocaInputResults")) || [];
     const flashcardResults = JSON.parse(localStorage.getItem("flashcardResults")) || []; // Ergebnisse für flashcard practise
 
-    
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
@@ -224,6 +223,7 @@
         wordCell.innerText = word;
         resultRow.appendChild(wordCell);
 
+        // Nur pronoun hinzufügen, wenn es im Modus ist
         if (pronoun) {
             const pronounCell = document.createElement('td');
             pronounCell.innerText = pronoun;
@@ -239,15 +239,32 @@
     }
 
     function updateDropdown() {
-        const source = new URLSearchParams(window.location.search).get("source");
+        const source = new URLSearchParams(window.location.search).get("fromPage");
         if (source) {
-            console.log('Quelle aus der URL:', source); // Console Log
-            for (let i = 0; i < dropdown.options.length; i++) {
-                if (dropdown.options[i].value === source) {
-                    dropdown.selectedIndex = i;
+            console.log('Quelle aus der URL:', source); // Debugging-Log
+            let sourceType = '';
+
+            switch(source) {
+                case 'practise.html':
+                    sourceType = 'practise';
                     break;
-                }
+                case 'verbForms.html':
+                    sourceType = 'verbForms';
+                    break;
+                case 'vocaBlanks.html':
+                    sourceType = 'vocaBlanks';
+                    break;
+                case 'vocaInput.html':
+                    sourceType = 'vocaInput';
+                    break;
+                default:
+                    console.error('Unbekannte Quelle:', source);
+                    return;
             }
+
+            // Setze das Dropdown basierend auf dem Source-Type
+            dropdown.value = sourceType;
+            loadResults(); // Ergebnisse für diese Auswahl laden
         }
     }
 
@@ -285,6 +302,7 @@
         }
     }
 </script>
+
 
 </body>
 </html>
