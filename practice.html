@@ -91,6 +91,13 @@ function startFlashcards(set) {
     displayFlashcard(); // Zeige die erste Karte an
 }
 
+// Funktion zum Speichern der Flashcard-Ergebnisse und Weiterleitung zur Result-Seite
+function showResults() {
+    localStorage.setItem("practiseFlashcardResults", JSON.stringify(flashcardResults)); // Speichert die Flashcard-Ergebnisse speziell für "practise"
+    const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
+    window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
+}
+    
 
 // Funktion zum Anzeigen der nächsten Karte
 function nextFlashcard() {
@@ -104,11 +111,11 @@ function nextFlashcard() {
         currentIndex = 0;
         displayFlashcard();
     } else {
-        // Wenn alle Runden beendet und alle Antworten richtig sind, leite zu result.html weiter
-        localStorage.setItem("results", JSON.stringify(flashcardResults)); // Ergebnisse speichern
-        window.location.href = "result.html?source=flashcards"; // Weiterleitung zu Result-Seite
+        // Wenn alle Runden beendet und alle Antworten richtig sind, rufe showResults auf
+        showResults(); // Ergebnisse speichern und zur Result-Seite weiterleiten
     }
-}
+
+    
 
 // Funktion zum Markieren einer falschen Antwort
 function markWrong() {
