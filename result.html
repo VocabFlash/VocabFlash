@@ -88,6 +88,15 @@
     display: inline-block; /* Automatische Breite basierend auf dem Inhalt */
 }
 
+.correct {
+    color: green; /* Grün für richtige Antworten */
+    font-weight: bold; /* Optional: fett gedruckt */
+}
+
+.wrong {
+    color: red; /* Rot für falsche Antworten */
+    font-weight: bold; /* Optional: fett gedruckt */
+}
 
     </style>
 </head>
@@ -215,28 +224,37 @@
         });
     }
 
-    function createResultRow(word, pronoun, status) {
-        const resultRow = document.createElement('tr');
-        resultRow.classList.add(status);
+function createResultRow(word, pronoun, status) {
+    const resultRow = document.createElement('tr');
+    resultRow.classList.add(status); // Klasse für den Status hinzufügen
 
-        const wordCell = document.createElement('td');
-        wordCell.innerText = word;
-        resultRow.appendChild(wordCell);
+    const wordCell = document.createElement('td');
+    wordCell.innerText = word;
+    resultRow.appendChild(wordCell);
 
-        // Nur pronoun hinzufügen, wenn es im Modus ist
-        if (pronoun) {
-            const pronounCell = document.createElement('td');
-            pronounCell.innerText = pronoun;
-            resultRow.appendChild(pronounCell);
-        }
-
-        const statusCell = document.createElement('td');
-        statusCell.innerText = status.replace("-", " ");
-        resultRow.appendChild(statusCell);
-
-        console.log('Ergebniszeile erstellt:', resultRow); // Console Log
-        return resultRow;
+    // Nur pronoun hinzufügen, wenn es im Modus ist
+    if (pronoun) {
+        const pronounCell = document.createElement('td');
+        pronounCell.innerText = pronoun;
+        resultRow.appendChild(pronounCell);
     }
+
+    const statusCell = document.createElement('td');
+    statusCell.innerText = status.replace("-", " ");
+    
+    // Färbe die Statusanzeige basierend auf dem Status
+    if (status === 'correct') {
+        statusCell.classList.add('correct'); // Klasse für grün
+    } else if (status === 'wrong') {
+        statusCell.classList.add('wrong'); // Klasse für rot
+    }
+
+    resultRow.appendChild(statusCell);
+
+    console.log('Ergebniszeile erstellt:', resultRow); // Console Log
+    return resultRow;
+}
+
 
     function updateDropdown() {
         const source = new URLSearchParams(window.location.search).get("fromPage");
