@@ -100,6 +100,37 @@ function updateVocabSet() {
         console.error("Set not found:", selectedSet); // Überprüfen, ob das Set vorhanden ist
     }
 }
+// Funktion, um den Timer zu starten
+function startTimer() {
+    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
+}
+
+// Funktion zur Behandlung der Tastenereignisse
+function handleKeyDown(event) {
+    const skipButton = document.getElementById('skipButton');
+    if (event.key === 'Enter') {
+        const checkButton = document.getElementById('submitAnswer');
+        if (checkButton.style.display !== 'none') {
+            checkAnswer(); // Wenn der Check-Button sichtbar ist, führt Enter die Überprüfung aus
+        } else if (skipButton.style.display !== 'none') {
+            skipToNext(); // Wenn der Skip-Button sichtbar ist, führt Enter das Skippen aus
+        }
+    }
+}
+
+// Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
+function toggleCheckButton() {
+    const userInput = document.getElementById('userInput').value;
+    const submitButton = document.getElementById('submitAnswer');
+    const skipButton = document.getElementById('skipButton');
+
+    // Der Check-Button soll nur sichtbar sein, wenn der Skip-Button nicht sichtbar ist
+    if (userInput.trim() !== "" && skipButton.style.display === "none") {
+        submitButton.style.display = "block"; // Zeige den Check-Button
+    } else {
+        submitButton.style.display = "none"; // Verberge den Check-Button, wenn der Skip-Button da ist
+    }
+}
 
 // Funktion für den nächsten Wortwechsel
 function nextWord() {
