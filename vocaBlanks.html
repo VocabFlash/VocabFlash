@@ -126,9 +126,9 @@ function nextWord() {
         currentIndex = 0;
         displayVocabWord();
     } else {
-        // Wenn alle Runden beendet und alle Antworten richtig sind, leite zu result.html weiter
-        localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
-        window.location.href = "result.html?source=vocaBlanks"; // Weiterleitung zu Result-Seite
+        console.log('Ergebnisse vor dem Speichern:', results); // Füge dies hinzu, um den Inhalt von results zu überprüfen
+        localStorage.setItem("results", JSON.stringify(results));
+
     }
 }
 
