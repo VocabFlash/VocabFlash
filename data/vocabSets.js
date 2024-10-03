@@ -151,38 +151,6 @@ const vocabSets= {
   ],
 
   set3: [
-    { de: "eine Kathedrale", ar: "une cathédrale" },
-    { de: "ein/e Vertreter/in", ar: "un représentant / une représentante" },
-    { de: "europäisch", ar: "européen / européenne" },
-    { de: "eine Grenze", ar: "une frontière" },
-    { de: "eine Entdeckung", ar: "une découverte" },
-    { de: "Freizeit", ar: "le temps libre" },
-    { de: "eine Begegnung, ein Treffen", ar: "une rencontre" },
-    { de: "eine Unterkunft", ar: "un hébergement" },
-    { de: "super", ar: "top" },
-    { de: "kaputt, erschöpft", ar: "crevé/crevée" },
-    { de: "die Nacht", ar: "la nuit" },
-    { de: "sich langweilen", ar: "s'ennuyer" },
-    { de: "anfangen zu tun", ar: "commencer à faire qc" },
-    { de: "sich beeilen", ar: "se dépêcher" },
-    { de: "eine Großmutter", ar: "une grand-mère" },
-    { de: "eine Rolle", ar: "un rôle" },
-    { de: "eine Führung", ar: "une visite guidée" },
-    { de: "eine Stadt", ar: "une ville" },
-    { de: "der Süden", ar: "le sud" },
-    { de: "der Westen", ar: "l'ouest" },
-    { de: "der Norden", ar: "le nord" },
-    { de: "eine Ankunft", ar: "une arrivée" },
-    { de: "eine Abfahrt", ar: "le départ" },
-    { de: "eine Rolle spielen", ar: "jouer un rôle" },
-  ],
-
-   set4: [
-
-    { "de": "Test Deutsch.", "ar": "Test Fremdsprache" },
-  ],
-
-  set5: [
        { "de": "eine (Land)Straße", "ar": "une route" },
     { "de": "auf dem Weg nach/in…", "ar": "en route pour…" },
     { "de": "das Elsass", "ar": "l’Alsace" },
@@ -301,7 +269,7 @@ const vocabSets= {
     { "de": "sich wiedersehen", "ar": "se revoir" }
 ],
 
-     set6: [
+     set4: [
 
     { "de": "sich aus den Augen verlieren", "ar": "se perdre de vue" },
     { "de": "sich an jdn./etw. erinnern", "ar": "se souvenir de qn/qc" },
