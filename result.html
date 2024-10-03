@@ -139,7 +139,7 @@
     const verbFormResults = getFromLocalStorage("verbFormResults");
     const flashcardResults = getFromLocalStorage("flashcardResults");
     const vocaBlanksResults = getFromLocalStorage("vocaBlanksResults");
-    const vocaInputResults = getFromLocalStorage("vocaInputResults");
+    const vocaInputResults =  JSON.parse(localStorage.getItem("vocaInputResults")) || [];
 
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
