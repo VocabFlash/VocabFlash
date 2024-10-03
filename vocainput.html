@@ -103,7 +103,7 @@ function updateVocabSet() {
 
 // Funktion für die Auswertung
 function showResults() {
-    localStorage.setItem("results", JSON.stringify(results)); // Ergebnisse speichern
+    localStorage.setItem("vocaInputResults", JSON.stringify(results)); // Speichert die Ergebnisse speziell für vocaInput
     const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
     window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
 }
