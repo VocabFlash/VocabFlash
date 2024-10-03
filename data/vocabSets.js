@@ -418,7 +418,12 @@ const vocabSets= {
     { "de": "in den Wald", "ar": "dans la forêt" },
     { "de": "ins Zentrum", "ar": "au centre-ville" }
 
-  ]
+  ],
 
+     set5: [
+
+    { "de": "sich aus den Augen verlieren", "ar": "se perdre de vue" },
+    { "de": "sich an jdn./etw. erinnern", "ar": "se souvenir de qn/qc" }
+  ]
 };
   
