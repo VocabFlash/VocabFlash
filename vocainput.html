@@ -119,8 +119,11 @@ function skipToNext() {
 function nextWord() {
     clearTimeout(timer);
     wrongAttempts = 0;
-    feedbackElement.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
 
+      // Feedback entfernen
+    const feedback = document.getElementById('feedback'); // Ersetze 'feedback' durch die ID deines Feedback-Elements
+    feedback.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+    
     // Wenn es noch nicht die zweite Runde ist und es gibt noch Wörter im Set
     if (!secondRound && currentIndex < currentSet.length - 1) {
         currentIndex++;
