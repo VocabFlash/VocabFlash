@@ -235,10 +235,16 @@ window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
 
-    function saveVocaBlanksResults(results) {
-    console.log("Speichern der vocaBlanksResults:", results); // Zeigt die Ergebnisse, die gespeichert werden sollen
-    localStorage.setItem("vocaBlanksResults", JSON.stringify(results));
+function saveVocaBlanksResults() {
+    const existingResults = JSON.parse(localStorage.getItem("vocaBlanksResults")) || [];
+    const updatedResults = [...existingResults, ...currentResults]; // currentResults enthält die neuen Ergebnisse
+    localStorage.setItem("vocaBlanksResults", JSON.stringify(updatedResults));
+    console.log("vocaBlanksResults erfolgreich gespeichert:", updatedResults);
 }
+
+// Aufruf nach jeder Aktualisierung der Ergebnisse
+saveVocaBlanksResults();
+
 
 </script>
 
