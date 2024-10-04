@@ -6,7 +6,7 @@
     <title>Ergebnisse</title>
     <style>
         body {
-            background-color: #1a1e24; /* Dunkler Hintergrund */
+            background-color: #1a1e24;
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
@@ -18,11 +18,11 @@
         h1 {
             font-size: 2.5rem;
             margin-top: 20px;
-            color: #fff; /* Weiße Schrift für den Titel */
+            color: #fff;
         }
 
         table {
-            width: auto; /* Passt die Breite der Tabelle an den Inhalt an */
+            width: auto;
             border-collapse: collapse;
             margin-top: 20px;
             background-color: #fff;
@@ -37,7 +37,7 @@
         }
 
         th {
-            background-color: #007bff; /* Dunkelblau für den Header */
+            background-color: #007bff;
             color: white;
         }
 
@@ -46,223 +46,149 @@
         }
 
         .correct-first {
-            background-color: #4caf50; /* Grün */
+            background-color: #4caf50; /* Grün für erste korrekte Runde */
+            color: white;
         }
-        
+
         .second-round {
-            background-color: #f44336; /* Rot */
+            background-color: #f44336; /* Rot für zweite Runde */
+            color: white;
         }
-        
+
         .correct-second {
-            background-color: #ff9800; /* Orange */
-        }
-
-        @media (max-width: 600px) {
-            table, th, td {
-                width: 100%;
-                display: block;
-            }
-
-            th, td {
-                box-sizing: border-box;
-                display: flex;
-                justify-content: space-between;
-            }
-
-            td::before {
-                content: attr(data-label);
-                font-weight: bold;
-                margin-right: 10px;
-            }
+            background-color: #ff9800; /* Orange nur für bestimmte Modi */
+            color: white;
         }
 
         .container {
-            background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
-            padding: 20px; /* Innenabstand */
-            border-radius: 15px; /* Abgerundete Ecken */
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
-            max-width: 600px; /* Maximale Breite für größere Bildschirme */
-            min-width: 300px; /* Minimale Breite, um zu kleine Container zu vermeiden */
-            text-align: center; /* Zentrierte Texte */
-            margin: 10px auto; /* Zentrierung und Abstand */
-            display: inline-block; /* Automatische Breite basierend auf dem Inhalt */
-        }
-
-        .correct {
-            color: green; /* Grün für richtige Antworten */
-            font-weight: bold; /* Optional: fett gedruckt */
-        }
-
-        .wrong {
-            color: red; /* Rot für falsche Antworten */
-            font-weight: bold; /* Optional: fett gedruckt */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            text-align: center;
+            margin: 10px auto;
         }
     </style>
 </head>
 <body>
-<a href="index.html"><h1>VocabFlash</h1></a>
-<div class="container">
-    <h2>Results</h2>
-</div>
+    <a href="index.html"><h1>VocabFlash</h1></a>
+    <div class="container">
+        <h2>Results</h2>
+    </div>
     
-<table id="vocabResultsTable">
-    <thead id="tableHeader"></thead>
-    <tbody id="resultsContainer"></tbody>
-</table>
+    <table id="vocabResultsTable">
+        <thead id="tableHeader"></thead>
+        <tbody id="resultsContainer"></tbody>
+    </table>
 
-<br>
-    
-<div class="container">
-    <label for="resultDropdown">Choose the result type:</label>
-    <select id="resultDropdown" aria-label="Choose the result type" onchange="updateResults()">
-        <option value="practise">Practise Flashcards</option>
-        <option value="verbForms">Verbs</option>
-        <option value="vocaBlanks">Blanks</option>
-        <option value="vocaInput">Spelling</option>
-    </select>
+    <div class="container">
+        <label for="resultDropdown">Wählen Sie den Ergebnis-Typ:</label>
+        <select id="resultDropdown" aria-label="Ergebnistyp wählen" onchange="updateResults()">
+            <option value="practise">Flashcards üben</option>
+            <option value="verbForms">Verben</option>
+            <option value="vocaBlanks">Lücken</option>
+            <option value="vocaInput">Rechtschreibung</option>
+        </select>
 
-    <br>
-    <button onclick="updateResults()">Select</button>
-    <br>
-    <a href="index.html">Go back to Homepage</a>
-</div>
+        <br><br>
+        <a href="index.html">Zurück zur Startseite</a>
+    </div>
 
-<script>
-// Ergebnisse aus localStorage abrufen und überprüfen
-function getFromLocalStorage(key) {
-    console.log(`Versuche, Daten für ${key} aus localStorage abzurufen...`);
-    const data = localStorage.getItem(key);
-    if (!data) {
-        console.error(`Keine Daten im localStorage für ${key} gefunden.`);
-        return [];
-    }
-    try {
-        console.log(`Daten für ${key} erfolgreich abgerufen.`);
-        return JSON.parse(data);
-    } catch (e) {
-        console.error(`Fehler beim Parsen von ${key}:`, e);
-        return [];
-    }
-}
-
-const resultsContainer = document.getElementById('resultsContainer');
-const tableHeader = document.getElementById('tableHeader');
-const dropdown = document.getElementById('resultDropdown'); 
-
-function loadResults() {
-    console.log('Lade Ergebnisse basierend auf der Dropdown-Auswahl...');
-    resultsContainer.innerHTML = ""; // Vorherige Ergebnisse löschen
-
-    const selectedType = dropdown.value; // Aktuelle Auswahl im Dropdown
-    console.log(`Aktuell ausgewählter Typ: ${selectedType}`);
-
-    let loadedResults = [];
-    let headerHTML = '';
-
-    switch (selectedType) {
-        case 'practise':
-            loadedResults = getFromLocalStorage("flashcardResults");
-            console.log(`Ergebnisse für 'practise' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        case 'verbForms':
-            loadedResults = getFromLocalStorage("verbFormResults");
-            console.log(`Ergebnisse für 'verbForms' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Verb</th>
-                    <th>Pronoun</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        case 'vocaBlanks':
-            loadedResults = getFromLocalStorage("vocaBlanksResults");
-            console.log(`Ergebnisse für 'vocaBlanks' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        case 'vocaInput':
-            loadedResults = getFromLocalStorage("vocaInputResults");
-            console.log(`Ergebnisse für 'vocaInput' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        default:
-            console.error('Unbekannter Typ ausgewählt:', selectedType);
-            return; // Keine Ergebnisse laden, wenn der Typ unbekannt ist
+    <script>
+    // Funktion zum Abrufen von Ergebnissen aus dem lokalen Speicher
+    function getFromLocalStorage(key) {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : [];
     }
 
-    // Wenn keine Ergebnisse geladen wurden
-    if (loadedResults.length === 0) {
-        console.warn(`Keine Ergebnisse verfügbar für ${selectedType}`);
-        resultsContainer.innerHTML = "<tr><td colspan='3'>Keine Ergebnisse verfügbar.</td></tr>";
-        return;
+    const resultsContainer = document.getElementById('resultsContainer');
+    const tableHeader = document.getElementById('tableHeader');
+    const dropdown = document.getElementById('resultDropdown');
+
+    function loadResults() {
+        resultsContainer.innerHTML = "";
+        const selectedType = dropdown.value;
+        let loadedResults = [];
+        let headerHTML = '';
+
+        switch (selectedType) {
+            case 'practise':
+                loadedResults = getFromLocalStorage("flashcardResults");
+                headerHTML = `
+                    <tr>
+                        <th>Deutsch</th>
+                        <th>Fremdsprache</th>
+                        <th>1. Runde</th>
+                        <th>2. Runde</th>
+                    </tr>
+                `;
+                break;
+            case 'verbForms':
+                loadedResults = getFromLocalStorage("verbFormResults");
+                headerHTML = `
+                    <tr>
+                        <th>Verb</th>
+                        <th>Pronoun</th>
+                        <th>1. Runde</th>
+                        <th>2. Runde</th>
+                    </tr>
+                `;
+                break;
+            case 'vocaBlanks':
+            case 'vocaInput':
+                loadedResults = getFromLocalStorage(selectedType === 'vocaBlanks' ? "vocaBlanksResults" : "vocaInputResults");
+                headerHTML = `
+                    <tr>
+                        <th>Deutsch</th>
+                        <th>Fremdsprache</th>
+                        <th>1. Runde</th>
+                        <th>2. Runde</th>
+                    </tr>
+                `;
+                break;
+        }
+
+        if (loadedResults.length === 0) {
+            resultsContainer.innerHTML = "<tr><td colspan='4'>Keine Ergebnisse verfügbar.</td></tr>";
+            return;
+        }
+
+        tableHeader.innerHTML = headerHTML;
+        loadedResults.forEach(result => {
+            const row = createResultRow(result.word, result.translation || result.pronoun, result.firstRound, result.secondRound);
+            resultsContainer.appendChild(row);
+        });
     }
 
-    // Header der Tabelle setzen
-    tableHeader.innerHTML = headerHTML;
-    console.log(`Tabellen-Header gesetzt: ${headerHTML}`);
+    function createResultRow(word, translation, firstRoundStatus, secondRoundStatus) {
+        const row = document.createElement('tr');
+        
+        const wordCell = document.createElement('td');
+        wordCell.innerText = word;
+        row.appendChild(wordCell);
 
-    // Ergebniszeilen hinzufügen
-    loadedResults.forEach(result => {
-        const resultRow = createResultRow(result.word, result.pronoun || null, result.status);
-        resultsContainer.appendChild(resultRow);
-        console.log('Ergebniszeile hinzugefügt:', resultRow);
-    });
-}
+        const translationCell = document.createElement('td');
+        translationCell.innerText = translation;
+        row.appendChild(translationCell);
 
-function createResultRow(word, pronoun, status) {
-    console.log(`Erstelle Ergebniszeile für: Wort = ${word}, Pronoun = ${pronoun}, Status = ${status}`);
-    const resultRow = document.createElement('tr');
-    resultRow.classList.add(status); // Klasse für den Status hinzufügen
+        const firstRoundCell = document.createElement('td');
+        firstRoundCell.innerText = firstRoundStatus.replace("-", " ");
+        firstRoundCell.classList.add(firstRoundStatus === 'correct-first' ? 'correct-first' : 'second-round');
+        row.appendChild(firstRoundCell);
 
-    const wordCell = document.createElement('td');
-    wordCell.innerText = word;
-    resultRow.appendChild(wordCell);
+        const secondRoundCell = document.createElement('td');
+        secondRoundCell.innerText = secondRoundStatus.replace("-", " ");
+        secondRoundCell.classList.add(secondRoundStatus === 'correct-second' ? 'correct-second' : 'second-round');
+        row.appendChild(secondRoundCell);
 
-    // Nur pronoun hinzufügen, wenn es im Modus ist
-    if (pronoun) {
-        const pronounCell = document.createElement('td');
-        pronounCell.innerText = pronoun;
-        resultRow.appendChild(pronounCell);
+        return row;
     }
 
-    const statusCell = document.createElement('td');
-    statusCell.innerText = status.replace("-", " ");
-    
-    // Färbe die Statusanzeige basierend auf dem Status
-    if (status === 'correct-first') {
-        statusCell.classList.add('correct'); // Klasse für grün
-    } else if (status === 'second-round') {
-        statusCell.classList.add('wrong'); // Klasse für rot
+    window.onload = loadResults;
+    function updateResults() {
+        loadResults();
     }
-
-    resultRow.appendChild(statusCell);
-    return resultRow;
-}
-
-// Ergebnisse beim Laden der Seite abrufen
-window.onload = loadResults;
-
-// Ergebnisse aktualisieren, wenn Dropdown geändert wird
-function updateResults() {
-    loadResults();
-}
-
-</script>
+    </script>
 </body>
 </html>
