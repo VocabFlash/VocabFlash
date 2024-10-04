@@ -131,12 +131,14 @@
 <script>
     // Ergebnisse aus localStorage abrufen und überprüfen
     function getFromLocalStorage(key) {
+        console.log(`Versuche, Daten für ${key} aus localStorage abzurufen...`);
         const data = localStorage.getItem(key);
         if (!data) {
             console.error(`Keine Daten im localStorage für ${key} gefunden.`);
             return [];
         }
         try {
+            console.log(`Daten für ${key} erfolgreich abgerufen.`);
             return JSON.parse(data);
         } catch (e) {
             console.error(`Fehler beim Parsen von ${key}:`, e);
@@ -145,20 +147,21 @@
     }
 
     const results = getFromLocalStorage("results");
-    const verbFormResults = JSON.parse(localStorage.getItem("verbFormResults")) || [];
-    const vocaBlanksResults = JSON.parse(localStorage.getItem("vocaBlanksResults")) || [];
-    const vocaInputResults =  JSON.parse(localStorage.getItem("vocaInputResults")) || [];
-    const flashcardResults = JSON.parse(localStorage.getItem("flashcardResults")) || []; // Ergebnisse für flashcard practise
+    const verbFormResults = getFromLocalStorage("verbFormResults");
+    const vocaBlanksResults = getFromLocalStorage("vocaBlanksResults");
+    const vocaInputResults = getFromLocalStorage("vocaInputResults");
+    const flashcardResults = getFromLocalStorage("flashcardResults"); // Ergebnisse für flashcard practise
 
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
 
     function loadResults() {
-        console.log('Lade Ergebnisse...'); // Console Log
+        console.log('Lade Ergebnisse basierend auf der Dropdown-Auswahl...');
         resultsContainer.innerHTML = ""; // Vorherige Ergebnisse löschen
 
         const selectedType = dropdown.value; // Aktuelle Auswahl im Dropdown
+        console.log(`Aktuell ausgewählter Typ: ${selectedType}`);
 
         // Lade die entsprechenden Ergebnisse basierend auf der Dropdown-Auswahl
         let loadedResults = [];
@@ -167,6 +170,7 @@
         switch (selectedType) {
             case 'practise':
                 loadedResults = flashcardResults;
+                console.log(`Ergebnisse für 'practise' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
                         <th>Wort</th>
@@ -176,6 +180,7 @@
                 break;
             case 'verbForms':
                 loadedResults = verbFormResults;
+                console.log(`Ergebnisse für 'verbForms' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
                         <th>Verb</th>
@@ -184,17 +189,10 @@
                     </tr>
                 `;
                 break;
-            case 'vocaBlanks':
-                loadedResults = vocaBlanksResults;
-                headerHTML = `
-                    <tr>
-                        <th>Wort</th>
-                        <th>Status</th>
-                    </tr>
-                `;
-                break;
+                
             case 'vocaInput':
                 loadedResults = vocaInputResults;
+                console.log(`Ergebnisse für 'vocaInput' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
                         <th>Wort</th>
@@ -209,52 +207,54 @@
 
         // Wenn keine Ergebnisse geladen wurden
         if (loadedResults.length === 0) {
-            console.warn('Keine Ergebnisse verfügbar für', selectedType);
+            console.warn(`Keine Ergebnisse verfügbar für ${selectedType}`);
             resultsContainer.innerHTML = "<tr><td colspan='3'>Keine Ergebnisse verfügbar.</td></tr>";
             return;
         }
 
         // Header der Tabelle setzen
         tableHeader.innerHTML = headerHTML;
+        console.log(`Tabellen-Header gesetzt: ${headerHTML}`);
 
         // Ergebniszeilen hinzufügen
         loadedResults.forEach(result => {
             const resultRow = createResultRow(result.word, result.pronoun || null, result.status);
             resultsContainer.appendChild(resultRow);
+            console.log('Ergebniszeile hinzugefügt:', resultRow);
         });
     }
 
-function createResultRow(word, pronoun, status) {
-    const resultRow = document.createElement('tr');
-    resultRow.classList.add(status); // Klasse für den Status hinzufügen
+    function createResultRow(word, pronoun, status) {
+        console.log(`Erstelle Ergebniszeile für: Wort = ${word}, Pronoun = ${pronoun}, Status = ${status}`);
+        const resultRow = document.createElement('tr');
+        resultRow.classList.add(status); // Klasse für den Status hinzufügen
 
-    const wordCell = document.createElement('td');
-    wordCell.innerText = word;
-    resultRow.appendChild(wordCell);
+        const wordCell = document.createElement('td');
+        wordCell.innerText = word;
+        resultRow.appendChild(wordCell);
 
-    // Nur pronoun hinzufügen, wenn es im Modus ist
-    if (pronoun) {
-        const pronounCell = document.createElement('td');
-        pronounCell.innerText = pronoun;
-        resultRow.appendChild(pronounCell);
+        // Nur pronoun hinzufügen, wenn es im Modus ist
+        if (pronoun) {
+            const pronounCell = document.createElement('td');
+            pronounCell.innerText = pronoun;
+            resultRow.appendChild(pronounCell);
+        }
+
+        const statusCell = document.createElement('td');
+        statusCell.innerText = status.replace("-", " ");
+        
+        // Färbe die Statusanzeige basierend auf dem Status
+        if (status === 'correct') {
+            statusCell.classList.add('correct'); // Klasse für grün
+        } else if (status === 'wrong') {
+            statusCell.classList.add('wrong'); // Klasse für rot
+        }
+
+        resultRow.appendChild(statusCell);
+
+        console.log('Ergebniszeile erstellt:', resultRow); // Console Log
+        return resultRow;
     }
-
-    const statusCell = document.createElement('td');
-    statusCell.innerText = status.replace("-", " ");
-    
-    // Färbe die Statusanzeige basierend auf dem Status
-    if (status === 'correct') {
-        statusCell.classList.add('correct'); // Klasse für grün
-    } else if (status === 'wrong') {
-        statusCell.classList.add('wrong'); // Klasse für rot
-    }
-
-    resultRow.appendChild(statusCell);
-
-    console.log('Ergebniszeile erstellt:', resultRow); // Console Log
-    return resultRow;
-}
-
 
     function updateDropdown() {
         const source = new URLSearchParams(window.location.search).get("fromPage");
@@ -282,12 +282,13 @@ function createResultRow(word, pronoun, status) {
 
             // Setze das Dropdown basierend auf dem Source-Type
             dropdown.value = sourceType;
+            console.log(`Dropdown-Wert gesetzt auf: ${sourceType}`);
             loadResults(); // Ergebnisse für diese Auswahl laden
         }
     }
 
     function updateResults() {
-        console.log('Aktualisiere Ergebnisse...'); // Console Log
+        console.log('Aktualisiere Ergebnisse aufgrund einer Dropdown-Änderung...'); // Console Log
         loadResults(); // Ergebnisse neu laden, wenn Dropdown geändert wird
     }
 
@@ -302,6 +303,7 @@ function createResultRow(word, pronoun, status) {
 
     function navigateToPage() {
         const selectedMode = dropdown.value;
+        console.log(`Navigiere zu Seite für Modus: ${selectedMode}`);
         switch(selectedMode) {
             case 'practise':
                 window.location.href = 'practise.html?source=practise'; // Parameter hinzufügen
@@ -320,6 +322,7 @@ function createResultRow(word, pronoun, status) {
         }
     }
 </script>
+
 
 
 </body>
