@@ -86,6 +86,16 @@ function displayVocabWord() {
     }
 }
 
+   function showResults() {
+    // This function will navigate to the results page
+    window.location.href = "result.html?sourceType=vocaBlanks";
+} 
+
+    function skipToNext() {
+    // Simply move to the next word by calling nextWord()
+    nextWord();
+}
+
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
     const selectedSet = document.getElementById('setSelect').value;
