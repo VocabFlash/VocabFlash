@@ -86,10 +86,12 @@ function displayVocabWord() {
     }
 }
 
-   function showResults() {
-    // This function will navigate to the results page
-    window.location.href = "result.html?sourceType=vocaBlanks";
-} 
+    // Funktion für die Auswertung
+function showResults() {
+    localStorage.setItem("vocaBlankResults", JSON.stringify(results)); // Speichert die Ergebnisse speziell für vocaInput
+    const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
+    window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
+}
 
     function skipToNext() {
     // Simply move to the next word by calling nextWord()
