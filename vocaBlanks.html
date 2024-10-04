@@ -50,7 +50,7 @@ let wrongAttempts = 0;
 let wrongAnswers = [];
 let secondRound = false; // Flag für die zweite Runde
 let timer;
-let results = [];
+let results = []; // Speichert alle Ergebnisse
 
 // Funktion zum Zufälligmischen des Arrays
 function shuffle(array) {
@@ -66,14 +66,14 @@ function displayVocabWord() {
     if (!secondRound && currentIndex === 0) {
         shuffle(currentSet);
     }
-    console.log("Aktuelles Wort wird angezeigt:", currentSet[currentIndex]); // Überprüfe das angezeigte Wort
+    console.log("Aktuelles Wort wird angezeigt:", currentSet[currentIndex]);
     const vocabWord = document.getElementById('vocabWord');
     const inputCounter = document.getElementById('inputCounter');
     const submitButton = document.getElementById('submitAnswer');
     const skipButton = document.getElementById('skipButton');
-    const feedback = document.getElementById('feedback'); // Feedback-Element
+    const feedback = document.getElementById('feedback');
 
-    feedback.innerText = ''; // Setze das Feedback zurück
+    feedback.innerText = ''; // Feedback zurücksetzen
 
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
@@ -86,18 +86,17 @@ function displayVocabWord() {
     }
 }
 
-    // Funktion für die Auswertung
+// Funktion für die Auswertung und Weiterleitung
 function showResults() {
-    console.log("Results:", results); // Überprüfen, ob die Variable 'results' richtig definiert ist
-    localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); // Speichert die Ergebnisse speziell für vocaInput
-    const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
-    console.log("Current Page:", currentPage); // Überprüfen, ob der Dateiname richtig extrahiert wird
+    console.log("Results:", results);
+    localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); // Speichert die Ergebnisse
+    const currentPage = window.location.pathname.split("/").pop();
+    console.log("Current Page:", currentPage);
     window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
 }
 
-
-    function skipToNext() {
-    // Simply move to the next word by calling nextWord()
+// Funktion zum Überspringen eines Wortes
+function skipToNext() {
     nextWord();
 }
 
@@ -107,17 +106,18 @@ function updateVocabSet() {
     if (vocabSets[selectedSet]) {
         currentSet = vocabSets[selectedSet];
         currentIndex = 0;
-        wrongAnswers = []; // Reset der falschen Antworten beim Set-Wechsel
-        secondRound = false; // Zurücksetzen der zweiten Runde
-        console.log("Aktuelles Set:", currentSet); // Überprüfe das ausgewählte Set
+        wrongAnswers = []; // Setze die falschen Antworten zurück
+        secondRound = false; // Setze die zweite Runde zurück
+        console.log("Aktuelles Set:", currentSet);
         displayVocabWord();
     } else {
-        console.error("Set not found:", selectedSet); // Überprüfen, ob das Set vorhanden ist
+        console.error("Set not found:", selectedSet);
     }
 }
+
 // Funktion, um den Timer zu starten
 function startTimer() {
-    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden automatisch zum nächsten Wort
+    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden zum nächsten Wort
 }
 
 // Funktion zur Behandlung der Tastenereignisse
@@ -126,9 +126,9 @@ function handleKeyDown(event) {
     if (event.key === 'Enter') {
         const checkButton = document.getElementById('submitAnswer');
         if (checkButton.style.display !== 'none') {
-            checkAnswer(); // Wenn der Check-Button sichtbar ist, führt Enter die Überprüfung aus
+            checkAnswer();
         } else if (skipButton.style.display !== 'none') {
-            skipToNext(); // Wenn der Skip-Button sichtbar ist, führt Enter das Skippen aus
+            skipToNext();
         }
     }
 }
@@ -141,9 +141,9 @@ function toggleCheckButton() {
 
     // Der Check-Button soll nur sichtbar sein, wenn der Skip-Button nicht sichtbar ist
     if (userInput.trim() !== "" && skipButton.style.display === "none") {
-        submitButton.style.display = "block"; // Zeige den Check-Button
+        submitButton.style.display = "block";
     } else {
-        submitButton.style.display = "none"; // Verberge den Check-Button, wenn der Skip-Button da ist
+        submitButton.style.display = "none";
     }
 }
 
@@ -152,10 +152,9 @@ function nextWord() {
     clearTimeout(timer);
     wrongAttempts = 0;
 
-      // Feedback entfernen
-    const feedback = document.getElementById('feedback'); // Ersetze 'feedback' durch die ID deines Feedback-Elements
-    feedback.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
-    
+    const feedback = document.getElementById('feedback');
+    feedback.innerHTML = ''; // Feedback zurücksetzen
+
     if (currentIndex < currentSet.length - 1) {
         currentIndex++;
         displayVocabWord();
@@ -163,19 +162,20 @@ function nextWord() {
         secondRound = true;
         currentSet = wrongAnswers;
         currentIndex = 0;
-        console.log("Zweite Runde gestartet mit falschen Antworten:", currentSet); // Überprüfe den Start der zweiten Runde
+        console.log("Zweite Runde gestartet mit falschen Antworten:", currentSet);
         displayVocabWord();
     } else {
-        console.log('Ergebnisse vor dem Speichern:', results); // Zeige die Ergebnisse vor dem Speichern an
-        localStorage.setItem("results", JSON.stringify(results));
-        console.log("Ergebnisse wurden in localStorage gespeichert."); // Bestätige die Speicherung
+        console.log('Ergebnisse vor dem Speichern:', results);
+        localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); // Ergebnisse speichern
+        console.log("Ergebnisse wurden in localStorage gespeichert.");
         showResults();
     }
 }
 
+// Funktion zur Überprüfung der Antwort
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
-    const currentWord = currentSet[currentIndex]; // Aktuelles Wort holen
+    const currentWord = currentSet[currentIndex];
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
@@ -185,23 +185,23 @@ function checkAnswer() {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
         feedback.classList.add('correct');
-        vocabWord.classList.remove('wrong'); // Entferne 'wrong' Klasse, falls sie gesetzt war
-        vocabWord.classList.add('correct'); // Setze 'correct' Klasse
+        vocabWord.classList.remove('wrong');
+        vocabWord.classList.add('correct');
         skipButton.style.display = "block"; // Zeige den Skip-Button
         submitButton.style.display = "none"; // Verberge den Check-Button
         startTimer();
         wrongAttempts = 0;
 
-        results.push({ word: currentWord.de, status: "correct-first" }); // Grün
+        results.push({ word: currentWord.de, status: "correct-first" });
         console.log("Richtige Antwort, Ergebnis hinzugefügt:", results);
     } else {
         handleWrongAnswer(currentWord);
     }
 
-    // Eingabefeld zurücksetzen
-    document.getElementById('userInput').value = '';
+    document.getElementById('userInput').value = ''; // Eingabefeld zurücksetzen
 }
 
+// Funktion zur Behandlung einer falschen Antwort
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
@@ -213,20 +213,20 @@ function handleWrongAnswer(currentWord) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
         feedback.classList.add('wrong');
-        vocabWord.classList.add('wrong'); // Hier wird die Klasse 'wrong' hinzugefügt
+        vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; // Skip-Button ausblenden
     } else if (wrongAttempts === 2) {
         feedback.innerText = `The correct answer is: ${currentWord.ar}`;
         feedback.classList.remove('correct', 'wrong');
         feedback.classList.add('solution');
-        vocabWord.classList.remove('wrong'); // Entferne die Klasse 'wrong'
-        vocabWord.classList.add('solution'); // Setze 'solution' Klasse
-        wrongAnswers.push(currentWord); // Falsches Wort zur Liste hinzufügen
-        results.push({ word: currentWord.de, status: "second-round" }); // Rot
+        vocabWord.classList.remove('wrong');
+        vocabWord.classList.add('solution');
+        wrongAnswers.push(currentWord);
+        results.push({ word: currentWord.de, status: "second-round" });
         console.log("Falsche Antwort, zweite Runde Ergebnis hinzugefügt:", results);
         skipButton.style.display = "block"; // Zeige den Skip-Button
-        document.getElementById('submitAnswer').style.display = "none"; // Verberge den Check-Button
-        startTimer(); // Starte den Timer
+        document.getElementById('submitAnswer').style.display = "none";
+        startTimer();
     }
 }
 
@@ -234,19 +234,8 @@ function handleWrongAnswer(currentWord) {
 window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
-
-function saveVocaBlanksResults() {
-    const existingResults = JSON.parse(localStorage.getItem("vocaBlanksResults")) || [];
-    const updatedResults = [...existingResults, ...currentResults]; // currentResults enthält die neuen Ergebnisse
-    localStorage.setItem("vocaBlanksResults", JSON.stringify(updatedResults));
-    console.log("vocaBlanksResults erfolgreich gespeichert:", updatedResults);
-}
-
-// Aufruf nach jeder Aktualisierung der Ergebnisse
-saveVocaBlanksResults();
-
-
 </script>
+
 
 </body>
 </html>
