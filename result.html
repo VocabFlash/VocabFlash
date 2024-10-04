@@ -189,7 +189,16 @@
                     </tr>
                 `;
                 break;
-                
+            case 'vocaBlanks':
+                loadedResults = vocaBlanksResults;
+                console.log(`Ergebnisse für 'vocaBlanks' geladen:`, loadedResults);
+                headerHTML = `
+                    <tr>
+                        <th>Wort</th>
+                        <th>Status</th>
+                    </tr>
+                `;
+                break;
             case 'vocaInput':
                 loadedResults = vocaInputResults;
                 console.log(`Ergebnisse für 'vocaInput' geladen:`, loadedResults);
@@ -322,6 +331,7 @@
         }
     }
 </script>
+
 
 
 
