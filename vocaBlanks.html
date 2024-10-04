@@ -234,6 +234,12 @@ function handleWrongAnswer(currentWord) {
 window.onload = function() {
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
+
+    function saveVocaBlanksResults(results) {
+    console.log("Speichern der vocaBlanksResults:", results); // Zeigt die Ergebnisse, die gespeichert werden sollen
+    localStorage.setItem("vocaBlanksResults", JSON.stringify(results));
+}
+
 </script>
 
 </body>
