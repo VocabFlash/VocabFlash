@@ -76,28 +76,27 @@
             }
         }
 
-.container {
-    background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
-    padding: 20px; /* Innenabstand */
-    border-radius: 15px; /* Abgerundete Ecken */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
-    max-width: 600px; /* Maximale Breite für größere Bildschirme */
-    min-width: 300px; /* Minimale Breite, um zu kleine Container zu vermeiden */
-    text-align: center; /* Zentrierte Texte */
-    margin: 10px auto; /* Zentrierung und Abstand */
-    display: inline-block; /* Automatische Breite basierend auf dem Inhalt */
-}
+        .container {
+            background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
+            padding: 20px; /* Innenabstand */
+            border-radius: 15px; /* Abgerundete Ecken */
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+            max-width: 600px; /* Maximale Breite für größere Bildschirme */
+            min-width: 300px; /* Minimale Breite, um zu kleine Container zu vermeiden */
+            text-align: center; /* Zentrierte Texte */
+            margin: 10px auto; /* Zentrierung und Abstand */
+            display: inline-block; /* Automatische Breite basierend auf dem Inhalt */
+        }
 
-.correct {
-    color: green; /* Grün für richtige Antworten */
-    font-weight: bold; /* Optional: fett gedruckt */
-}
+        .correct {
+            color: green; /* Grün für richtige Antworten */
+            font-weight: bold; /* Optional: fett gedruckt */
+        }
 
-.wrong {
-    color: red; /* Rot für falsche Antworten */
-    font-weight: bold; /* Optional: fett gedruckt */
-}
-
+        .wrong {
+            color: red; /* Rot für falsche Antworten */
+            font-weight: bold; /* Optional: fett gedruckt */
+        }
     </style>
 </head>
 <body>
@@ -146,13 +145,6 @@
         }
     }
 
-    const results = getFromLocalStorage("results");
-    const verbFormResults = getFromLocalStorage("verbFormResults");
-    const vocaBlanksResults = getFromLocalStorage("vocaBlanksResults");
-    console.log("Geladene vocaBlanksResults:", vocaBlanksResults);
-    const vocaInputResults = getFromLocalStorage("vocaInputResults");
-    const flashcardResults = getFromLocalStorage("flashcardResults"); // Ergebnisse für flashcard practise
-
     const resultsContainer = document.getElementById('resultsContainer');
     const tableHeader = document.getElementById('tableHeader');
     const dropdown = document.getElementById('resultDropdown'); 
@@ -164,13 +156,12 @@
         const selectedType = dropdown.value; // Aktuelle Auswahl im Dropdown
         console.log(`Aktuell ausgewählter Typ: ${selectedType}`);
 
-        // Lade die entsprechenden Ergebnisse basierend auf der Dropdown-Auswahl
         let loadedResults = [];
         let headerHTML = '';
-        
+
         switch (selectedType) {
             case 'practise':
-                loadedResults = flashcardResults;
+                loadedResults = getFromLocalStorage("flashcardResults");
                 console.log(`Ergebnisse für 'practise' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
@@ -180,7 +171,7 @@
                 `;
                 break;
             case 'verbForms':
-                loadedResults = verbFormResults;
+                loadedResults = getFromLocalStorage("verbFormResults");
                 console.log(`Ergebnisse für 'verbForms' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
@@ -191,7 +182,7 @@
                 `;
                 break;
             case 'vocaBlanks':
-                loadedResults = vocaBlanksResults;
+                loadedResults = getFromLocalStorage("vocaBlanksResults");
                 console.log(`Ergebnisse für 'vocaBlanks' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
@@ -201,7 +192,7 @@
                 `;
                 break;
             case 'vocaInput':
-                loadedResults = vocaInputResults;
+                loadedResults = getFromLocalStorage("vocaInputResults");
                 console.log(`Ergebnisse für 'vocaInput' geladen:`, loadedResults);
                 headerHTML = `
                     <tr>
@@ -261,80 +252,16 @@
         }
 
         resultRow.appendChild(statusCell);
-
-        console.log('Ergebniszeile erstellt:', resultRow); // Console Log
         return resultRow;
     }
 
-    function updateDropdown() {
-        const source = new URLSearchParams(window.location.search).get("fromPage");
-        if (source) {
-            console.log('Quelle aus der URL:', source); // Debugging-Log
-            let sourceType = '';
+    // Ergebnisse beim Laden der Seite abrufen
+    window.onload = loadResults;
 
-            switch(source) {
-                case 'practise.html':
-                    sourceType = 'practise';
-                    break;
-                case 'verbForms.html':
-                    sourceType = 'verbForms';
-                    break;
-                case 'vocaBlanks.html':
-                    sourceType = 'vocaBlanks';
-                    break;
-                case 'vocaInput.html':
-                    sourceType = 'vocaInput';
-                    break;
-                default:
-                    console.error('Unbekannte Quelle:', source);
-                    return;
-            }
-
-            // Setze das Dropdown basierend auf dem Source-Type
-            dropdown.value = sourceType;
-            console.log(`Dropdown-Wert gesetzt auf: ${sourceType}`);
-            loadResults(); // Ergebnisse für diese Auswahl laden
-        }
-    }
-
+    // Ergebnisse aktualisieren, wenn Dropdown geändert wird
     function updateResults() {
-        console.log('Aktualisiere Ergebnisse aufgrund einer Dropdown-Änderung...'); // Console Log
-        loadResults(); // Ergebnisse neu laden, wenn Dropdown geändert wird
-    }
-
-    // Event-Listener für Dropdown
-    dropdown.addEventListener('change', updateResults);
-
-    window.onload = function() {
-        console.log('Seite wird geladen...'); // Console Log
-        updateDropdown();
         loadResults();
-    };
-
-    function navigateToPage() {
-        const selectedMode = dropdown.value;
-        console.log(`Navigiere zu Seite für Modus: ${selectedMode}`);
-        switch(selectedMode) {
-            case 'practise':
-                window.location.href = 'practise.html?source=practise'; // Parameter hinzufügen
-                break;
-            case 'verbForms':
-                window.location.href = 'verbForms.html?source=verbForms'; // Parameter hinzufügen
-                break;
-            case 'vocaBlanks':
-                window.location.href = 'vocaBlanks.html?source=vocaBlanks'; // Parameter hinzufügen
-                break;
-            case 'vocaInput':
-                window.location.href = 'result.html?source=vocaInput'; // Direkt zu result.html mit dem entsprechenden Parameter
-                break;
-            default:
-                console.error('Unbekannter Modus ausgewählt.'); // Console Log
-        }
     }
 </script>
-
-
-
-
 </body>
 </html>
