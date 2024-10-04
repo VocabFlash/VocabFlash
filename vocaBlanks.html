@@ -89,7 +89,7 @@ function displayVocabWord() {
     // Funktion für die Auswertung
 function showResults() {
     console.log("Results:", results); // Überprüfen, ob die Variable 'results' richtig definiert ist
-    localStorage.setItem("vocaBlankResults", JSON.stringify(results)); // Speichert die Ergebnisse speziell für vocaInput
+    localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); // Speichert die Ergebnisse speziell für vocaInput
     const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
     console.log("Current Page:", currentPage); // Überprüfen, ob der Dateiname richtig extrahiert wird
     window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
