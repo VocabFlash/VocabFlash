@@ -130,7 +130,6 @@
                 skipToNext(); // Zum nächsten Wort springen
             }
         } else if (event.key === 'PageDown') {
-            const inputs = document.querySelectorAll('input[type="text"]');
             const currentInput = document.activeElement;
             const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
             const currentIndex = inputs.indexOf(document.activeElement);
