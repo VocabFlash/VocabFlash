@@ -106,11 +106,8 @@
 
     // Funktion für den nächsten Wortwechsel
     function nextWord() {
-        wrongAttempts = 0;
-
         // Feedback entfernen
-        const feedback = document.getElementById('feedback'); // Überflüssig, da nicht mehr verwendet
-        feedback.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+        clearFeedback();
 
         // Wenn es noch nicht die zweite Runde ist und es gibt noch Wörter im Set
         if (!secondRound && currentIndex < currentSet.length - 1) {
@@ -130,16 +127,31 @@
         }
     }
 
+    function clearFeedback() {
+        ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
+            const feedbackElement = document.getElementById(`feedback${pronoun}`);
+            feedbackElement.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+            feedbackElement.className = 'feedback'; // Setzt die Klasse zurück
+        });
+    }
+
     function displayVocabWord() {
         if (currentSet.length > 0) {
             const vocab = currentSet[currentIndex];
-            vocabWord.innerText = vocab.de; // Zeigt das aktuelle Wort an
-            vocabWord.classList.remove('correct', 'wrong', 'solution');
+            document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`; // Zeigt das aktuelle Verb an
 
             inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
             submitButton.style.display = "block"; // Zeige den Check-Button
             skipButton.style.display = "block"; // Skip-Button sichtbar machen
+
+            clearInputs(); // Eingabefelder zurücksetzen
         }
+    }
+
+    function clearInputs() {
+        ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
+            document.getElementById(`input${pronoun}`).value = ''; // Setzt die Eingabefelder zurück
+        });
     }
 
     function loadVerbForConjugation() {
@@ -157,10 +169,8 @@
 
         document.getElementById('selectedVerb').innerText = `Selected Verb: ${currentVerb.verb}`;
 
-        // Reset inputs
-        ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
-            document.getElementById(`input${pronoun}`).value = '';
-        });
+        clearInputs();
+        clearFeedback();
     }
 
     function checkAnswers() {
@@ -185,8 +195,22 @@
             } else {
                 feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`; // Zeige die richtige Antwort an
                 feedbackElement.className = 'feedback wrong'; // Füge die Klasse für die falsche Antwort hinzu
+                wrongAnswers.push(pronoun); // Füge falsche Antworten zur Liste hinzu
             }
         }
+
+        // Aktiviere den Skip-Button, wenn es falsche Antworten gibt
+        if (wrongAnswers.length > 0) {
+            skipButton.style.display = "block"; 
+        }
+
+        // Aktiviere den Bestätigungs-Button, um zur nächsten Runde zu gelangen
+        submitButton.style.display = "none"; 
+    }
+
+    function showResults() {
+        alert('All done!'); // Placeholder für das Anzeigen der Ergebnisse
+        // Hier kannst du die Logik hinzufügen, um die Ergebnisse anzuzeigen.
     }
 </script>
 
