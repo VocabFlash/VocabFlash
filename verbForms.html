@@ -17,43 +17,50 @@
     <table id="conjugationTable">
         <thead>
             <tr>
+                <th>Pronoun</th>
                 <th>Your Answer</th>
             </tr>
         </thead>
         <tbody>
             <tr>
+                <td>je</td>
                 <td>
-                    <input type="text" id="inputJe" placeholder="je">
+                    <input type="text" id="inputJe" onkeydown="handleKeyDown(event)">
                     <span id="feedbackJe" class="feedback"></span>
                 </td>
             </tr>
             <tr>
+                <td>tu</td>
                 <td>
-                    <input type="text" id="inputTu" placeholder="tu">
+                    <input type="text" id="inputTu" onkeydown="handleKeyDown(event)">
                     <span id="feedbackTu" class="feedback"></span>
                 </td>
             </tr>
             <tr>
+                <td>il/elle</td>
                 <td>
-                    <input type="text" id="inputIlElle" placeholder="il/elle">
+                    <input type="text" id="inputIlElle" onkeydown="handleKeyDown(event)">
                     <span id="feedbackIlElle" class="feedback"></span>
                 </td>
             </tr>
             <tr>
+                <td>nous</td>
                 <td>
-                    <input type="text" id="inputNous" placeholder="nous">
+                    <input type="text" id="inputNous" onkeydown="handleKeyDown(event)">
                     <span id="feedbackNous" class="feedback"></span>
                 </td>
             </tr>
             <tr>
+                <td>vous</td>
                 <td>
-                    <input type="text" id="inputVous" placeholder="vous">
+                    <input type="text" id="inputVous" onkeydown="handleKeyDown(event)">
                     <span id="feedbackVous" class="feedback"></span>
                 </td>
             </tr>
             <tr>
+                <td>ils/elles</td>
                 <td>
-                    <input type="text" id="inputIlsElles" placeholder="ils/elles">
+                    <input type="text" id="inputIlsElles" onkeydown="handleKeyDown(event)">
                     <span id="feedbackIlsElles" class="feedback"></span>
                 </td>
             </tr>
@@ -99,23 +106,17 @@
 
     // Funktion für den nächsten Wortwechsel
     function nextWord() {
-        // Feedback entfernen
         clearFeedback();
 
-        // Wenn es noch nicht die zweite Runde ist und es gibt noch Wörter im Set
         if (!secondRound && currentIndex < currentSet.length - 1) {
             currentIndex++;
             displayVocabWord();
-        } 
-        // Falls die erste Runde zu Ende ist und es gibt falsche Antworten
-        else if (!secondRound && wrongAnswers.length > 0) {
+        } else if (!secondRound && wrongAnswers.length > 0) {
             secondRound = true;
             currentSet = wrongAnswers;
             currentIndex = 0;
             displayVocabWord();
-        } 
-        // Wenn keine weiteren Wörter da sind (egal ob erste oder zweite Runde)
-        else {
+        } else {
             showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
         }
     }
@@ -131,11 +132,11 @@
     function displayVocabWord() {
         if (currentSet.length > 0) {
             const vocab = currentSet[currentIndex];
-            document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`; // Zeigt das aktuelle Verb an
+            document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`;
 
             inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-            document.getElementById("submitConjugation").style.display = "block"; // Zeige den Check-Button
-            document.getElementById("skipButton").style.display = "none"; // Skip-Button verstecken
+            submitButton.style.display = "block"; // Zeige den Check-Button
+            skipButton.style.display = "none"; // Skip-Button nicht sichtbar
 
             clearInputs(); // Eingabefelder zurücksetzen
         }
@@ -160,10 +161,10 @@
         const randomIndex = Math.floor(Math.random() * verbs.length);
         currentVerb = verbs[randomIndex];
 
-        currentSet = [currentVerb]; // Setze die aktuelle Setzen auf das ausgewählte Verb
-        currentIndex = 0; // Setze den Index zurück
+        document.getElementById('selectedVerb').innerText = `Selected Verb: ${currentVerb.verb}`;
 
-        displayVocabWord(); // Zeige das Verb an
+        clearInputs();
+        clearFeedback();
     }
 
     function checkAnswers() {
@@ -178,7 +179,7 @@
             ilsElles: conjugate(currentVerb, selectedTense, 'ils')
         };
 
-        wrongAnswers = []; // Reset wrongAnswers at the beginning of this function
+        let allCorrect = true;
 
         for (const pronoun in correctAnswers) {
             const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
@@ -187,23 +188,38 @@
             if (userAnswer === correctAnswers[pronoun]) {
                 feedbackElement.innerHTML = 'Correct!'; // Füge ein Häkchen hinzu
                 feedbackElement.className = 'feedback correct'; // Füge die Klasse für die richtige Antwort hinzu
-                // Starten Sie den Countdown, um das nächste Wort anzuzeigen
-                setTimeout(() => {
-                    nextWord();
-                }, 4000);
             } else {
                 feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`; // Zeige die richtige Antwort an
                 feedbackElement.className = 'feedback wrong'; // Füge die Klasse für die falsche Antwort hinzu
                 wrongAnswers.push(pronoun); // Füge falsche Antworten zur Liste hinzu
+                allCorrect = false; // Markiere, dass nicht alle Antworten korrekt sind
             }
         }
 
         // Aktiviere den Skip-Button, wenn es falsche Antworten gibt
-        if (wrongAnswers.length > 0) {
-            skipButton.style.display = "block"; 
-            submitButton.style.display = "none"; // Verstecke den Bestätigungs-Button
+        if (allCorrect) {
+            skipButton.style.display = "block"; // Skip-Button sichtbar machen, wenn alles korrekt ist
+            submitButton.style.display = "none"; // Bestätigungs-Button nicht sichtbar
         } else {
-            skipButton.style.display = "none"; // Verstecke den Skip-Button, wenn alle Antworten richtig sind
+            skipButton.style.display = "none"; // Skip-Button nicht sichtbar machen, wenn nicht alles korrekt ist
+            submitButton.style.display = "block"; // Bestätigungs-Button sichtbar machen
+        }
+    }
+
+    // Handle keydown events for navigation
+    function handleKeyDown(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Verhindere das Standardverhalten des Enter-Keys
+            checkAnswers(); // Antworten überprüfen
+        } else if (event.key === 'ArrowDown' || event.key === 'PageDown') {
+            event.preventDefault(); // Verhindere das Standardverhalten der Pfeiltasten
+            const inputs = document.querySelectorAll('input[type="text"]');
+            const currentInput = event.target;
+            const nextInput = Array.from(inputs).find(input => input === currentInput).nextElementSibling;
+
+            if (nextInput && nextInput.tagName === 'INPUT') {
+                nextInput.focus(); // Verschiebe den Fokus zum nächsten Eingabefeld
+            }
         }
     }
 </script>
