@@ -101,6 +101,8 @@
     let currentSet = []; // Aktuelles Set von Verben
     let timer; // Timer für automatisches Weiterspringen
     let results = []; // Ergebnisse speichern
+    let submitButton;
+    let skipButton;
 
     // VERB ANZEIGEN
     function displayVocabWord() {
@@ -203,7 +205,7 @@
         // Nach 2 falschen Versuchen oder korrekten Antworten Timer starten
         if (allCorrect || wrongAttempts >= 2) {
             skipButton.style.display = "block"; // Zeige den Skip-Button
-            submitButton.style.display = "none"; // Verstecke den Check-Button
+            .style.display = "none"; // Verstecke den Check-Button
             startTimer(); // Timer starten, um automatisch zum nächsten Wort zu wechseln
         } else {
             wrongAttempts++; // Falsche Versuche zählen
@@ -233,6 +235,7 @@
     }
 
     //FEEDBACK ENTFERNEN
+    function clearFeedback() {
     ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
         const feedbackElement = document.getElementById(`feedback${pronoun}`);
         if (feedbackElement) {
