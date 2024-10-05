@@ -17,50 +17,43 @@
     <table id="conjugationTable">
         <thead>
             <tr>
-                <th>Pronoun</th>
                 <th>Your Answer</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>je</td>
                 <td>
-                    <input type="text" id="inputJe">
+                    <input type="text" id="inputJe" placeholder="je">
                     <span id="feedbackJe" class="feedback"></span>
                 </td>
             </tr>
             <tr>
-                <td>tu</td>
                 <td>
-                    <input type="text" id="inputTu">
+                    <input type="text" id="inputTu" placeholder="tu">
                     <span id="feedbackTu" class="feedback"></span>
                 </td>
             </tr>
             <tr>
-                <td>il/elle</td>
                 <td>
-                    <input type="text" id="inputIlElle">
+                    <input type="text" id="inputIlElle" placeholder="il/elle">
                     <span id="feedbackIlElle" class="feedback"></span>
                 </td>
             </tr>
             <tr>
-                <td>nous</td>
                 <td>
-                    <input type="text" id="inputNous">
+                    <input type="text" id="inputNous" placeholder="nous">
                     <span id="feedbackNous" class="feedback"></span>
                 </td>
             </tr>
             <tr>
-                <td>vous</td>
                 <td>
-                    <input type="text" id="inputVous">
+                    <input type="text" id="inputVous" placeholder="vous">
                     <span id="feedbackVous" class="feedback"></span>
                 </td>
             </tr>
             <tr>
-                <td>ils/elles</td>
                 <td>
-                    <input type="text" id="inputIlsElles">
+                    <input type="text" id="inputIlsElles" placeholder="ils/elles">
                     <span id="feedbackIlsElles" class="feedback"></span>
                 </td>
             </tr>
@@ -141,8 +134,8 @@
             document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`; // Zeigt das aktuelle Verb an
 
             inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-            submitButton.style.display = "block"; // Zeige den Check-Button
-            skipButton.style.display = "block"; // Skip-Button sichtbar machen
+            document.getElementById("submitConjugation").style.display = "block"; // Zeige den Check-Button
+            document.getElementById("skipButton").style.display = "none"; // Skip-Button verstecken
 
             clearInputs(); // Eingabefelder zurücksetzen
         }
@@ -167,10 +160,10 @@
         const randomIndex = Math.floor(Math.random() * verbs.length);
         currentVerb = verbs[randomIndex];
 
-        document.getElementById('selectedVerb').innerText = `Selected Verb: ${currentVerb.verb}`;
+        currentSet = [currentVerb]; // Setze die aktuelle Setzen auf das ausgewählte Verb
+        currentIndex = 0; // Setze den Index zurück
 
-        clearInputs();
-        clearFeedback();
+        displayVocabWord(); // Zeige das Verb an
     }
 
     function checkAnswers() {
@@ -185,6 +178,8 @@
             ilsElles: conjugate(currentVerb, selectedTense, 'ils')
         };
 
+        wrongAnswers = []; // Reset wrongAnswers at the beginning of this function
+
         for (const pronoun in correctAnswers) {
             const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
             const feedbackElement = document.getElementById(`feedback${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`); // Feedback-Element für das jeweilige Pronomen
@@ -192,6 +187,10 @@
             if (userAnswer === correctAnswers[pronoun]) {
                 feedbackElement.innerHTML = 'Correct!'; // Füge ein Häkchen hinzu
                 feedbackElement.className = 'feedback correct'; // Füge die Klasse für die richtige Antwort hinzu
+                // Starten Sie den Countdown, um das nächste Wort anzuzeigen
+                setTimeout(() => {
+                    nextWord();
+                }, 4000);
             } else {
                 feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`; // Zeige die richtige Antwort an
                 feedbackElement.className = 'feedback wrong'; // Füge die Klasse für die falsche Antwort hinzu
@@ -202,17 +201,11 @@
         // Aktiviere den Skip-Button, wenn es falsche Antworten gibt
         if (wrongAnswers.length > 0) {
             skipButton.style.display = "block"; 
+            submitButton.style.display = "none"; // Verstecke den Bestätigungs-Button
+        } else {
+            skipButton.style.display = "none"; // Verstecke den Skip-Button, wenn alle Antworten richtig sind
         }
-
-        // Aktiviere den Bestätigungs-Button, um zur nächsten Runde zu gelangen
-        submitButton.style.display = "none"; 
-    }
-
-    function showResults() {
-        alert('All done!'); // Placeholder für das Anzeigen der Ergebnisse
-        // Hier kannst du die Logik hinzufügen, um die Ergebnisse anzuzeigen.
     }
 </script>
-
 </body>
 </html>
