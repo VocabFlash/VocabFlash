@@ -123,7 +123,7 @@
     function handleKeyDown(event) {
         const skipButton = document.getElementById('skipButton');
         if (event.key === 'Enter') {
-            const checkButton = document.getElementById('submitAnswer');
+            const checkButton = document.getElementById('submitConjugation');
             if (checkButton.style.display !== 'none') {
                 checkAnswers(); // Antworten prüfen
             } else if (skipButton.style.display !== 'none') {
@@ -132,7 +132,9 @@
         } else if (event.key === 'PageDown') {
             const inputs = document.querySelectorAll('input[type="text"]');
             const currentInput = document.activeElement;
-            const nextInput = Array.from(inputs).find(input => input === currentInput).nextElementSibling;
+            const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
+            const currentIndex = inputs.indexOf(document.activeElement);
+            const nextInput = inputs[currentIndex + 1];
             if (nextInput && nextInput.tagName === 'INPUT') {
                 nextInput.focus(); // Fokus zum nächsten Eingabefeld verschieben
             }
@@ -149,9 +151,10 @@
     function nextWord() {
         clearTimeout(timer);
         wrongAttempts = 0;
+        clearFeedback();
         //FEEDBACK ENTFERNEN
-            const feedback = document.getElementById('feedback'); // Ersetze 'feedback' durch die ID deines Feedback-Elements
-            feedback.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+             // Ersetze 'feedback' durch die ID deines Feedback-Elements
+             // Entfernt den vorherigen Feedback-Text
         //ERSTE RUNDE IM GANGE
              if (!secondRound && currentIndex < currentSet.length - 1) {
                 currentIndex++;
@@ -211,7 +214,7 @@
     // CHECK-BUTTON ANZEIGEN/VERSTECKEN
     function toggleCheckButton() {
         const inputs = document.querySelectorAll('.verb-input'); // Alle Eingabefelder für die Konjugationen
-        const submitButton = document.getElementById('submitAnswer');
+        const submitButton = document.getElementById('submitConjugation');
         const skipButton = document.getElementById('skipButton');
         let allFilled = true; // Annahme, dass alle Felder ausgefüllt sind
     
@@ -224,20 +227,20 @@
     
         // Zeige den Check-Button nur, wenn alle Felder ausgefüllt sind und der Skip-Button nicht sichtbar ist
         if (allFilled && skipButton.style.display === "none") {
-            submitButton.style.display = "block"; // Zeige den Check-Button
+            document.getElementById('submitConjugation').style.display = "block"; // Zeige den Check-Button
         } else {
-            submitButton.style.display = "none"; // Verberge den Check-Button
+            document.getElementById('submitConjugation').style.display = "none"; // Verberge den Check-Button
         }
     }
 
-    // FEEDBACK LÖSCHEN
-    function clearFeedback() {
-        ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
-            const feedbackElement = document.getElementById(`feedback${pronoun}`);
-            feedbackElement.innerHTML = ''; // Feedback-Text entfernen
-            feedbackElement.className = 'feedback'; // Klasse zurücksetzen
-        });
-    }
+    //FEEDBACK ENTFERNEN
+    ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
+        const feedbackElement = document.getElementById(`feedback${pronoun}`);
+        if (feedbackElement) {
+            feedbackElement.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+            feedbackElement.className = 'feedback'; // Setzt die Klasse zurück
+        }
+    });
 
     // EINGABEFELDER LÖSCHEN
     function clearInputs() {
@@ -274,6 +277,7 @@
 
     // VERB LADEN
     function loadVerbForConjugation() {
+        clearTimeout(timer);
         const selectedSet = document.getElementById('setSelect').value;
         const selectedTense = document.getElementById('tenseSelect').value;
         const verbs = verbSets[selectedSet];
