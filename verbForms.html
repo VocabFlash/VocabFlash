@@ -24,33 +24,51 @@
         <tbody>
             <tr>
                 <td>je</td>
-                <td><input type="text" id="inputJe"></td>
+                <td>
+                    <input type="text" id="inputJe">
+                    <span id="feedbackJe" class="feedback"></span>
+                </td>
             </tr>
             <tr>
                 <td>tu</td>
-                <td><input type="text" id="inputTu"></td>
+                <td>
+                    <input type="text" id="inputTu">
+                    <span id="feedbackTu" class="feedback"></span>
+                </td>
             </tr>
             <tr>
                 <td>il/elle</td>
-                <td><input type="text" id="inputIlElle"></td>
+                <td>
+                    <input type="text" id="inputIlElle">
+                    <span id="feedbackIlElle" class="feedback"></span>
+                </td>
             </tr>
             <tr>
                 <td>nous</td>
-                <td><input type="text" id="inputNous"></td>
+                <td>
+                    <input type="text" id="inputNous">
+                    <span id="feedbackNous" class="feedback"></span>
+                </td>
             </tr>
             <tr>
                 <td>vous</td>
-                <td><input type="text" id="inputVous"></td>
+                <td>
+                    <input type="text" id="inputVous">
+                    <span id="feedbackVous" class="feedback"></span>
+                </td>
             </tr>
             <tr>
                 <td>ils/elles</td>
-                <td><input type="text" id="inputIlsElles"></td>
+                <td>
+                    <input type="text" id="inputIlsElles">
+                    <span id="feedbackIlsElles" class="feedback"></span>
+                </td>
             </tr>
         </tbody>
     </table>
     
-    <button id="submitConjugation" onclick="checkAnswers()">Submit Answers</button>
-    <div id="feedback"></div>
+    <button class="confirm-button" id="submitConjugation" onclick="checkAnswers()">Submit Answers</button>
+    <button class="confirm-button" id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button>
 </div>
 
 <div class="container">
@@ -75,7 +93,54 @@
 </div>
 
 <script>
-    let currentVerb;
+    let currentVerb; // Aktuelles Verb
+    let currentIndex = 0; // Index des aktuellen Verbs
+    let wrongAnswers = []; // Falsche Antworten speichern
+    let secondRound = false; // Überprüfen, ob es die zweite Runde ist
+    let currentSet = []; // Aktuelles Set von Verben
+
+    // Funktion für den Skip-Button 
+    function skipToNext() {
+        nextWord();
+    }
+
+    // Funktion für den nächsten Wortwechsel
+    function nextWord() {
+        wrongAttempts = 0;
+
+        // Feedback entfernen
+        const feedback = document.getElementById('feedback'); // Überflüssig, da nicht mehr verwendet
+        feedback.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
+
+        // Wenn es noch nicht die zweite Runde ist und es gibt noch Wörter im Set
+        if (!secondRound && currentIndex < currentSet.length - 1) {
+            currentIndex++;
+            displayVocabWord();
+        } 
+        // Falls die erste Runde zu Ende ist und es gibt falsche Antworten
+        else if (!secondRound && wrongAnswers.length > 0) {
+            secondRound = true;
+            currentSet = wrongAnswers;
+            currentIndex = 0;
+            displayVocabWord();
+        } 
+        // Wenn keine weiteren Wörter da sind (egal ob erste oder zweite Runde)
+        else {
+            showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
+        }
+    }
+
+    function displayVocabWord() {
+        if (currentSet.length > 0) {
+            const vocab = currentSet[currentIndex];
+            vocabWord.innerText = vocab.de; // Zeigt das aktuelle Wort an
+            vocabWord.classList.remove('correct', 'wrong', 'solution');
+
+            inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
+            submitButton.style.display = "block"; // Zeige den Check-Button
+            skipButton.style.display = "block"; // Skip-Button sichtbar machen
+        }
+    }
 
     function loadVerbForConjugation() {
         const selectedSet = document.getElementById('setSelect').value;
@@ -110,17 +175,18 @@
             ilsElles: conjugate(currentVerb, selectedTense, 'ils')
         };
 
-        let feedback = '';
         for (const pronoun in correctAnswers) {
             const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
+            const feedbackElement = document.getElementById(`feedback${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`); // Feedback-Element für das jeweilige Pronomen
+
             if (userAnswer === correctAnswers[pronoun]) {
-                feedback += `${pronoun}: Correct!<br>`;
+                feedbackElement.innerHTML = 'Correct!'; // Füge ein Häkchen hinzu
+                feedbackElement.className = 'feedback correct'; // Füge die Klasse für die richtige Antwort hinzu
             } else {
-                feedback += `${pronoun}: Wrong! Correct answer: ${correctAnswers[pronoun]}<br>`;
+                feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`; // Zeige die richtige Antwort an
+                feedbackElement.className = 'feedback wrong'; // Füge die Klasse für die falsche Antwort hinzu
             }
         }
-
-        document.getElementById('feedback').innerHTML = feedback;
     }
 </script>
 
