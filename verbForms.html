@@ -105,21 +105,28 @@
     }
 
     // Funktion für den nächsten Wortwechsel
-    function nextWord() {
-        clearFeedback();
+function nextWord() {
+    // Feedback entfernen
+    clearFeedback();
 
-        if (!secondRound && currentIndex < currentSet.length - 1) {
-            currentIndex++;
-            displayVocabWord();
-        } else if (!secondRound && wrongAnswers.length > 0) {
-            secondRound = true;
-            currentSet = wrongAnswers;
-            currentIndex = 0;
-            displayVocabWord();
-        } else {
-            showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
-        }
+    // Wenn es noch nicht die zweite Runde ist und es gibt noch Wörter im Set
+    if (!secondRound && currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } 
+    // Falls die erste Runde zu Ende ist und es gibt falsche Antworten
+    else if (!secondRound && wrongAnswers.length > 0) {
+        secondRound = true;
+        currentSet = wrongAnswers;
+        currentIndex = 0;
+        displayVocabWord();
+    } 
+    // Wenn keine weiteren Wörter da sind
+    else {
+        showResults(); // Leite zur Ergebnisseite weiter
     }
+}
+
 
     function clearFeedback() {
         ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
@@ -167,44 +174,42 @@
         clearFeedback();
     }
 
-    function checkAnswers() {
-        const selectedTense = document.getElementById('tenseSelect').value;
+function checkAnswers() {
+    const selectedTense = document.getElementById('tenseSelect').value;
 
-        const correctAnswers = {
-            je: conjugate(currentVerb, selectedTense, 'je'),
-            tu: conjugate(currentVerb, selectedTense, 'tu'),
-            ilElle: conjugate(currentVerb, selectedTense, 'il'),
-            nous: conjugate(currentVerb, selectedTense, 'nous'),
-            vous: conjugate(currentVerb, selectedTense, 'vous'),
-            ilsElles: conjugate(currentVerb, selectedTense, 'ils')
-        };
+    const correctAnswers = {
+        je: conjugate(currentVerb, selectedTense, 'je').replace('je ', ''),
+        tu: conjugate(currentVerb, selectedTense, 'tu').replace('tu ', ''),
+        ilElle: conjugate(currentVerb, selectedTense, 'il').replace('il ', ''),
+        nous: conjugate(currentVerb, selectedTense, 'nous').replace('nous ', ''),
+        vous: conjugate(currentVerb, selectedTense, 'vous').replace('vous ', ''),
+        ilsElles: conjugate(currentVerb, selectedTense, 'ils').replace('ils ', '')
+    };
 
-        let allCorrect = true;
+    for (const pronoun in correctAnswers) {
+        const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
+        const feedbackElement = document.getElementById(`feedback${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`);
 
-        for (const pronoun in correctAnswers) {
-            const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
-            const feedbackElement = document.getElementById(`feedback${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`); // Feedback-Element für das jeweilige Pronomen
-
-            if (userAnswer === correctAnswers[pronoun]) {
-                feedbackElement.innerHTML = 'Correct!'; // Füge ein Häkchen hinzu
-                feedbackElement.className = 'feedback correct'; // Füge die Klasse für die richtige Antwort hinzu
-            } else {
-                feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`; // Zeige die richtige Antwort an
-                feedbackElement.className = 'feedback wrong'; // Füge die Klasse für die falsche Antwort hinzu
-                wrongAnswers.push(pronoun); // Füge falsche Antworten zur Liste hinzu
-                allCorrect = false; // Markiere, dass nicht alle Antworten korrekt sind
-            }
-        }
-
-        // Aktiviere den Skip-Button, wenn es falsche Antworten gibt
-        if (allCorrect) {
-            skipButton.style.display = "block"; // Skip-Button sichtbar machen, wenn alles korrekt ist
-            submitButton.style.display = "none"; // Bestätigungs-Button nicht sichtbar
+        if (userAnswer === correctAnswers[pronoun]) {
+            feedbackElement.innerHTML = 'Correct!'; 
+            feedbackElement.className = 'feedback correct'; 
         } else {
-            skipButton.style.display = "none"; // Skip-Button nicht sichtbar machen, wenn nicht alles korrekt ist
-            submitButton.style.display = "block"; // Bestätigungs-Button sichtbar machen
+            feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`; 
+            feedbackElement.className = 'feedback wrong'; 
+            wrongAnswers.push(pronoun); 
         }
     }
+
+    // Skip-Button und Submit-Button Logik
+    if (wrongAnswers.length === 0) {
+        skipButton.style.display = "block"; 
+        submitButton.style.display = "none"; 
+    } else {
+        skipButton.style.display = "none"; 
+        submitButton.style.display = "block"; 
+    }
+}
+
 
     // Handle keydown events for navigation
     function handleKeyDown(event) {
@@ -222,6 +227,27 @@
             }
         }
     }
+
+    document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        if (submitButton.style.display !== "none") {
+            checkAnswers();
+        } else if (skipButton.style.display !== "none") {
+            skipToNext();
+        }
+    }
+    
+    if (event.key === 'PageDown') {
+        const inputs = document.querySelectorAll('input[type="text"]');
+        const currentInput = document.activeElement;
+        const nextInput = Array.from(inputs).find(input => input === currentInput).nextElementSibling;
+
+        if (nextInput && nextInput.tagName === 'INPUT') {
+            nextInput.focus(); // Verschiebe den Fokus zum nächsten Eingabefeld
+        }
+    }
+});
+
 </script>
 </body>
 </html>
