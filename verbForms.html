@@ -210,6 +210,11 @@
         } else {
             wrongAttempts++; // Falsche Versuche zählen
         }
+    
+        // Überprüfen, ob alle Verben abgeschlossen sind
+        if (currentIndex === currentSet.length - 1 && allCorrect) {
+            showResults(); // Weiterleitung zu den Ergebnissen
+        }
     }
 
     // CHECK-BUTTON ANZEIGEN/VERSTECKEN
