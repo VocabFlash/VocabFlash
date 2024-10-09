@@ -121,7 +121,7 @@ function loadResults() {
     if (round1Results.length > 0) {
         console.log("Populating round 1 results...");
         round1Results.forEach(result => {
-            const resultRow = createResultRow(result.word, result.answer, result.status);
+            const resultRow = createResultRow(result.de, result.ar, result.status); // Hier die richtigen Felder verwenden
             resultsContainerRound1.appendChild(resultRow);
         });
         document.getElementById('vocabResultsTableRound1').style.display = 'table';
@@ -129,12 +129,12 @@ function loadResults() {
         console.log("No round 1 results found.");
         document.getElementById('vocabResultsTableRound1').style.display = 'none';
     }
-
+    
     // Populate round 2 results
     if (round2Results.length > 0) {
         console.log("Populating round 2 results...");
         round2Results.forEach(result => {
-            const resultRow = createResultRow(result.word, result.answer, result.status);
+            const resultRow = createResultRow(result.de, result.ar, result.status); // Hier die richtigen Felder verwenden
             resultsContainerRound2.appendChild(resultRow);
         });
         document.getElementById('vocabResultsTableRound2').style.display = 'table';
@@ -142,7 +142,7 @@ function loadResults() {
         console.log("No round 2 results found.");
         document.getElementById('vocabResultsTableRound2').style.display = 'none';
     }
-}
+
 
 function createResultRow(word, translation, status) {
     const resultRow = document.createElement('tr');
