@@ -1,7 +1,66 @@
-/* Tabellenheader: Heller Grauton */
-th {
-    background-color: #e0e0e0; /* Heller Grauton für den Header */
-    color: #333; /* Dunkler Text im Header */
+/* Body Styling */
+body {
+    background-color: #1a1e24; /* Dunkler Hintergrund */
+    font-family: "Arial Black", sans-serif; /* Einheitliche Schriftart */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+
+/* Header und Überschriften */
+.header {
+    display: flex;
+    align-items: center; /* Zentriert das Logo und den Titel vertikal */
+}
+
+h1, h2 {
+    margin: 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+h1 {
+    color: #fff; /* Weißer Text */
+    font-size: 24px;
+}
+
+h2 {
+    color: black;
+    font-size: 20px;
+}
+
+/* Container Styling */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    min-width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Ergebnisfarben */
+.correct {
+    background-color: #4caf50; /* Grün für korrekte Antworten */
+}
+
+.correct-second {
+    background-color: #ff9800; /* Orange für korrekte Antworten im zweiten Versuch */
+}
+
+.wrong {
+    background-color: #f44336; /* Rot für falsche Antworten */
+}
+
+.table-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* Abstand zwischen den Tabellen */
 }
 
 /* Tabellen Styling */
@@ -20,42 +79,55 @@ th, td {
     text-align: left; /* Text links ausrichten */
 }
 
+/* Tabellenheader: Dunkler Grauton */
+th {
+    background-color: #2c2f33; /* Dunkelgrauer Header leicht heller als der Hintergrund */
+    color: #ccc; /* Heller Text im Header */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Leichte Schattierung für besseren Kontrast */
+}
+
+/* Tabellenzeilen Styling */
 td {
     font-size: 1rem; /* Standard-Schriftgröße */
+    color: #000; /* Standard-Schriftfarbe */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Leichte Schattierung für besseren Kontrast */
 }
 
 /* Linke Spalte */
 td.left-column {
     font-size: 10px; /* Schriftgröße verkleinern */
-    width: 50%; /* Breite der linken Spalte */
+    width: 30%; /* Breite der linken Spalte */
 }
 
 /* Rechte Spalte */
 td.right-column {
-    font-size: 20px; /* Schriftgröße vergrößern */
-    width: 50%; /* Breite der rechten Spalte */
+    font-size: 16px; /* Schriftgröße vergrößern */
+    width: 70%; /* Breite der rechten Spalte */
 }
 
-/* Ergebnisfarben und passende Textfarben */
+/* Ergebnisfarben und passende Textfarben mit Schattierung */
 .correct-first {
-    background-color: #4caf50; /* Grüner Hintergrund für korrekte Antworten */
-    color: #2e7d32; /* Dunkelgrüner Text für besseren Kontrast */
+    background-color: #388e3c; /* Dunklerer Grüner Hintergrund für korrekte Antworten */
+    color: #1b5e20; /* Dunkelgrüne Schrift */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast */
 }
 
 .wrong-first {
-    background-color: #ff9800; /* Orange für falsche Antworten */
-    color: #e65100; /* Dunkeloranger Text für besseren Kontrast */
+    background-color: #fb8c00; /* Dunkler Orange Hintergrund für falsche Antworten */
+    color: #e65100; /* Dunkeloranger Text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast */
 }
 
 .second-round {
-    background-color: #f44336; /* Roter Hintergrund für zweite Runde */
-    color: #b71c1c; /* Dunkelroter Text für besseren Kontrast */
-    font-weight: bold; /* Text fett, um Lesbarkeit zu verbessern */
+    background-color: #d32f2f; /* Dunkler Rot Hintergrund für zweite Runde */
+    color: #b71c1c; /* Dunkelroter Text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast */
+    font-weight: bold; /* Fettgedruckter Text für bessere Lesbarkeit */
 }
 
-/* Tabellenzeilen mit alternierenden Farben */
+/* Alternierende Zeilen */
 #vocabResultsTable tr:nth-child(even) {
-    background-color: #f9f9f9; /* Leichte Hintergrundfarbe für gerade Zeilen */
+    background-color: #f5f5f5; /* Hellerer Hintergrund für gerade Zeilen */
 }
 
 /* Responsives Design für mobile Geräte */
