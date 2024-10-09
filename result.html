@@ -69,8 +69,21 @@
 
 <div class="container">
     <h2>Results</h2>
-</div>
+    <br>
+        <label for="resultDropdown">Choose the result type:</label>
+    <select id="resultDropdown" aria-label="Choose the result type" onchange="updateResults()">
+        <option value="practise">Practise Flashcards</option>
+        <option value="vocaInput">Spelling</option>
+        <option value="vocaBlanks">Blanks</option>
+        <option value="verbForms">Verbs</option>
+    </select>
 
+    <br>
+    <button onclick="updateResults()">Select</button>
+    <br>
+    <a href="index.html">Go back to Homepage</a>
+</div>
+<br>
 <div class="table-container" id="tableContainer">
     <table id="vocabResultsTableRound1">
         <thead id="tableHeaderRound1"></thead>
@@ -84,22 +97,6 @@
 </div>
 
 <br>
-
-<div class="container">
-    <label for="resultDropdown">Choose the result type:</label>
-    <select id="resultDropdown" aria-label="Choose the result type" onchange="updateResults()">
-        <option value="practise">Practise Flashcards</option>
-        <option value="vocaInput">Spelling</option>
-        <option value="vocaBlanks">Blanks</option>
-        <option value="verbForms">Verbs</option>
-    </select>
-
-    <br>
-    <button onclick="updateResults()">Select</button>
-    <br>
-    <a href="index.html">Go back to Homepage</a>
-</div>
-
 <script>
 function getFromLocalStorage(key) {
     const data = localStorage.getItem(key);
