@@ -5,21 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <link rel="stylesheet" href="css/resultstyle.css">
+    <style>
+        /* New Styles for Tables */
+        /* Equal column widths for both tables */
+        #vocabResultsTableRound1, #vocabResultsTableRound2 {
+            width: 100%; /* Ensure full width */
+        }
+        #vocabResultsTableRound1 th, #vocabResultsTableRound1 td,
+        #vocabResultsTableRound2 th, #vocabResultsTableRound2 td {
+            width: 50%; /* Equal width for both columns */
+        }
+
+        /* Reduced font size for left column */
+        td.left-column {
+            font-size: 0.8rem; /* Reduced font size */
+        }
+
+        /* Increased font size for right column */
+        td.right-column {
+            font-size: 1.4rem; /* Increased font size */
+        }
+
+        /* Ensure second table starts at the top */
+        .table-container {
+            margin-bottom: 20px; /* Space below tables */
+            display: flex; /* Keep tables in a row */
+            flex-direction: column; /* Arrange vertically */
+            align-items: center; /* Center alignment */
+        }
+
+        /* Hide second table initially */
+        #vocabResultsTableRound2 {
+            display: none; /* Hide second round table */
+        }
+    </style>
 </head>
 <body>
 <a href="index.html"><h1>VocabFlash</h1></a>
-    
+
 <div class="container">
     <h2>Results</h2>
 </div>
-    
+
 <div class="table-container" id="tableContainer">
     <table id="vocabResultsTableRound1">
         <thead id="tableHeaderRound1"></thead>
         <tbody id="resultsContainerRound1"></tbody>
     </table>
 
-    <table id="vocabResultsTableRound2" style="display: none;">
+    <table id="vocabResultsTableRound2">
         <thead id="tableHeaderRound2"></thead>
         <tbody id="resultsContainerRound2"></tbody>
     </table>
@@ -97,7 +131,7 @@ function loadResults() {
     if (round1Results.length > 0) {
         console.log("Populating round 1 results...");
         round1Results.forEach(result => {
-            const resultRow = createResultRow(result.de, result.ar, result.status); // Hier die richtigen Felder verwenden
+            const resultRow = createResultRow(result.de, result.ar, result.status);
             resultsContainerRound1.appendChild(resultRow);
         });
         document.getElementById('vocabResultsTableRound1').style.display = 'table';
@@ -110,7 +144,7 @@ function loadResults() {
     if (round2Results.length > 0) {
         console.log("Populating round 2 results...");
         round2Results.forEach(result => {
-            const resultRow = createResultRow(result.de, result.ar, result.status); // Hier die richtigen Felder verwenden
+            const resultRow = createResultRow(result.de, result.ar, result.status);
             resultsContainerRound2.appendChild(resultRow);
         });
         document.getElementById('vocabResultsTableRound2').style.display = 'table';
@@ -118,7 +152,7 @@ function loadResults() {
         console.log("No round 2 results found.");
         document.getElementById('vocabResultsTableRound2').style.display = 'none';
     }
-} // Hier die schließende Klammer hinzufügen
+}
 
 function createResultRow(word, translation, status) {
     const resultRow = document.createElement('tr');
