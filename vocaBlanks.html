@@ -214,6 +214,10 @@ function handleWrongAnswer(currentWord) {
         feedback.classList.add('wrong');
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; // Skip-Button ausblenden
+
+        // Falsche Antwort speichern, aber noch nicht als zweite Runde zählen
+        results.push({ word: currentWord.de, answer: currentWord.ar, status: "wrong-first" });
+        console.log("Falsche Antwort (versuch 1), Ergebnis hinzugefügt:", results);
     } else if (wrongAttempts === 2) {
         feedback.innerText = `The correct answer is: ${currentWord.ar}`;
         feedback.classList.remove('correct', 'wrong');
@@ -221,15 +225,15 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.remove('wrong');
         vocabWord.classList.add('solution');
         wrongAnswers.push(currentWord);
-        // Speichere die falsche Antwort mit beiden Sprachen
+        
+        // Speichere die falsche Antwort mit beiden Sprachen, da sie jetzt beantwortet wurde
         results.push({ word: currentWord.de, answer: currentWord.ar, status: "second-round" });
-        console.log("Falsche Antwort, zweite Runde Ergebnis hinzugefügt:", results);
+        console.log("Falsche Antwort (versuch 2), Ergebnis hinzugefügt:", results);
         skipButton.style.display = "block"; // Zeige den Skip-Button
         document.getElementById('submitAnswer').style.display = "none";
         startTimer();
     }
 }
-
 
 // Initiales Set anzeigen
 window.onload = function() {
