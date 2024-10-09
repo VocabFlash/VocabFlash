@@ -179,11 +179,11 @@ function checkAnswer() {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
-    
+
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
-        feedback.classList.add('correct');
+        feedback.classList.add('correct'); // Grün für richtige Antwort
         vocabWord.classList.remove('wrong');
         vocabWord.classList.add('correct');
         skipButton.style.display = "block"; // Zeige den Skip-Button
@@ -211,29 +211,45 @@ function handleWrongAnswer(currentWord) {
     if (wrongAttempts === 1) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
-        feedback.classList.add('wrong');
+        feedback.classList.add('wrong'); // Gelb für den ersten Versuch
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; // Skip-Button ausblenden
 
         // Falsche Antwort speichern, aber noch nicht als zweite Runde zählen
         results.push({ word: currentWord.de, answer: currentWord.ar, status: "wrong-first" });
-        console.log("Falsche Antwort (versuch 1), Ergebnis hinzugefügt:", results);
+        console.log("Falsche Antwort (Versuch 1), Ergebnis hinzugefügt:", results);
     } else if (wrongAttempts === 2) {
-        feedback.innerText = `The correct answer is: ${currentWord.ar}`;
-        feedback.classList.remove('correct', 'wrong');
-        feedback.classList.add('solution');
-        vocabWord.classList.remove('wrong');
-        vocabWord.classList.add('solution');
-        wrongAnswers.push(currentWord);
-        
-        // Speichere die falsche Antwort mit beiden Sprachen, da sie jetzt beantwortet wurde
-        results.push({ word: currentWord.de, answer: currentWord.ar, status: "second-round" });
-        console.log("Falsche Antwort (versuch 2), Ergebnis hinzugefügt:", results);
-        skipButton.style.display = "block"; // Zeige den Skip-Button
-        document.getElementById('submitAnswer').style.display = "none";
-        startTimer();
+        if (userInput === currentWord.ar.toLowerCase()) {
+            // Zweiter Versuch war korrekt
+            feedback.innerText = "Correct!";
+            feedback.classList.remove('wrong', 'solution');
+            feedback.classList.add('correct'); // Grün für den zweiten Versuch
+            vocabWord.classList.remove('wrong');
+            vocabWord.classList.add('correct');
+
+            // Ergebnisse aufzeichnen, auch wenn die Antwort im zweiten Versuch korrekt ist
+            results.push({ word: currentWord.de, answer: currentWord.ar, status: "wrong-first" }); // Gelb für wrong-first
+            wrongAttempts = 0; // Setze wrongAttempts zurück
+            skipButton.style.display = "block"; // Zeige den Skip-Button
+        } else {
+            // Zweiter Versuch war falsch
+            feedback.innerText = `The correct answer is: ${currentWord.ar}`;
+            feedback.classList.remove('correct', 'wrong');
+            feedback.classList.add('solution'); // Rot für falsche Antwort
+            vocabWord.classList.remove('correct');
+            vocabWord.classList.add('solution');
+
+            // Speichere die falsche Antwort mit beiden Sprachen, da sie jetzt beantwortet wurde
+            results.push({ word: currentWord.de, answer: currentWord.ar, status: "wrong-second" }); // Rot für falsche Antwort beim zweiten Versuch
+            console.log("Falsche Antwort (Versuch 2), Ergebnis hinzugefügt:", results);
+            wrongAnswers.push(currentWord);
+            skipButton.style.display = "block"; // Zeige den Skip-Button
+            document.getElementById('submitAnswer').style.display = "none";
+            startTimer();
+        }
     }
 }
+
 
 // Initiales Set anzeigen
 window.onload = function() {
