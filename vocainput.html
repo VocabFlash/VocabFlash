@@ -127,7 +127,8 @@ function checkAnswer() {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
-    
+    const submitButton = document.getElementById('submitAnswer'); // Hier ist die Definition von submitButton
+
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
@@ -147,6 +148,7 @@ function checkAnswer() {
 
     document.getElementById('userInput').value = '';
 }
+
 
 
 function handleWrongAnswer(currentWord) {
