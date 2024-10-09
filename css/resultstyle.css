@@ -1,69 +1,7 @@
-/* Body Styling */
-body {
-    background-color: #1a1e24; /* Dunkler Hintergrund */
-    font-family: "Arial Black", sans-serif; /* Einheitliche Schriftart */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-}
-
-/* Header und Überschriften */
-.header {
-    display: flex;
-    align-items: center; /* Zentriert das Logo und den Titel vertikal */
-}
-
-h1, h2 {
-    margin: 0;
-    padding: 15px;
-    border-radius: 15px;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    color: #fff; /* Weißer Text */
-    font-size: 24px;
-}
-
-h2 {
-    color: black;
-    font-size: 20px;
-}
-
-/* Container Styling */
-.container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-    max-width: 600px;
-    min-width: 300px;
-    text-align: center;
-    margin: 20px auto;
-}
-
-/* Ergebnisfarben */
-.correct {
-    background-color: #4caf50; /* Grün für korrekte Antworten */
-}
-
-.correct-second {
-    background-color: #ff9800; /* Orange für korrekte Antworten im zweiten Versuch */
-}
-
-.wrong {
-    background-color: #f44336; /* Rot für falsche Antworten */
-}
-
-.table-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px; /* Abstand zwischen den Tabellen */
+/* Tabellenheader: Heller Grauton */
+th {
+    background-color: #e0e0e0; /* Heller Grauton für den Header */
+    color: #333; /* Dunkler Text im Header */
 }
 
 /* Tabellen Styling */
@@ -72,19 +10,14 @@ table {
     border-collapse: collapse; /* Tabellenränder zusammenführen */
     margin: auto; /* Zentriert die Tabelle */
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 0px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 th, td {
-    border: 1px solid #ccc; /* Tabellenrahmen */
+    border: 0px solid #ccc; /* Tabellenrahmen */
     padding: 12px 20px; /* Innenabstand */
     text-align: left; /* Text links ausrichten */
-}
-
-th {
-    background-color: #007bff; /* Dunkelblau für den Header */
-    color: white;
 }
 
 td {
@@ -94,27 +27,35 @@ td {
 /* Linke Spalte */
 td.left-column {
     font-size: 10px; /* Schriftgröße verkleinern */
-    width: 30%; /* Breite der linken Spalte */
+    width: 50%; /* Breite der linken Spalte */
 }
 
 /* Rechte Spalte */
 td.right-column {
-    font-size: 16px; /* Schriftgröße vergrößern */
-    width: 70%; /* Breite der rechten Spalte */
+    font-size: 20px; /* Schriftgröße vergrößern */
+    width: 50%; /* Breite der rechten Spalte */
 }
 
-/* Status-Farben */
+/* Ergebnisfarben und passende Textfarben */
 .correct-first {
-    background-color: #4caf50; /* Grün für korrekte Antworten */
+    background-color: #4caf50; /* Grüner Hintergrund für korrekte Antworten */
+    color: #2e7d32; /* Dunkelgrüner Text für besseren Kontrast */
 }
 
 .wrong-first {
     background-color: #ff9800; /* Orange für falsche Antworten */
+    color: #e65100; /* Dunkeloranger Text für besseren Kontrast */
 }
 
 .second-round {
-    background-color: #f44336; /* Rot für zweite Runde */
-    color: white; /* Textfarbe in der roten Spalte auf weiß ändern */
+    background-color: #f44336; /* Roter Hintergrund für zweite Runde */
+    color: #b71c1c; /* Dunkelroter Text für besseren Kontrast */
+    font-weight: bold; /* Text fett, um Lesbarkeit zu verbessern */
+}
+
+/* Tabellenzeilen mit alternierenden Farben */
+#vocabResultsTable tr:nth-child(even) {
+    background-color: #f9f9f9; /* Leichte Hintergrundfarbe für gerade Zeilen */
 }
 
 /* Responsives Design für mobile Geräte */
@@ -140,24 +81,4 @@ td.right-column {
         display: block;
         width: 100%;
     }
-}
-
-/* Stil für die Tabelle */
-#vocabResultsTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-#vocabResultsTable th, #vocabResultsTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-#vocabResultsTable th {
-    background-color: #f2f2f2;
-}
-
-#vocabResultsTable tr:nth-child(even) {
-    background-color: #f9f9f9;
 }
