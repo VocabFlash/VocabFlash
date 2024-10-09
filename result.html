@@ -18,6 +18,16 @@
             padding: 8px; /* Innenabstand */
             text-align: left; /* Text links ausrichten */
         }
+        /* Status-Farben */
+        .correct-first {
+            color: green;
+        }
+        .wrong-first {
+            color: orange;
+        }
+        .second-round {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -59,10 +69,16 @@
 <script>
 function getFromLocalStorage(key) {
     const data = localStorage.getItem(key);
-    if (!data) return [];
+    if (!data) {
+        console.log(`No data found for key: ${key}`);
+        return [];
+    }
     try {
-        return JSON.parse(data);
+        const parsedData = JSON.parse(data);
+        console.log(`Data successfully retrieved for key: ${key}`);
+        return parsedData;
     } catch (e) {
+        console.error(`Failed to parse data for key: ${key}`, e);
         return [];
     }
 }
@@ -80,6 +96,13 @@ function loadResults() {
     const selectedType = dropdown.value;
     let loadedResults = getFromLocalStorage(selectedType + "Results");
 
+    if (loadedResults.length === 0) {
+        console.log("No results available to display.");
+        resultsContainerRound1.innerHTML = "<tr><td colspan='2'>No results available.</td></tr>";
+        document.getElementById('vocabResultsTableRound2').style.display = 'none'; // Hide round 2 table if no results
+        return;
+    }
+
     let headerHTML = `
         <tr>
             <th>Translation</th>
@@ -90,52 +113,60 @@ function loadResults() {
     tableHeaderRound1.innerHTML = headerHTML;
     tableHeaderRound2.innerHTML = headerHTML;
 
-    if (loadedResults.length === 0) {
-        resultsContainerRound1.innerHTML = "<tr><td colspan='2'>No results available.</td></tr>";
-        return;
-    }
-
     // Sort results for the first and second rounds
-    const round1Results = loadedResults.filter(result => result.round === 1);
-    const round2Results = loadedResults.filter(result => result.round === 2);
+    const round1Results = loadedResults.filter(result => result.status === "correct-first" || result.status === "wrong-first");
+    const round2Results = loadedResults.filter(result => result.status === "second-round");
 
     // Populate round 1 results
-    round1Results.forEach(result => {
-        const resultRow = createResultRow(result.word, result.translation, result.status);
-        resultsContainerRound1.appendChild(resultRow);
-    });
-
-    // Show round 1 table if there are results
-    document.getElementById('vocabResultsTableRound1').style.display = round1Results.length > 0 ? 'table' : 'none';
+    if (round1Results.length > 0) {
+        console.log("Populating round 1 results...");
+        round1Results.forEach(result => {
+            const resultRow = createResultRow(result.word, result.answer, result.status);
+            resultsContainerRound1.appendChild(resultRow);
+        });
+        document.getElementById('vocabResultsTableRound1').style.display = 'table';
+    } else {
+        console.log("No round 1 results found.");
+        document.getElementById('vocabResultsTableRound1').style.display = 'none';
+    }
 
     // Populate round 2 results
-    round2Results.forEach(result => {
-        const resultRow = createResultRow(result.word, result.translation, result.status);
-        resultsContainerRound2.appendChild(resultRow);
-    });
-
-    // Show round 2 table if there are results
-    document.getElementById('vocabResultsTableRound2').style.display = round2Results.length > 0 ? 'table' : 'none';
+    if (round2Results.length > 0) {
+        console.log("Populating round 2 results...");
+        round2Results.forEach(result => {
+            const resultRow = createResultRow(result.word, result.answer, result.status);
+            resultsContainerRound2.appendChild(resultRow);
+        });
+        document.getElementById('vocabResultsTableRound2').style.display = 'table';
+    } else {
+        console.log("No round 2 results found.");
+        document.getElementById('vocabResultsTableRound2').style.display = 'none';
+    }
 }
 
 function createResultRow(word, translation, status) {
     const resultRow = document.createElement('tr');
-    resultRow.classList.add(status); // Add class for status
-
+    
     const wordCell = document.createElement('td');
     wordCell.innerText = word;
+    wordCell.classList.add(status); // Add class for status (color)
     resultRow.appendChild(wordCell);
 
     const translationCell = document.createElement('td');
     translationCell.innerText = translation;
+    translationCell.classList.add(status); // Add class for status (color)
     resultRow.appendChild(translationCell);
 
     return resultRow;
 }
 
-window.onload = loadResults;
+window.onload = () => {
+    console.log("Loading results page...");
+    loadResults();
+};
 
 function updateResults() {
+    console.log("Results type updated to:", dropdown.value);
     loadResults();
 }
 </script>
