@@ -27,12 +27,13 @@
             margin-bottom: 20px; /* Space below tables */
             display: flex; /* Keep tables in a row */
             flex-direction: column; /* Arrange vertically */
-            align-items: center; /* Center alignment */
+            align-items: flex-start; /* Center alignment */
         }
 
         /* Hide second table initially */
         #vocabResultsTableRound2 {
             display: none; /* Hide second round table */
+            margin-top: 20px; /* Space above the second table */
         }
     </style>
 </head>
@@ -156,11 +157,13 @@ function createResultRow(word, translation, status) {
     const wordCell = document.createElement('td');
     wordCell.innerText = word;
     wordCell.classList.add(status); // Add class for status (color)
+    wordCell.classList.add('left-column'); // Apply left column styling
     resultRow.appendChild(wordCell);
 
     const translationCell = document.createElement('td');
     translationCell.innerText = translation;
     translationCell.classList.add(status); // Add class for status (color)
+    translationCell.classList.add('right-column'); // Apply right column stylin
     resultRow.appendChild(translationCell);
 
     return resultRow;
