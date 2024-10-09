@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ergebnisse</title>
+    <title>Results</title>
     <link rel="stylesheet" href="css/resultstyle.css">
 </head>
 <body>
@@ -49,6 +49,7 @@ function getFromLocalStorage(key) {
     try {
         return JSON.parse(data);
     } catch (e) {
+        console.error("Error parsing data from localStorage:", e);
         return [];
     }
 }
@@ -60,10 +61,13 @@ const tableHeaderRound2 = document.getElementById('tableHeaderRound2');
 const dropdown = document.getElementById('resultDropdown'); 
 
 function loadResults() {
-    resultsContainerRound1.innerHTML = ""; // Vorherige Ergebnisse löschen
+    console.log("Loading results...");
+    resultsContainerRound1.innerHTML = ""; // Clear previous results
     resultsContainerRound2.innerHTML = "";
 
     const selectedType = dropdown.value;
+    console.log("Selected type:", selectedType);
+    
     let loadedResults = getFromLocalStorage(selectedType + "Results");
 
     let headerHTML = `
@@ -77,11 +81,12 @@ function loadResults() {
     tableHeaderRound2.innerHTML = headerHTML;
 
     if (loadedResults.length === 0) {
-        resultsContainerRound1.innerHTML = "<tr><td colspan='2'>Keine Ergebnisse verfügbar.</td></tr>";
+        console.log("No results available.");
+        resultsContainerRound1.innerHTML = "<tr><td colspan='2'>No results available.</td></tr>";
         return;
     }
 
-    // Ergebnisse der ersten und zweiten Runde sortieren
+    // Sort results for the first and second rounds
     const round1Results = loadedResults.filter(result => result.round === 1);
     const round2Results = loadedResults.filter(result => result.round === 2);
 
@@ -94,11 +99,13 @@ function loadResults() {
         const resultRow = createResultRow(result.word, result.translation, result.status);
         resultsContainerRound2.appendChild(resultRow);
     });
+
+    console.log("Results loaded successfully.");
 }
 
 function createResultRow(word, translation, status) {
     const resultRow = document.createElement('tr');
-    resultRow.classList.add(status); // Klasse für den Status hinzufügen
+    resultRow.classList.add(status); // Add class for status
 
     const wordCell = document.createElement('td');
     wordCell.innerText = word;
@@ -114,6 +121,7 @@ function createResultRow(word, translation, status) {
 window.onload = loadResults;
 
 function updateResults() {
+    console.log("Updating results...");
     loadResults();
 }
 </script>
