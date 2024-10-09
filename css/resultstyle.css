@@ -65,7 +65,7 @@ h2 {
 
 /* Tabellen Styling */
 table {
-    width: 55%; /* Breite der Tabelle */
+    width: 50%; /* Setze die Breite der Tabelle auf 50% für gleichmäßige Spalten */
     border-collapse: collapse; /* Tabellenränder zusammenführen */
     margin: auto; /* Zentriert die Tabelle */
     background-color: #fff;
@@ -96,13 +96,13 @@ td {
 /* Linke Spalte */
 td.left-column {
     font-size: 10px; /* Schriftgröße verkleinern */
-    width: 30%; /* Breite der linken Spalte */
+    width: 50%; /* Breite der linken Spalte auf 50% setzen */
 }
 
 /* Rechte Spalte */
 td.right-column {
     font-size: 16px; /* Schriftgröße vergrößern */
-    width: 70%; /* Breite der rechten Spalte */
+    width: 50%; /* Breite der rechten Spalte auf 50% setzen */
 }
 
 /* Ergebnisfarben und passende Textfarben mit Schattierung */
