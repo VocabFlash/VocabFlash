@@ -172,7 +172,7 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.add('correct'); 
 
             // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
-            saveVocaInputResults(currentWord, "wrong-first");
+            saveVocaInputResults(currentWord, "correct-second");
             wrongAttempts = 0;
         } else {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
