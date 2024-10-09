@@ -173,7 +173,7 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.add('correct'); 
 
             // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
-            saveVocaInputResults(currentWord, "correct-second");
+            saveVocaInputResults(currentWord, "wrong-first");
             wrongAttempts = 0; // Zurücksetzen der Versuche
         } else {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
@@ -183,7 +183,7 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.add('solution'); 
 
             // Ergebnisse aufzeichnen für den zweiten falschen Versuch
-            saveVocaInputResults(currentWord, "wrong-second");
+            saveVocaInputResults(currentWord, "second-round");
             wrongAnswers.push(currentWord); 
             skipButton.style.display = "block"; 
             document.getElementById('submitAnswer').style.display = "none"; 
