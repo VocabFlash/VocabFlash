@@ -48,43 +48,48 @@ h2 {
     margin: 20px auto;
 }
 
+/* Ergebnisfarben */
+.correct {
+    background-color: #4caf50; /* Grün für korrekte Antworten */
+}
+
+.correct-second {
+    background-color: #ff9800; /* Orange für korrekte Antworten im zweiten Versuch */
+}
+
+.wrong {
+    background-color: #f44336; /* Rot für falsche Antworten */
+}
+
+.table-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Tabellen Styling */
-        table {
-            width: auto; /* Passt die Breite der Tabelle an den Inhalt an */
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
+table {
+    width: auto; /* Passt die Breite der Tabelle an den Inhalt an */
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-        th, td {
-            padding: 12px 20px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+th, td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
 
-        th {
-            background-color: #007bff; /* Dunkelblau für den Header */
-            color: white;
-        }
+th {
+    background-color: #007bff; /* Dunkelblau für den Header */
+    color: white;
+}
 
-        td {
-            font-size: 1rem;
-        }
-
-        .correct-first {
-            background-color: #4caf50; /* Grün */
-        }
-        
-        .second-round {
-            background-color: #f44336; /* Rot */
-        }
-        
-        .correct-second {
-            background-color: #ff9800; /* Orange */
-        }
-
+td {
+    font-size: 1rem;
+}
 
 /* Responsives Design für mobile Geräte */
 @media (max-width: 768px) {
