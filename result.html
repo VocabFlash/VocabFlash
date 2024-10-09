@@ -8,17 +8,25 @@
 </head>
 <body>
 <a href="index.html"><h1>VocabFlash</h1></a>
+    
 <div class="container">
     <h2>Results</h2>
 </div>
     
-<table id="vocabResultsTable">
-    <thead id="tableHeader"></thead>
-    <tbody id="resultsContainer"></tbody>
-</table>
+<div class="table-container">
+    <table id="vocabResultsTableRound1">
+        <thead id="tableHeaderRound1"></thead>
+        <tbody id="resultsContainerRound1"></tbody>
+    </table>
+
+    <table id="vocabResultsTableRound2">
+        <thead id="tableHeaderRound2"></thead>
+        <tbody id="resultsContainerRound2"></tbody>
+    </table>
+</div>
 
 <br>
-    
+
 <div class="container">
     <label for="resultDropdown">Choose the result type:</label>
     <select id="resultDropdown" aria-label="Choose the result type" onchange="updateResults()">
@@ -35,105 +43,60 @@
 </div>
 
 <script>
-// Ergebnisse aus localStorage abrufen und überprüfen
 function getFromLocalStorage(key) {
-    console.log(`Versuche, Daten für ${key} aus localStorage abzurufen...`);
     const data = localStorage.getItem(key);
-    if (!data) {
-        console.error(`Keine Daten im localStorage für ${key} gefunden.`);
-        return [];
-    }
+    if (!data) return [];
     try {
-        console.log(`Daten für ${key} erfolgreich abgerufen.`);
         return JSON.parse(data);
     } catch (e) {
-        console.error(`Fehler beim Parsen von ${key}:`, e);
         return [];
     }
 }
 
-const resultsContainer = document.getElementById('resultsContainer');
-const tableHeader = document.getElementById('tableHeader');
+const resultsContainerRound1 = document.getElementById('resultsContainerRound1');
+const resultsContainerRound2 = document.getElementById('resultsContainerRound2');
+const tableHeaderRound1 = document.getElementById('tableHeaderRound1');
+const tableHeaderRound2 = document.getElementById('tableHeaderRound2');
 const dropdown = document.getElementById('resultDropdown'); 
 
 function loadResults() {
-    console.log('Lade Ergebnisse basierend auf der Dropdown-Auswahl...');
-    resultsContainer.innerHTML = ""; // Vorherige Ergebnisse löschen
+    resultsContainerRound1.innerHTML = ""; // Vorherige Ergebnisse löschen
+    resultsContainerRound2.innerHTML = "";
 
-    const selectedType = dropdown.value; // Aktuelle Auswahl im Dropdown
-    console.log(`Aktuell ausgewählter Typ: ${selectedType}`);
+    const selectedType = dropdown.value;
+    let loadedResults = getFromLocalStorage(selectedType + "Results");
 
-    let loadedResults = [];
-    let headerHTML = '';
+    let headerHTML = `
+        <tr>
+            <th>Translation</th>
+            <th>Word</th>
+        </tr>
+    `;
 
-    switch (selectedType) {
-        case 'practise':
-            loadedResults = getFromLocalStorage("flashcardResults");
-            console.log(`Ergebnisse für 'practise' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        case 'verbForms':
-            loadedResults = getFromLocalStorage("verbFormResults");
-            console.log(`Ergebnisse für 'verbForms' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Verb</th>
-                    <th>Pronoun</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        case 'vocaBlanks':
-            loadedResults = getFromLocalStorage("vocaBlanksResults");
-            console.log(`Ergebnisse für 'vocaBlanks' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        case 'vocaInput':
-            loadedResults = getFromLocalStorage("vocaInputResults");
-            console.log(`Ergebnisse für 'vocaInput' geladen:`, loadedResults);
-            headerHTML = `
-                <tr>
-                    <th>Wort</th>
-                    <th>Status</th>
-                </tr>
-            `;
-            break;
-        default:
-            console.error('Unbekannter Typ ausgewählt:', selectedType);
-            return; // Keine Ergebnisse laden, wenn der Typ unbekannt ist
-    }
+    tableHeaderRound1.innerHTML = headerHTML;
+    tableHeaderRound2.innerHTML = headerHTML;
 
-    // Wenn keine Ergebnisse geladen wurden
     if (loadedResults.length === 0) {
-        console.warn(`Keine Ergebnisse verfügbar für ${selectedType}`);
-        resultsContainer.innerHTML = "<tr><td colspan='3'>Keine Ergebnisse verfügbar.</td></tr>";
+        resultsContainerRound1.innerHTML = "<tr><td colspan='2'>Keine Ergebnisse verfügbar.</td></tr>";
         return;
     }
 
-    // Header der Tabelle setzen
-    tableHeader.innerHTML = headerHTML;
-    console.log(`Tabellen-Header gesetzt: ${headerHTML}`);
+    // Ergebnisse der ersten und zweiten Runde sortieren
+    const round1Results = loadedResults.filter(result => result.round === 1);
+    const round2Results = loadedResults.filter(result => result.round === 2);
 
-    // Ergebniszeilen hinzufügen
-    loadedResults.forEach(result => {
-        const resultRow = createResultRow(result.word, result.pronoun || null, result.status);
-        resultsContainer.appendChild(resultRow);
-        console.log('Ergebniszeile hinzugefügt:', resultRow);
+    round1Results.forEach(result => {
+        const resultRow = createResultRow(result.word, result.translation, result.status);
+        resultsContainerRound1.appendChild(resultRow);
+    });
+
+    round2Results.forEach(result => {
+        const resultRow = createResultRow(result.word, result.translation, result.status);
+        resultsContainerRound2.appendChild(resultRow);
     });
 }
 
-function createResultRow(word, pronoun, status) {
-    console.log(`Erstelle Ergebniszeile für: Wort = ${word}, Pronoun = ${pronoun}, Status = ${status}`);
+function createResultRow(word, translation, status) {
     const resultRow = document.createElement('tr');
     resultRow.classList.add(status); // Klasse für den Status hinzufügen
 
@@ -141,35 +104,18 @@ function createResultRow(word, pronoun, status) {
     wordCell.innerText = word;
     resultRow.appendChild(wordCell);
 
-    // Nur pronoun hinzufügen, wenn es im Modus ist
-    if (pronoun) {
-        const pronounCell = document.createElement('td');
-        pronounCell.innerText = pronoun;
-        resultRow.appendChild(pronounCell);
-    }
+    const translationCell = document.createElement('td');
+    translationCell.innerText = translation;
+    resultRow.appendChild(translationCell);
 
-    const statusCell = document.createElement('td');
-    statusCell.innerText = status.replace("-", " ");
-    
-    // Färbe die Statusanzeige basierend auf dem Status
-    if (status === 'correct-first') {
-        statusCell.classList.add('correct'); // Klasse für grün
-    } else if (status === 'second-round') {
-        statusCell.classList.add('wrong'); // Klasse für rot
-    }
-
-    resultRow.appendChild(statusCell);
     return resultRow;
 }
 
-// Ergebnisse beim Laden der Seite abrufen
 window.onload = loadResults;
 
-// Ergebnisse aktualisieren, wenn Dropdown geändert wird
 function updateResults() {
     loadResults();
 }
-
 </script>
 </body>
 </html>
