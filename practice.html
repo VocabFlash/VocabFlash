@@ -51,7 +51,7 @@ let currentSet = [];
 let currentIndex = 0;
 let wrongAnswers = []; // Neue Liste für falsche Antworten
 let showingBack = false;
-let flashcardResults = []; // Liste, um Ergebnisse zu speichern
+let practiseResults = []; // Liste, um Ergebnisse zu speichern
 
 // Funktion, um das Array zu mischen (Fisher-Yates Shuffle)
 function shuffleArray(array) {
@@ -94,7 +94,7 @@ function startFlashcards(set) {
 
 // Funktion zum Speichern der Flashcard-Ergebnisse und Weiterleitung zur Result-Seite
 function showResults() {
-    localStorage.setItem("flashcardResults", JSON.stringify(flashcardResults)); // Speichert die Flashcard-Ergebnisse speziell für "practise"
+    localStorage.setItem("practiseResults", JSON.stringify(practiseResults)); // Speichert die Flashcard-Ergebnisse speziell für "practise"
     const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
     window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
 }
@@ -140,7 +140,7 @@ function updateVocabSet() {
     shuffleArray(currentSet); // Mische das Set, wenn es aktualisiert wird
     currentIndex = 0; // Startindex zurücksetzen
     wrongAnswers = []; // Reset wrong answers
-    flashcardResults = []; // Reset results
+    practiseResults = []; // Reset results
     displayFlashcard(); // Zeigt die erste Karte an
 }
 
@@ -162,10 +162,10 @@ document.getElementById('flashcard').addEventListener('click', function() {
 });
     
 // Funktion zum Speichern der Flashcard-Ergebnisse
-function saveFlashcardResult(vocab, status) {
+function savePractiseResults(vocab, status) {
     // Speichert sowohl die deutsche als auch die arabische Vokabel zusammen mit dem Status
-    flashcardResults.push({ de: vocab.de, ar: vocab.ar, status: status });
-    console.log('Ergebnisse gespeichert:', flashcardResults); // Debugging-Log
+    practiseResults.push({ de: vocab.de, ar: vocab.ar, status: status });
+    console.log('Ergebnisse gespeichert:', practiseResults); // Debugging-Log
 }
 
 
