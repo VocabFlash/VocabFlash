@@ -132,16 +132,16 @@ function checkAnswer() {
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
-        feedback.classList.add('correct');
-        vocabWord.classList.remove('wrong', 'solution'); // Entferne die falschen Status
-        vocabWord.classList.add('correct'); // Setze den Status auf "correct"
+        feedback.classList.add('correct'); // Grün für richtig
+        vocabWord.classList.remove('wrong', 'solution');
+        vocabWord.classList.add('correct'); 
         skipButton.style.display = "block"; 
         submitButton.style.display = "none"; 
         startTimer();
         wrongAttempts = 0;
 
-        // Ergebnisse aufzeichnen
-        results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "correct-first" }); // Grün
+        // Ergebnisse aufzeichnen für den ersten Versuch
+        results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "correct-first" }); 
     } else {
         handleWrongAnswer(currentWord);
     }
@@ -159,23 +159,40 @@ function handleWrongAnswer(currentWord) {
     if (wrongAttempts === 1) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
-        feedback.classList.add('wrong');
-        vocabWord.classList.remove('correct', 'solution'); // Entferne korrekte Klassen
+        feedback.classList.add('wrong'); // Gelb für den ersten falschen Versuch
+        vocabWord.classList.remove('correct', 'solution');
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; 
     } else if (wrongAttempts === 2) {
-        feedback.innerText = `The correct answer is: ${currentWord.ar}`;
-        feedback.classList.remove('correct', 'wrong');
-        feedback.classList.add('solution');
-        vocabWord.classList.remove('correct', 'wrong'); // Entferne falsche Status
-        vocabWord.classList.add('solution'); // Setze den Status auf "solution"
-        wrongAnswers.push(currentWord); 
-        results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "second-round" }); // Rot
-        skipButton.style.display = "block"; 
-        document.getElementById('submitAnswer').style.display = "none"; 
-        startTimer(); 
+        if (userInput === currentWord.ar.toLowerCase()) {
+            // Zweiter Versuch war korrekt
+            feedback.innerText = "Correct!";
+            feedback.classList.remove('wrong', 'solution');
+            feedback.classList.add('correct'); // Grün für den zweiten Versuch
+            vocabWord.classList.remove('wrong', 'solution');
+            vocabWord.classList.add('correct'); 
+
+            // Ergebnisse aufzeichnen, auch wenn die Antwort im zweiten Versuch korrekt ist
+            results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "wrong-first" }); // Gelb für wrong-first
+            wrongAttempts = 0; // reset wrong attempts
+        } else {
+            // Zweiter Versuch war falsch
+            feedback.innerText = `The correct answer is: ${currentWord.ar}`;
+            feedback.classList.remove('correct', 'wrong');
+            feedback.classList.add('solution'); // Rot für die falsche Antwort
+            vocabWord.classList.remove('correct', 'wrong');
+            vocabWord.classList.add('solution'); 
+
+            // Ergebnisse aufzeichnen
+            results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "wrong-second" }); // Rot für falsche Antwort beim zweiten Versuch
+            wrongAnswers.push(currentWord); 
+            skipButton.style.display = "block"; 
+            document.getElementById('submitAnswer').style.display = "none"; 
+            startTimer(); 
+        }
     }
 }
+
 
 function toggleCheckButton() {
     const userInput = document.getElementById('userInput').value;
