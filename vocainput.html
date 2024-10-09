@@ -127,8 +127,7 @@ function checkAnswer() {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
-    const submitButton = document.getElementById('submitAnswer');
-
+    
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
@@ -141,13 +140,14 @@ function checkAnswer() {
         wrongAttempts = 0;
 
         // Ergebnisse aufzeichnen für den ersten Versuch
-        saveVocaInputResults(currentWord, "correct-first");
+        saveVocaInputResults(currentWord, wrongAttempts === 1 ? "wrong-first" : "correct-first"); // Hier ist die Änderung
     } else {
         handleWrongAnswer(currentWord);
     }
 
     document.getElementById('userInput').value = '';
 }
+
 
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
@@ -164,7 +164,7 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; 
     } else if (wrongAttempts === 2) {
-        const userInput = document.getElementById('userInput').value.toLowerCase(); // Stelle sicher, dass wir die Benutzerantwort hier haben
+        const userInput = document.getElementById('userInput').value.toLowerCase();
         if (userInput === currentWord.ar.toLowerCase()) {
             feedback.innerText = "Correct!";
             feedback.classList.remove('wrong', 'solution');
@@ -173,7 +173,7 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.add('correct'); 
 
             // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
-            saveVocaInputResults(currentWord, "wrong-first");
+            saveVocaInputResults(currentWord, "wrong-first"); // Hier ist die Änderung
             wrongAttempts = 0; // Zurücksetzen der Versuche
         } else {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
