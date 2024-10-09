@@ -179,8 +179,7 @@ function checkAnswer() {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
-    const submitButton = document.getElementById('submitAnswer');
-
+    
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
@@ -188,11 +187,11 @@ function checkAnswer() {
         vocabWord.classList.remove('wrong');
         vocabWord.classList.add('correct');
         skipButton.style.display = "block"; // Zeige den Skip-Button
-        submitButton.style.display = "none"; // Verberge den Check-Button
         startTimer();
         wrongAttempts = 0;
 
-        results.push({ word: currentWord.de, status: "correct-first" });
+        // Speichere die richtige Antwort mit beiden Sprachen
+        results.push({ word: currentWord.de, answer: currentWord.ar, status: "correct-first" });
         console.log("Richtige Antwort, Ergebnis hinzugefügt:", results);
     } else {
         handleWrongAnswer(currentWord);
@@ -222,13 +221,15 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.remove('wrong');
         vocabWord.classList.add('solution');
         wrongAnswers.push(currentWord);
-        results.push({ word: currentWord.de, status: "second-round" });
+        // Speichere die falsche Antwort mit beiden Sprachen
+        results.push({ word: currentWord.de, answer: currentWord.ar, status: "second-round" });
         console.log("Falsche Antwort, zweite Runde Ergebnis hinzugefügt:", results);
         skipButton.style.display = "block"; // Zeige den Skip-Button
         document.getElementById('submitAnswer').style.display = "none";
         startTimer();
     }
 }
+
 
 // Initiales Set anzeigen
 window.onload = function() {
