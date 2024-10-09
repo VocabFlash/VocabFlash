@@ -164,6 +164,7 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; 
     } else if (wrongAttempts === 2) {
+        const userInput = document.getElementById('userInput').value.toLowerCase(); // Stelle sicher, dass wir die Benutzerantwort hier haben
         if (userInput === currentWord.ar.toLowerCase()) {
             feedback.innerText = "Correct!";
             feedback.classList.remove('wrong', 'solution');
@@ -173,7 +174,7 @@ function handleWrongAnswer(currentWord) {
 
             // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
             saveVocaInputResults(currentWord, "correct-second");
-            wrongAttempts = 0;
+            wrongAttempts = 0; // Zurücksetzen der Versuche
         } else {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
             feedback.classList.remove('correct', 'wrong');
@@ -190,6 +191,7 @@ function handleWrongAnswer(currentWord) {
         }
     }
 }
+
 
 function saveVocaInputResults(vocab, status) {
     // Speichert sowohl die deutsche als auch die arabische Vokabel zusammen mit dem Status
