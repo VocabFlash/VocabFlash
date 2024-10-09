@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Results</title>
     <link rel="stylesheet" href="css/resultstyle.css">
+    <style>
+        .table-container {
+            margin-bottom: 20px; /* Abstand zwischen den Tabellen */
+        }
+        table {
+            width: 100%; /* Tabelle nimmt die gesamte Breite ein */
+            border-collapse: collapse; /* Tabellenränder zusammenführen */
+        }
+        th, td {
+            border: 1px solid #ccc; /* Tabellenrahmen */
+            padding: 8px; /* Innenabstand */
+            text-align: left; /* Text links ausrichten */
+        }
+    </style>
 </head>
 <body>
 <a href="index.html"><h1>VocabFlash</h1></a>
@@ -13,13 +27,13 @@
     <h2>Results</h2>
 </div>
     
-<div class="table-container">
+<div class="table-container" id="tableContainer">
     <table id="vocabResultsTableRound1">
         <thead id="tableHeaderRound1"></thead>
         <tbody id="resultsContainerRound1"></tbody>
     </table>
 
-    <table id="vocabResultsTableRound2">
+    <table id="vocabResultsTableRound2" style="display: none;">
         <thead id="tableHeaderRound2"></thead>
         <tbody id="resultsContainerRound2"></tbody>
     </table>
@@ -49,7 +63,6 @@ function getFromLocalStorage(key) {
     try {
         return JSON.parse(data);
     } catch (e) {
-        console.error("Error parsing data from localStorage:", e);
         return [];
     }
 }
@@ -58,16 +71,13 @@ const resultsContainerRound1 = document.getElementById('resultsContainerRound1')
 const resultsContainerRound2 = document.getElementById('resultsContainerRound2');
 const tableHeaderRound1 = document.getElementById('tableHeaderRound1');
 const tableHeaderRound2 = document.getElementById('tableHeaderRound2');
-const dropdown = document.getElementById('resultDropdown'); 
+const dropdown = document.getElementById('resultDropdown');
 
 function loadResults() {
-    console.log("Loading results...");
     resultsContainerRound1.innerHTML = ""; // Clear previous results
     resultsContainerRound2.innerHTML = "";
 
     const selectedType = dropdown.value;
-    console.log("Selected type:", selectedType);
-    
     let loadedResults = getFromLocalStorage(selectedType + "Results");
 
     let headerHTML = `
@@ -81,7 +91,6 @@ function loadResults() {
     tableHeaderRound2.innerHTML = headerHTML;
 
     if (loadedResults.length === 0) {
-        console.log("No results available.");
         resultsContainerRound1.innerHTML = "<tr><td colspan='2'>No results available.</td></tr>";
         return;
     }
@@ -90,17 +99,23 @@ function loadResults() {
     const round1Results = loadedResults.filter(result => result.round === 1);
     const round2Results = loadedResults.filter(result => result.round === 2);
 
+    // Populate round 1 results
     round1Results.forEach(result => {
         const resultRow = createResultRow(result.word, result.translation, result.status);
         resultsContainerRound1.appendChild(resultRow);
     });
 
+    // Show round 1 table if there are results
+    document.getElementById('vocabResultsTableRound1').style.display = round1Results.length > 0 ? 'table' : 'none';
+
+    // Populate round 2 results
     round2Results.forEach(result => {
         const resultRow = createResultRow(result.word, result.translation, result.status);
         resultsContainerRound2.appendChild(resultRow);
     });
 
-    console.log("Results loaded successfully.");
+    // Show round 2 table if there are results
+    document.getElementById('vocabResultsTableRound2').style.display = round2Results.length > 0 ? 'table' : 'none';
 }
 
 function createResultRow(word, translation, status) {
@@ -121,7 +136,6 @@ function createResultRow(word, translation, status) {
 window.onload = loadResults;
 
 function updateResults() {
-    console.log("Updating results...");
     loadResults();
 }
 </script>
