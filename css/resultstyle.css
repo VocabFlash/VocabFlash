@@ -93,37 +93,26 @@ td {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Leichte Schattierung für besseren Kontrast */
 }
 
-/* Linke Spalte */
-td.left-column {
-    font-size: 10px; /* Schriftgröße verkleinern */
-    width: 50%; /* Breite der linken Spalte auf 50% setzen */
-}
-
-/* Rechte Spalte */
-td.right-column {
-    font-size: 16px; /* Schriftgröße vergrößern */
-    width: 50%; /* Breite der rechten Spalte auf 50% setzen */
-}
-
-/* Ergebnisfarben und passende Textfarben mit Schattierung */
+/* Ergebnisfarben und passende Textfarben mit Schattierung
 .correct-first {
-    background-color: #388e3c; /* Dunklerer Grüner Hintergrund für korrekte Antworten */
-    color: #2c2f33; /* Dunkelgrüne Schrift */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast */
+    background-color: #388e3c; /* Dunklerer Grüner Hintergrund für korrekte Antworten 
+    color: #2c2f33; /* Dunkelgrüne Schrift *
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast 
 }
 
 .wrong-first {
-    background-color: #fb8c00; /* Dunkler Orange Hintergrund für falsche Antworten */
-    color: #2c2f33; /* Dunkeloranger Text */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast */
+    background-color: #fb8c00; /* Dunkler Orange Hintergrund für falsche Antworten 
+    color: #2c2f33; /* Dunkeloranger Text *
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast 
 }
 
 .second-round {
-    background-color: #d32f2f; /* Dunkler Rot Hintergrund für zweite Runde */
-    color: #2c2f33; /* Dunkelroter Text */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast */
-    font-weight: bold; /* Fettgedruckter Text für bessere Lesbarkeit */
+    background-color: #d32f2f; /* Dunkler Rot Hintergrund für zweite Runde 
+    color: #2c2f33; /* Dunkelroter Text 
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Schattierung für besseren Kontrast 
+    font-weight: bold; /* Fettgedruckter Text für bessere Lesbarkeit 
 }
+*/
 
 /* Alternierende Zeilen */
 #vocabResultsTable tr:nth-child(even) {
