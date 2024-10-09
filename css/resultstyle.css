@@ -1,0 +1,112 @@
+/* Body Styling */
+body {
+    background-color: #1a1e24; /* Dunkler Hintergrund */
+    font-family: "Arial Black", sans-serif; /* Einheitliche Schriftart */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+
+/* Header und Überschriften */
+.header {
+    display: flex;
+    align-items: center; /* Zentriert das Logo und den Titel vertikal */
+}
+
+h1, h2 {
+    margin: 0;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #fff; /* Weißer Text */
+    font-size: 24px;
+}
+
+h2 {
+    background-color: #fff; /* Weißer Hintergrund */
+    color: black;
+    font-size: 20px;
+}
+
+/* Container Styling */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    max-width: 600px;
+    min-width: 300px;
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Tabellen Styling */
+        table {
+            width: auto; /* Passt die Breite der Tabelle an den Inhalt an */
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff; /* Dunkelblau für den Header */
+            color: white;
+        }
+
+        td {
+            font-size: 1rem;
+        }
+
+        .correct-first {
+            background-color: #4caf50; /* Grün */
+        }
+        
+        .second-round {
+            background-color: #f44336; /* Rot */
+        }
+        
+        .correct-second {
+            background-color: #ff9800; /* Orange */
+        }
+
+
+/* Responsives Design für mobile Geräte */
+@media (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .container {
+        width: 90%; /* Maximale Breite */
+        padding: 10px;
+    }
+    
+    table, th, td {
+        display: block;
+        width: 100%;
+    }
+}
