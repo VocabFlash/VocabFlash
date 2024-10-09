@@ -147,7 +147,6 @@ function toggleCheckButton() {
     }
 }
 
-// Funktion für den nächsten Wortwechsel
 function nextWord() {
     clearTimeout(timer);
     wrongAttempts = 0;
@@ -170,10 +169,12 @@ function nextWord() {
         console.log("Ergebnisse wurden in localStorage gespeichert.");
         showResults();
     }
-   // Submit-Button einblenden und Skip-Button ausblenden
-    document.getElementById('submitAnswer').style.display = "block";
-    document.getElementById('skipButton').style.display = "none";
+    
+    // Submit-Button einblenden und Skip-Button ausblenden
+    document.getElementById('submitAnswer').style.display = "none"; // Submit-Button ausblenden
+    document.getElementById('skipButton').style.display = "none"; // Skip-Button ausblenden, falls nötig
 }
+
 
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
@@ -193,14 +194,14 @@ function checkAnswer() {
         wrongAttempts = 0;
 
         // Speichere die richtige Antwort mit beiden Sprachen
-        saveVocaBlanksResults(currentWord, "correct-first");
+        saveVocaBlanksResults(currentWord, "correct-first"); // Hier wird currentWord verwendet
+        document.getElementById('submitAnswer').style.display = "none"; // Verstecke den Submit-Button
     } else {
         handleWrongAnswer(currentWord);
     }
 
     document.getElementById('userInput').value = ''; // Eingabefeld zurücksetzen
 }
-
 
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
@@ -256,9 +257,9 @@ function handleWrongAnswer(currentWord) {
     }
 }
 
-    function saveVocaBlanksResults(vocab, status) {
+function saveVocaBlanksResults(vocab, status) {
     // Speichert das deutsche und das arabische Wort zusammen mit dem Status
-    results.push({ word: vocab.de, answer: vocab.ar, status: status });
+    results.push({ ar: vocab.ar, de: vocab.de, status: status }); // Jetzt werden die Wörter richtig gespeichert
     console.log('VocaBlanks Ergebnisse gespeichert:', results);
 }
 
