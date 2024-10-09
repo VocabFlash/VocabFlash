@@ -129,7 +129,7 @@ function loadResults() {
         console.log("No round 1 results found.");
         document.getElementById('vocabResultsTableRound1').style.display = 'none';
     }
-    
+
     // Populate round 2 results
     if (round2Results.length > 0) {
         console.log("Populating round 2 results...");
@@ -142,7 +142,7 @@ function loadResults() {
         console.log("No round 2 results found.");
         document.getElementById('vocabResultsTableRound2').style.display = 'none';
     }
-
+} // Hier die schließende Klammer hinzufügen
 
 function createResultRow(word, translation, status) {
     const resultRow = document.createElement('tr');
