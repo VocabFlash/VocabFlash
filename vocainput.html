@@ -132,7 +132,7 @@ function checkAnswer() {
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
-        feedback.classList.add('correct'); // Grün für richtig
+        feedback.classList.add('correct'); 
         vocabWord.classList.remove('wrong', 'solution');
         vocabWord.classList.add('correct'); 
         skipButton.style.display = "block"; 
@@ -141,7 +141,7 @@ function checkAnswer() {
         wrongAttempts = 0;
 
         // Ergebnisse aufzeichnen für den ersten Versuch
-        results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "correct-first" }); 
+        saveVocaInputResults(currentWord, "correct-first");
     } else {
         handleWrongAnswer(currentWord);
     }
@@ -159,38 +159,42 @@ function handleWrongAnswer(currentWord) {
     if (wrongAttempts === 1) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
-        feedback.classList.add('wrong'); // Gelb für den ersten falschen Versuch
+        feedback.classList.add('wrong'); 
         vocabWord.classList.remove('correct', 'solution');
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; 
     } else if (wrongAttempts === 2) {
         if (userInput === currentWord.ar.toLowerCase()) {
-            // Zweiter Versuch war korrekt
             feedback.innerText = "Correct!";
             feedback.classList.remove('wrong', 'solution');
-            feedback.classList.add('correct'); // Grün für den zweiten Versuch
+            feedback.classList.add('correct'); 
             vocabWord.classList.remove('wrong', 'solution');
             vocabWord.classList.add('correct'); 
 
-            // Ergebnisse aufzeichnen, auch wenn die Antwort im zweiten Versuch korrekt ist
-            results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "wrong-first" }); // Gelb für wrong-first
-            wrongAttempts = 0; // reset wrong attempts
+            // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
+            saveVocaInputResults(currentWord, "wrong-first");
+            wrongAttempts = 0;
         } else {
-            // Zweiter Versuch war falsch
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
             feedback.classList.remove('correct', 'wrong');
-            feedback.classList.add('solution'); // Rot für die falsche Antwort
+            feedback.classList.add('solution'); 
             vocabWord.classList.remove('correct', 'wrong');
             vocabWord.classList.add('solution'); 
 
-            // Ergebnisse aufzeichnen
-            results.push({ word: `${currentWord.de} (${currentWord.ar})`, status: "wrong-second" }); // Rot für falsche Antwort beim zweiten Versuch
+            // Ergebnisse aufzeichnen für den zweiten falschen Versuch
+            saveVocaInputResults(currentWord, "wrong-second");
             wrongAnswers.push(currentWord); 
             skipButton.style.display = "block"; 
             document.getElementById('submitAnswer').style.display = "none"; 
             startTimer(); 
         }
     }
+}
+
+function saveVocaInputResults(vocab, status) {
+    // Speichert sowohl die deutsche als auch die arabische Vokabel zusammen mit dem Status
+    results.push({ de: vocab.de, ar: vocab.ar, status: status });
+    console.log('VocaInput Ergebnisse gespeichert:', results); // Debugging-Log
 }
 
 
