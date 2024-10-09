@@ -94,24 +94,27 @@ td {
 /* Linke Spalte */
 td.left-column {
     font-size: 10px; /* Schriftgröße verkleinern */
+    width: 30%; /* Breite der linken Spalte */
 }
 
 /* Rechte Spalte */
 td.right-column {
     font-size: 16px; /* Schriftgröße vergrößern */
+    width: 70%; /* Breite der rechten Spalte */
 }
 
 /* Status-Farben */
 .correct-first {
-    color: green; /* Grün für korrekte Antworten */
+    background-color: #4caf50; /* Grün für korrekte Antworten */
 }
 
 .wrong-first {
-    color: orange; /* Orange für falsche Antworten */
+    background-color: #ff9800; /* Orange für falsche Antworten */
 }
 
 .second-round {
-    color: red; /* Rot für falsche Antworten */
+    background-color: #f44336; /* Rot für zweite Runde */
+    color: white; /* Textfarbe in der roten Spalte auf weiß ändern */
 }
 
 /* Responsives Design für mobile Geräte */
