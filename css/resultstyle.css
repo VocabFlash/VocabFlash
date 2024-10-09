@@ -115,3 +115,37 @@ td {
         width: 100%;
     }
 }
+
+/* Statusfarben für die Ergebniszeilen */
+.correct {
+    color: green; /* Grün für korrekte Antworten */
+}
+
+.wrong {
+    color: red; /* Rot für falsche Antworten */
+}
+
+.second-round {
+    color: orange; /* Orange für zweite Runde */
+}
+
+/* Stil für die Tabelle */
+#vocabResultsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#vocabResultsTable th, #vocabResultsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#vocabResultsTable th {
+    background-color: #f2f2f2;
+}
+
+#vocabResultsTable tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
