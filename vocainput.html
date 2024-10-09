@@ -127,8 +127,9 @@ function checkAnswer() {
     const feedback = document.getElementById('feedback');
     const skipButton = document.getElementById('skipButton');
     const vocabWord = document.getElementById('vocabWord');
-    const submitButton = document.getElementById('submitAnswer'); // Hier ist die Definition von submitButton
+    const submitButton = document.getElementById('submitAnswer');
 
+    // Überprüfen, ob die Eingabe korrekt ist
     if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
         feedback.classList.remove('wrong', 'solution');
@@ -141,15 +142,14 @@ function checkAnswer() {
         wrongAttempts = 0;
 
         // Ergebnisse aufzeichnen für den ersten Versuch
-        saveVocaInputResults(currentWord, wrongAttempts === 1 ? "wrong-first" : "correct-first"); // Hier ist die Änderung
+        saveVocaInputResults(currentWord, "correct-first"); // Korrekt gespeichert
     } else {
+        // Wenn die Antwort falsch ist, rufen wir die Funktion für falsche Antworten auf
         handleWrongAnswer(currentWord);
     }
 
     document.getElementById('userInput').value = '';
 }
-
-
 
 function handleWrongAnswer(currentWord) {
     const feedback = document.getElementById('feedback');
@@ -175,7 +175,7 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.add('correct'); 
 
             // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
-            saveVocaInputResults(currentWord, "wrong-first"); // Hier ist die Änderung
+            saveVocaInputResults(currentWord, "wrong-first"); // Hier wird gespeichert, dass der erste Versuch falsch war
             wrongAttempts = 0; // Zurücksetzen der Versuche
         } else {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
@@ -193,6 +193,7 @@ function handleWrongAnswer(currentWord) {
         }
     }
 }
+
 
 
 function saveVocaInputResults(vocab, status) {
