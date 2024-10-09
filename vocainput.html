@@ -121,8 +121,6 @@ function nextWord() {
     }
 }
 
-let wrongAttempts = 0; // Globale Variable für falsche Versuche
-
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
     const currentWord = currentSet[currentIndex]; 
@@ -141,15 +139,16 @@ function checkAnswer() {
         skipButton.style.display = "block"; 
         submitButton.style.display = "none"; 
         startTimer();
-        wrongAttempts = 0; // Falsche Versuche zurücksetzen
+        wrongAttempts = 0;
 
         // Ergebnisse aufzeichnen für den ersten Versuch
         saveVocaInputResults(currentWord, "correct-first"); // Korrekt gespeichert
     } else {
+        // Wenn die Antwort falsch ist, rufen wir die Funktion für falsche Antworten auf
         handleWrongAnswer(currentWord);
     }
 
-    document.getElementById('userInput').value = ''; // Eingabefeld leeren
+    document.getElementById('userInput').value = '';
 }
 
 function handleWrongAnswer(currentWord) {
@@ -165,7 +164,7 @@ function handleWrongAnswer(currentWord) {
         feedback.classList.add('wrong'); 
         vocabWord.classList.remove('correct', 'solution');
         vocabWord.classList.add('wrong');
-        skipButton.style.display = "none"; // Skip Button ausblenden
+        skipButton.style.display = "none"; 
     } else if (wrongAttempts === 2) {
         const userInput = document.getElementById('userInput').value.toLowerCase();
         if (userInput === currentWord.ar.toLowerCase()) {
@@ -176,8 +175,8 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.add('correct'); 
 
             // Ergebnisse aufzeichnen für den zweiten richtigen Versuch
-            saveVocaInputResults(currentWord, "second-round"); // Speichern als second-round
-            wrongAttempts = 0; // Falsche Versuche zurücksetzen
+            saveVocaInputResults(currentWord, "wrong-first"); // Hier wird gespeichert, dass der erste Versuch falsch war
+            wrongAttempts = 0; // Zurücksetzen der Versuche
         } else {
             feedback.innerText = `The correct answer is: ${currentWord.ar}`;
             feedback.classList.remove('correct', 'wrong');
@@ -185,8 +184,8 @@ function handleWrongAnswer(currentWord) {
             vocabWord.classList.remove('correct', 'wrong');
             vocabWord.classList.add('solution'); 
 
-            // Ergebnisse aufzeichnen für den ersten falschen Versuch
-            saveVocaInputResults(currentWord, "wrong-first"); // Hier wird gespeichert, dass der erste Versuch falsch war
+            // Ergebnisse aufzeichnen für den zweiten falschen Versuch
+            saveVocaInputResults(currentWord, "second-round");
             wrongAnswers.push(currentWord); 
             skipButton.style.display = "block"; 
             document.getElementById('submitAnswer').style.display = "none"; 
@@ -194,6 +193,8 @@ function handleWrongAnswer(currentWord) {
         }
     }
 }
+
+
 
 function saveVocaInputResults(vocab, status) {
     // Speichert sowohl die deutsche als auch die arabische Vokabel zusammen mit dem Status
