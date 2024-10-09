@@ -121,7 +121,7 @@ function nextFlashcard() {
 // Funktion zum Markieren einer falschen Antwort
 function markWrong() {
     const vocab = currentSet[currentIndex];
-    saveFlashcardResult(vocab, 'wrong');
+    saveFlashcardResult(vocab, 'second-round');
     wrongAnswers.push(vocab); // Falsche Antwort in Liste speichern
     nextFlashcard();
 }
@@ -129,7 +129,7 @@ function markWrong() {
 // Funktion zum Markieren einer richtigen Antwort
 function markCorrect() {
     const vocab = currentSet[currentIndex];
-    saveFlashcardResult(vocab, 'correct');
+    saveFlashcardResult(vocab, 'correct-first');
     nextFlashcard();
 }
 
