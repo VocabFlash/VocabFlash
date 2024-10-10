@@ -114,12 +114,49 @@ function nextWord() {
     } else if (!secondRound && wrongAnswers.length > 0) {
         secondRound = true;
         currentSet = wrongAnswers;
+        wrongAnswers = []; // Zurücksetzen für die neue Runde
         currentIndex = 0;
         displayVocabWord();
-    } else if (wrongAnswers.length === 0) { // Nur weiterleiten, wenn es keine falschen Antworten gibt
+    } else if (secondRound && currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } else if (secondRound && wrongAnswers.length > 0) {
+        currentSet = wrongAnswers;
+        wrongAnswers = [];
+        currentIndex = 0;
+        displayVocabWord();
+    } else if (wrongAnswers.length === 0) { 
         showResults(); 
     }
 }
+function nextWord() {
+    clearTimeout(timer);
+    wrongAttempts = 0;
+    const feedback = document.getElementById('feedback');
+    feedback.innerHTML = ''; 
+
+    if (!secondRound && currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } else if (!secondRound && wrongAnswers.length > 0) {
+        secondRound = true;
+        currentSet = wrongAnswers;
+        wrongAnswers = []; // Zurücksetzen für die neue Runde
+        currentIndex = 0;
+        displayVocabWord();
+    } else if (secondRound && currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } else if (secondRound && wrongAnswers.length > 0) {
+        currentSet = wrongAnswers;
+        wrongAnswers = [];
+        currentIndex = 0;
+        displayVocabWord();
+    } else if (wrongAnswers.length === 0) { 
+        showResults(); 
+    }
+}
+
 
 function checkAnswer() {
     const userInput = document.getElementById('userInput').value.toLowerCase();
