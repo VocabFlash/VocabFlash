@@ -65,7 +65,7 @@ h2 {
 
 /* Tabellen Styling */
 table {
-    width: 50%; /* Setze die Breite der Tabelle auf 50% für gleichmäßige Spalten */
+    width: 70%; /* Setze die Breite der Tabelle auf 50% für gleichmäßige Spalten */
     border-collapse: collapse; /* Tabellenränder zusammenführen */
     margin: auto; /* Zentriert die Tabelle */
     background-color: #fff;
