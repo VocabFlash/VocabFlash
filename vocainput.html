@@ -116,7 +116,7 @@ function nextWord() {
         currentSet = wrongAnswers;
         currentIndex = 0;
         displayVocabWord();
-    } else {
+    } else if (wrongAnswers.length === 0) { // Nur weiterleiten, wenn es keine falschen Antworten gibt
         showResults(); 
     }
 }
