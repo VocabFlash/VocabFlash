@@ -112,29 +112,15 @@ td, th {
 
     table {
         width: 100%; /* Maximale Breite auf mobilen Geräten */
-    }
-
-    /* Flexibles Layout für Header und Tabelle */
-    th, td {
-        display: block; /* Blockweise Darstellung für Zellen */
-        width: 100%; /* Volle Breite für jede Zelle */
-        text-align: left;
-    }
-
-    th {
-        background-color: #2c2f33;
-        padding: 10px;
-    }
-    
-    td {
-        background-color: #4caf50;
-        padding: 10px;
         margin: 0;
     }
 
-    /* Vermeidung von weißen Zwischenräumen bei Mobilgeräten */
+    th, td {
+        padding: 8px; /* Kompaktere Polsterung */
+    }
+    
     td, th {
-        border: 0;
+        border: 0; /* Entfernt alle Ränder */
         margin: 0;
         padding: 8px;
     }
