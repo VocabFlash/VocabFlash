@@ -13,15 +13,17 @@ body {
 /* Header und Überschriften */
 .header {
     display: flex;
-    justify-content: space-between; /* Elemente nebeneinander platzieren */
     align-items: center; /* Zentriert das Logo und den Titel vertikal */
-    flex-wrap: wrap; /* Ermöglicht Umbruch bei kleinen Bildschirmen */
+    justify-content: space-between; /* Elemente nebeneinander platzieren */
+    flex-wrap: wrap; /* Ermöglicht Umbruch auf kleinen Bildschirmen */
+    width: 100%; /* Nutzt die volle Breite */
 }
 
 h1, h2 {
     margin: 0;
     font-weight: bold;
     text-align: center;
+    flex: 1; /* Flexibles Layout für den Header */
 }
 
 h1 {
@@ -61,7 +63,7 @@ h2 {
 
 /* Tabellen Styling */
 table {
-    width: 75%; /* 75% der Breite auf Desktops */
+    width: 100%; /* Maximale Breite auf kleineren Bildschirmen */
     border-collapse: collapse; /* Tabellenränder zusammenführen */
     margin: auto; /* Zentriert die Tabelle */
     background-color: #fff;
@@ -70,24 +72,30 @@ table {
 }
 
 th, td {
-    border: 0px solid #ccc; /* Tabellenrahmen */
+    border: none; /* Tabellenrahmen entfernen */
     padding: 12px 20px; /* Innenabstand */
     text-align: left; /* Text links ausrichten */
 }
 
 /* Tabellenheader: Dunkler Grauton */
 th {
-    background-color: #2c2f33; /* Dunkelgrauer Header leicht heller als der Hintergrund */
+    background-color: #2c2f33; /* Dunkelgrauer Header */
     color: #ccc; /* Heller Text im Header */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Leichte Schattierung für besseren Kontrast */
 }
 
 /* Tabellenzeilen Styling */
 td {
     font-size: 1rem; /* Standard-Schriftgröße */
     color: #000; /* Standard-Schriftfarbe */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Leichte Schattierung für besseren Kontrast */
-    border: none; /* Entfernt eventuelle weiße Zwischenräume */
+}
+
+/* Entferne Zwischenräume */
+table {
+    border-spacing: 0; /* Entfernt Zwischenräume zwischen Zellen */
+}
+
+td, th {
+    padding: 8px;
 }
 
 /* Alternierende Zeilen */
@@ -95,38 +103,39 @@ td {
     background-color: #f5f5f5; /* Hellerer Hintergrund für gerade Zeilen */
 }
 
-/* Entferne Zwischenräume */
-table {
-    border-spacing: 0;
-}
-
-td, th {
-    margin: 0;
-    padding: 0;
-    border: 0; /* Entfernt eventuelle Abstände zwischen den Zellen */
-}
-
-/* Responsives Design für mobile Geräte */
+/* Anpassungen für kleine Bildschirme */
 @media (max-width: 768px) {
+    .header {
+        flex-direction: row; /* Header-Elemente bleiben in einer Zeile */
+        justify-content: space-around; /* Bessere Platzierung des Headers */
+    }
+
     table {
-        width: 90%; /* Maximal 90% Breite auf mobilen Geräten */
+        width: 100%; /* Maximale Breite auf mobilen Geräten */
     }
-    
-    /* Zellen nebeneinander */
+
+    /* Flexibles Layout für Header und Tabelle */
     th, td {
-        display: inline-block; /* Zellen in einer Reihe anzeigen */
-        width: 45%; /* Zellen teilen sich den verfügbaren Platz */
-        box-sizing: border-box;
-    }
-    
-    th, td {
-        padding: 8px;
+        display: block; /* Blockweise Darstellung für Zellen */
+        width: 100%; /* Volle Breite für jede Zelle */
         text-align: left;
     }
+
+    th {
+        background-color: #2c2f33;
+        padding: 10px;
+    }
     
-    /* Header: Inhalte nebeneinander, aber auch auf kleineren Bildschirmen lesbar */
-    .header {
-        flex-direction: row; /* Elemente in einer Reihe */
-        justify-content: space-between;
+    td {
+        background-color: #4caf50;
+        padding: 10px;
+        margin: 0;
+    }
+
+    /* Vermeidung von weißen Zwischenräumen bei Mobilgeräten */
+    td, th {
+        border: 0;
+        margin: 0;
+        padding: 8px;
     }
 }
