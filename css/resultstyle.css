@@ -92,11 +92,12 @@ td {
 /* Entferne Zwischenräume */
 table {
     border-spacing: 0; /* Entfernt Zwischenräume zwischen Zellen */
+    margin: 20px auto;
 }
 
 td, th {
     padding: 8px;
-    border: 1px;
+    border: 1px solid #1a1e24;;
 }
 
 /* Alternierende Zeilen */
@@ -113,7 +114,7 @@ td, th {
 
     table {
         width: 90%; /* Maximale Breite auf mobilen Geräten */
-        margin: 0px auto;
+        margin: 20px auto;
     }
 
     th, td {
@@ -122,7 +123,7 @@ td, th {
     
     td, th {
         /* border: 0; Entfernt alle Ränder */
-        border: 1px solid #fff; /* Dünner grauer Rand */
+        border: 1px solid #1a1e24; /* Dünner grauer Rand */
         margin: 0;
         padding: 8px;
     }
