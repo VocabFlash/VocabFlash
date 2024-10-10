@@ -68,7 +68,7 @@ table {
 }
 
 th, td {
-    border: 1px solid #ccc; /* Tabellenrahmen */
+    border: 0px solid #ccc; /* Tabellenrahmen */
     padding: 12px 20px; /* Innenabstand */
     text-align: left; /* Text links ausrichten */
 }
