@@ -96,6 +96,7 @@ table {
 
 td, th {
     padding: 8px;
+    border: 1px;
 }
 
 /* Alternierende Zeilen */
@@ -111,7 +112,7 @@ td, th {
     }
 
     table {
-        width: 100%; /* Maximale Breite auf mobilen Geräten */
+        width: 90%; /* Maximale Breite auf mobilen Geräten */
         margin: 0;
     }
 
@@ -120,7 +121,8 @@ td, th {
     }
     
     td, th {
-        border: 0; /* Entfernt alle Ränder */
+        /* border: 0; Entfernt alle Ränder */
+        border: 1px; /* Dünner grauer Rand */
         margin: 0;
         padding: 8px;
     }
