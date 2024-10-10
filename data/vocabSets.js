@@ -151,7 +151,7 @@ const vocabSets= {
   ],
 
   set3: [
-       { "de": "eine (Land)Straße", "ar": "une route" },
+    { "de": "eine (Land)Straße", "ar": "une route" },
     { "de": "auf dem Weg nach/in…", "ar": "en route pour…" },
     { "de": "das Elsass", "ar": "l'Alsace" },
     { "de": "eine Kathedrale", "ar": "une cathédrale" },
@@ -204,7 +204,9 @@ const vocabSets= {
     { "de": "etw./jdn. schicken in/zu/nach", "ar": "envoyer qc à qn" },
     { "de": "sich etw. vorstellen", "ar": "imaginer qc" },
     { "de": "ein Verrückter/eine Verrückte", "ar": "un fou/une folle" },
-    { "de": "Unsinn machen", "ar": "faire le fou" },
+    { "de": "Unsinn machen", "ar": "faire le fou" }
+  ],
+set4: [    
     { "de": "zuerst", "ar": "d'abord" },
     { "de": "ein Stadtzentrum", "ar": "un centre-ville" },
     { "de": "danach, anschließend", "ar": "ensuite" },
@@ -269,7 +271,7 @@ const vocabSets= {
     { "de": "sich wiedersehen", "ar": "se revoir" }
 ],
 
-     set4: [
+     set5: [
 
     { "de": "sich aus den Augen verlieren", "ar": "se perdre de vue" },
     { "de": "sich an jdn./etw. erinnern", "ar": "se souvenir de qn/qc" },
@@ -343,7 +345,9 @@ const vocabSets= {
     { "de": "Es kostet Eintritt.", "ar": "L'entrée est payante." },
     { "de": "ein Sportler/eine Sportlerin", "ar": "un sportif/une sportive" },
     { "de": "bekannt", "ar": "connu/connue" },
-    { "de": "niemand (Subjekt)", "ar": "personne ne..." },
+    { "de": "niemand (Subjekt)", "ar": "personne ne..." }
+  ],
+    set6: [
     { "de": "das Radio", "ar": "la radio" },
     { "de": "ein Podcast", "ar": "un podcast" },
     { "de": "begeistert", "ar": "emballé/emballée" },
@@ -420,7 +424,7 @@ const vocabSets= {
 
   ],
 
-     set5: [
+     set7: [
 
     { "de": "sich aus den Augen verlieren", "ar": "se perdre de vue" },
     { "de": "sich an jdn./etw. erinnern", "ar": "se souvenir de qn/qc" }
