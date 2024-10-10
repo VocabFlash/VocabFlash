@@ -206,6 +206,7 @@ function handleWrongAnswer(currentWord) {
         vocabWord.classList.remove('correct', 'solution');
         vocabWord.classList.add('wrong');
         skipButton.style.display = "none"; 
+        saveVocaInputResults(currentWord, "wrong-first");
     } else if (wrongAttempts === 2) {
         const userInput = document.getElementById('userInput').value.toLowerCase();
         if (userInput === currentWord.ar.toLowerCase()) {
