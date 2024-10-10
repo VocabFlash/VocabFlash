@@ -153,7 +153,7 @@ const vocabSets= {
   set3: [
     { "de": "eine (Land)Straße", "ar": "une route" },
     { "de": "auf dem Weg nach/in...", "ar": "en route pour..." },
-    { "de": "das Elsass", "ar": "l'Alsace" },
+    { "de": "das Elsass", "ar": "l'Alsace (f)" },
     { "de": "eine Kathedrale", "ar": "une cathédrale" },
     { "de": "ein Vertreter/eine Vertreterin", "ar": "un représentant/une représentante" },
     { "de": "ein Land", "ar": "un pays" },
