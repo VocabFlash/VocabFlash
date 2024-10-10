@@ -152,7 +152,7 @@ const vocabSets= {
 
   set3: [
     { "de": "eine (Land)Straße", "ar": "une route" },
-    { "de": "auf dem Weg nach/in…", "ar": "en route pour…" },
+    { "de": "auf dem Weg nach/in...", "ar": "en route pour..." },
     { "de": "das Elsass", "ar": "l'Alsace" },
     { "de": "eine Kathedrale", "ar": "une cathédrale" },
     { "de": "ein Vertreter/eine Vertreterin", "ar": "un représentant/une représentante" },
@@ -211,11 +211,11 @@ set4: [
     { "de": "ein Stadtzentrum", "ar": "un centre-ville" },
     { "de": "danach, anschließend", "ar": "ensuite" },
     { "de": "ganz (m./f.)", "ar": "tout/toute" },
-    { "de": "alle (m./f.), die ganzen", "ar": "tous/toutes (tous les …)" },
+    { "de": "alle (m./f.), die ganzen", "ar": "tous/toutes (tous les ...)" },
     { "de": "interessant", "ar": "intéressant/intéressante" },
     { "de": "super; genial; großartig", "ar": "génial/géniale" },
     { "de": "jdm. vorschlagen, etw. zu tun", "ar": "proposer à qn de faire qc" },
-    { "de": "oben; nach oben", "ar": "en haut (loc.)" },
+    { "de": "oben; nach oben", "ar": "en haut" },
     { "de": "Achtung!; Vorsicht!", "ar": "Attention !" },
     { "de": "eine Stufe", "ar": "une marche" },
     { "de": "Keine Sorge!; Mach dir keine Sorgen!", "ar": "T'inquiète !" },
@@ -229,7 +229,7 @@ set4: [
     { "de": "gleicher Meinung sein", "ar": "être du même avis" },
     { "de": "da; weil", "ar": "comme" },
     { "de": "eine Brücke", "ar": "un pont" },
-    { "de": "etw. austeilen/verteilen", "ar": "distribuer qc" },
+    { "de": "etw. austeilen/verteilen", "ar": "distribuer qc"},
     { "de": "außerdem", "ar": "en plus" },
     { "de": "die Großeltern", "ar": "les grands-parents" },
     { "de": "etw. wie seine Westentasche kennen", "ar": "connaître qc comme sa poche" },
@@ -254,7 +254,7 @@ set4: [
     { "de": "die Wirklichkeit; die Realität", "ar": "la réalité" },
     { "de": "verschieden; anders; unterschiedlich", "ar": "différent/différente" },
     { "de": "ein Kilometer", "ar": "un kilomètre" },
-    { "de": "ein Meter", "ar": "un mètre" },
+    { "de": "ein Meter", "ar": "un mètre"},
     { "de": "unter; unter der Erde; unterhalb", "ar": "sous" },
     { "de": "tief; tiefgründig", "ar": "profond/profonde" },
     { "de": "ein Soldat/eine Soldatin", "ar": "un soldat/une soldate" },
@@ -268,7 +268,7 @@ set4: [
     { "de": "eine Großmutter", "ar": "une grand-mère" },
     { "de": "sich kennenlernen; sich begegnen", "ar": "se rencontrer" },
     { "de": "eine Städte-/Schulpartnerschaft", "ar": "un jumelage" },
-    { "de": "sich wiedersehen", "ar": "se revoir" }
+    { "de": "sich wiedersehen", "ar": "se revoir"}
 ],
 
      set5: [
@@ -348,7 +348,7 @@ set4: [
     { "de": "niemand (Subjekt)", "ar": "personne ne..." }
   ],
     set6: [
-    { "de": "das Radio", "ar": "la radio" },
+    { "de": "das Radio", "ar": "la radio"},
     { "de": "ein Podcast", "ar": "un podcast" },
     { "de": "begeistert", "ar": "emballé/emballée" },
     { "de": "klar; natürlich", "ar": "évidemment" },
