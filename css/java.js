@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function() {
     darkModeButton.style.zIndex = "1000";
     darkModeButton.innerHTML = "◐";
     document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
-
+}
     // Dropdown-Menü erstellen
  //   createDropdown(); // Stelle sicher, dass die Dropdown-Funktion aufgerufen wird
 //});
