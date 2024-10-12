@@ -31,8 +31,17 @@
 
 <div class="container">
     <label for="setSelect">Choose a set:</label>
-    <!-- Dropdown wird hier direkt eingefügt -->
-    <select id="setSelect" onchange="updateVocabSet()"></select> 
+        <select id="setSelect" onchange="updateVocabSet()">
+            <option value="set1">Set 1 - Arabisch 1</option>
+            <option value="set2">Set 2 - Arabisch 2</option>
+            <option value="set3">Set 3 - Franz 1.1</option>
+            <option value="set4">Set 4 - Franz 1.2</option>
+            <option value="set5">Set 5 - Franz 1.3</option>
+            <option value="set6">Set 6 - Franz 1.4</option>
+            <option value="set7">Set 7 - </option>
+            <option value="set8">Set 8 - </option>
+             <!-- Füge hier weitere Sets hinzu -->
+        </select>
     <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
     <br><a href="result.html">Show results</a><br>
     <a href="javascript:history.back()">Go back</a><br>
