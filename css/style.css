@@ -177,7 +177,7 @@ input, select {
 
 /* Button Styling */
 .button {
-    background-color: #007BFF; /* Hintergrundfarbe */
+    background-color: #0056b3; /* Hintergrundfarbe */
     color: white; /* Textfarbe */
     border: none; /* Keine Umrandung */
     border-radius: 15px; /* Abgerundete Ecken */
@@ -190,7 +190,7 @@ input, select {
 .confirm-button {
     padding: 8px 18px; /* Innenabstand */
     margin-top: 15px; /* Abstand nach oben */
-    background-color: #007BFF; /* Hintergrundfarbe */
+    background-color: #0056b3; /* Hintergrundfarbe */
     color: white; /* Textfarbe */
     border: none; /* Keine Umrandung */
     border-radius: 15px; /* Abgerundete Ecken */
