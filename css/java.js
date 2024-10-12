@@ -12,9 +12,6 @@ function openFullscreen() {
     }
 }
 
-// Event-Listener für den Fullscreen Button
-document.getElementById('fullscreenButton').addEventListener('click', openFullscreen);
-
 // Funktion zum Umschalten des Dark Modes
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -80,6 +77,7 @@ function createDropdown() {
     select.id = "setSelect";
     select.onchange = updateVocabSet; // Stelle sicher, dass die Funktion existiert
 
+    // Optionen zum Dropdown-Menü hinzufügen
     vocabSetOptions.forEach(set => {
         const option = document.createElement("option");
         option.value = set.value;
@@ -87,6 +85,7 @@ function createDropdown() {
         select.appendChild(option);
     });
 
+    // Dropdown und Label zum Body hinzufügen
     document.body.appendChild(label);
     document.body.appendChild(select);
 }
