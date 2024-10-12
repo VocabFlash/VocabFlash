@@ -178,8 +178,8 @@ input, select {
 
 /* Bestätigungsbutton */
 .confirm-button {
-    padding: 10px 20px; /* Gleiche Innenabstände */
-    margin-top: 10px;
+    padding: 8px 18px; /* Gleiche Innenabstände */
+    margin-top: 15px;
     background-color: #007BFF;
     color: white;
     border: none;
