@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>VocabFlash</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="data/vocaBlanks.js" defer></script>
     <script src="css/java.js" defer></script>
+    <script src="data/vocaBlanks.js" defer></script>
 </head>
 <body>
-
+    
 <a href="index.html"><h1>VocabFlash</h1></a>
 <h2 id="inputCounter">Word: 1 / 10</h2>
 
@@ -25,18 +27,22 @@
         </div> 
         <p id="feedback"></p>
     </div>
-</div>
+</div> 
 
 <div class="container">
     <label for="setSelect">Choose a set:</label>
     <select id="setSelect" onchange="updateVocabSet()">
-        <option value="set1">Set 1</option>
-        <option value="set2">Set 2</option>
+        <option value="set1">Set 1 - </option>
+        <option value="set2">Set 2 - </option>
+        <option value="set3">Set 3 - </option>
+        <option value="set4">Set 4 - </option>
+        <option value="set5">Set 5 - </option>
+        <option value="set6">Set 6 - </option>
+        <option value="set7">Set 7 - </option>
+        <option value="set8">Set 8 - </option>
     </select>
     <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
-    <br><a href="result.html">Show results</a><br>
-    <a href="javascript:history.back()">Go back</a><br>
-    <a href="index.html">Go back to homepage</a>
+
 </div>
 
 <script>
@@ -44,12 +50,12 @@ let currentSet = [];
 let currentIndex = 0;
 let wrongAttempts = 0;
 let wrongAnswers = [];
-let secondRound = false;
+let secondRound = false; 
 let timer;
 let results = [];
 
-// Funktion zum Zufälligmischen des Arrays
 function shuffle(array) {
+    console.log("Shuffling the array");
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
@@ -57,21 +63,15 @@ function shuffle(array) {
     return array;
 }
 
-// Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
-    console.log("Aktuelles Set:", currentSet);
-    
+    console.log("Displaying vocab word at index:", currentIndex);
     if (!secondRound && currentIndex === 0) {
         shuffle(currentSet);
     }
-    
     const vocabWord = document.getElementById('vocabWord');
     const inputCounter = document.getElementById('inputCounter');
     const submitButton = document.getElementById('submitAnswer');
     const skipButton = document.getElementById('skipButton');
-    const feedback = document.getElementById('feedback');
-
-    feedback.innerText = ''; // Feedback zurücksetzen
 
     if (currentSet.length > 0) {
         const vocab = currentSet[currentIndex];
@@ -79,56 +79,174 @@ function displayVocabWord() {
         vocabWord.classList.remove('correct', 'wrong', 'solution');
 
         inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-        submitButton.style.display = "block"; // Zeige den Check-Button
-        skipButton.style.display = "none"; // Skip-Button zu Beginn ausblenden
+        submitButton.style.display = "block"; 
+        skipButton.style.display = "none"; 
+    } else {
+        console.warn("Current set is empty.");
     }
 }
 
-// Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
     const selectedSet = document.getElementById('setSelect').value;
-    console.log("Ausgewähltes Set:", selectedSet); // Konsolenausgabe hinzufügen
+    console.log("Selected set:", selectedSet);
     if (vocabSets[selectedSet]) {
         currentSet = vocabSets[selectedSet];
         currentIndex = 0;
-        wrongAnswers = []; // Setze die falschen Antworten zurück
-        secondRound = false; // Setze die zweite Runde zurück
-        console.log("Aktuelles Set geladen:", currentSet); // Konsolenausgabe hinzufügen
+        wrongAnswers = []; 
+        secondRound = false; 
+        console.log("Loaded set:", currentSet);
         displayVocabWord();
     } else {
-        console.error("Set nicht gefunden:", selectedSet); // Fehlerausgabe
+        console.error("Set not found:", selectedSet);
+    }
+}
+
+function showResults() {
+    localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); 
+    const currentPage = window.location.pathname.split("/").pop(); 
+    console.log("Redirecting to results page from:", currentPage);
+    window.location.href = `result.html?fromPage=${currentPage}`; 
+}
+
+function skipToNext() {
+    clearTimeout(timer);
+    console.log("Skipping to next word");
+    nextWord();
+}
+
+function nextWord() {
+    clearTimeout(timer);
+    console.log("Moving to the next word");
+    wrongAttempts = 0;
+    const feedback = document.getElementById('feedback');
+    feedback.innerHTML = ''; 
+
+    if (!secondRound && currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } else if (!secondRound && wrongAnswers.length > 0) {
+        secondRound = true;
+        currentSet = wrongAnswers;
+        wrongAnswers = [];
+        currentIndex = 0;
+        console.log("Starting second round with wrong answers");
+        displayVocabWord();
+    } else if (secondRound && currentIndex < currentSet.length - 1) {
+        currentIndex++;
+        displayVocabWord();
+    } else if (secondRound && wrongAnswers.length > 0) {
+        currentSet = wrongAnswers;
+        wrongAnswers = [];
+        currentIndex = 0;
+        displayVocabWord();
+    } else if (wrongAnswers.length === 0) { 
+        showResults(); 
     }
 }
 
 function checkAnswer() {
-    const userInput = document.getElementById('userInput').value.trim();
-    const currentVocab = currentSet[currentIndex].solution; // Assuming you have a solution property
-
+    const userInput = document.getElementById('userInput').value.toLowerCase();
+    const currentWord = currentSet[currentIndex]; 
     const feedback = document.getElementById('feedback');
-    const submitButton = document.getElementById('submitAnswer');
     const skipButton = document.getElementById('skipButton');
+    const vocabWord = document.getElementById('vocabWord');
+    const submitButton = document.getElementById('submitAnswer');
 
-    if (userInput.toLowerCase() === currentVocab.toLowerCase()) {
+    console.log("User input:", userInput, "Expected answer:", currentWord.ar.toLowerCase());
+    if (userInput === currentWord.ar.toLowerCase()) {
         feedback.innerText = "Correct!";
-        feedback.className = "correct"; // Set correct class for styling
-        // Here you can increment index or set up for next word
-        currentIndex++;
-        if (currentIndex < currentSet.length) {
-            displayVocabWord(); // Load next vocab word
-        } else {
-            // Logic when all words are done (e.g., show results)
-        }
+        feedback.classList.remove('wrong', 'solution');
+        feedback.classList.add('correct'); 
+        vocabWord.classList.remove('wrong', 'solution');
+        vocabWord.classList.add('correct'); 
+        skipButton.style.display = "block"; 
+        submitButton.style.display = "none"; 
+        startTimer();
+        wrongAttempts = 0;
+        saveVocaBlanksResults(currentWord, "correct-first");
     } else {
-        feedback.innerText = "Try again!";
-        feedback.className = "wrong"; // Set wrong class for styling
-        // Add logic to handle wrong answers if needed
+        handleWrongAnswer(currentWord);
+    }
+
+    document.getElementById('userInput').value = '';
+}
+
+function handleWrongAnswer(currentWord) {
+    const feedback = document.getElementById('feedback');
+    const skipButton = document.getElementById('skipButton');
+    const vocabWord = document.getElementById('vocabWord');
+
+    wrongAttempts++;
+    console.log("Wrong attempt number:", wrongAttempts);
+
+    if (wrongAttempts === 1) {
+        feedback.innerText = "Try again.";
+        feedback.classList.remove('correct', 'solution');
+        feedback.classList.add('wrong'); 
+        vocabWord.classList.remove('correct', 'solution');
+        vocabWord.classList.add('wrong');
+        skipButton.style.display = "none"; 
+        saveVocaBlanksResults(currentWord, "wrong-first");
+    } else if (wrongAttempts === 2) {
+        const userInput = document.getElementById('userInput').value.toLowerCase();
+        if (userInput === currentWord.ar.toLowerCase()) {
+            feedback.innerText = "Correct!";
+            feedback.classList.remove('wrong', 'solution');
+            feedback.classList.add('correct'); 
+            vocabWord.classList.remove('wrong', 'solution');
+            vocabWord.classList.add('correct'); 
+            saveVocaBlanksResults(currentWord, "wrong-first");
+            wrongAttempts = 0;
+        } else {
+            feedback.innerText = `The correct answer is: ${currentWord.ar}`;
+            feedback.classList.remove('correct', 'wrong');
+            feedback.classList.add('solution'); 
+            vocabWord.classList.remove('correct', 'wrong');
+            vocabWord.classList.add('solution'); 
+            saveVocaBlanksResults(currentWord, "second-round");
+            wrongAnswers.push(currentWord); 
+            skipButton.style.display = "block"; 
+            document.getElementById('submitAnswer').style.display = "none"; 
+            startTimer();
+        }
     }
 }
 
-// Initiales Set anzeigen
+function toggleCheckButton() {
+    const userInput = document.getElementById('userInput').value;
+    document.getElementById('submitAnswer').style.display = userInput.trim() === '' ? 'none' : 'block'; 
+}
+
+function handleKeyDown(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        if (document.getElementById('submitAnswer').style.display !== "none") {
+            checkAnswer();
+        }
+    } else if (event.key === "PageDown") {
+        event.preventDefault();
+        skipToNext();
+    }
+}
+
+function startTimer() {
+    console.log("Starting timer for 3 seconds");
+    timer = setTimeout(() => {
+        console.log("3 seconds passed, skipping to next word");
+        nextWord();
+    }, 3000); 
+}
+
+function saveVocaBlanksResults(currentWord, status) {
+    results.push({
+        word: currentWord.de + ' ... ',
+        status: status
+    });
+    console.log("Saved result:", currentWord.de, status);
+}
+
 window.onload = function() {
-    console.log("Seite geladen, setSelect wird aktualisiert."); // Konsolenausgabe hinzufügen
-    updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+    updateVocabSet(); 
 };
 </script>
 
