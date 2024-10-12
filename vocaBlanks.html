@@ -100,6 +100,31 @@ function updateVocabSet() {
     }
 }
 
+function checkAnswer() {
+    const userInput = document.getElementById('userInput').value.trim();
+    const currentVocab = currentSet[currentIndex].solution; // Assuming you have a solution property
+
+    const feedback = document.getElementById('feedback');
+    const submitButton = document.getElementById('submitAnswer');
+    const skipButton = document.getElementById('skipButton');
+
+    if (userInput.toLowerCase() === currentVocab.toLowerCase()) {
+        feedback.innerText = "Correct!";
+        feedback.className = "correct"; // Set correct class for styling
+        // Here you can increment index or set up for next word
+        currentIndex++;
+        if (currentIndex < currentSet.length) {
+            displayVocabWord(); // Load next vocab word
+        } else {
+            // Logic when all words are done (e.g., show results)
+        }
+    } else {
+        feedback.innerText = "Try again!";
+        feedback.className = "wrong"; // Set wrong class for styling
+        // Add logic to handle wrong answers if needed
+    }
+}
+
 // Initiales Set anzeigen
 window.onload = function() {
     console.log("Seite geladen, setSelect wird aktualisiert."); // Konsolenausgabe hinzufügen
