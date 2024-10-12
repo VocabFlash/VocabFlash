@@ -90,6 +90,8 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.style.bottom = "10px";
     homeButton.style.right = "70px"; // Position links, näher am Zurück-Button
     homeButton.style.zIndex = "1000";
+    resultButton.style.padding = "5px 10px"; // Kleines Padding für den Button
+    resultButton.style.fontSize = "13px"; // Kleinere Schriftgröße, falls gewünscht
     homeButton.onclick = goResults; // Funktion für den Home-Button
     document.body.appendChild(resultButton); // Button dem Body hinzufügen
     
