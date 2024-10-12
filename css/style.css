@@ -196,25 +196,26 @@ button {
 
 .dark-mode .container {
     background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid #fff;
+    border: none; /* Keine Umrandung im Dark Mode */
 }
 
 .dark-mode h2 {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
-    border: 1px solid #fff;
+    border: none; /* Keine Umrandung im Dark Mode */
 }
 
 .dark-mode .flashcard {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
-    border: 1px solid #fff;
+    border: none; /* Keine Umrandung im Dark Mode */
 }
 
 .dark-mode input, .dark-mode select {
     background-color: #555;
     color: #fff;
-    border: 1px solid #fff;
+    border: none; /* Keine Umrandung im Dark Mode */
+    border-radius: 5px; /* Abgerundet in allen Ansichten */
 }
 
 /* Einheitliches Design für alle Dropdown-Menüs */
@@ -228,39 +229,33 @@ select {
 .dark-mode select {
     background-color: #555;
     color: #fff;
+    border: none; /* Keine Umrandung im Dark Mode */
 }
 
 /* Button Anpassungen im Dark Mode */
 .dark-mode button {
-    background-color: #333;
+    background-color: #555;
     color: #fff;
 }
 
 /* Positionierung der Buttons */
-#fullscreenButton {
+#fullscreenButton, #darkModeButton {
     position: fixed;
     bottom: 10px;
-    left: 10px;
-    background-color: #4caf50;
+    width: 40px; /* Gleiche Breite */
+    height: 40px; /* Gleiche Höhe */
+    border-radius: 50%; /* Runde Form */
+    background-color: gray; /* Grau in allen Ansichten */
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 16px;
     cursor: pointer;
     z-index: 1000;
 }
 
+#fullscreenButton {
+    left: 10px; /* Unten links */
+}
+
 #darkModeButton {
-    position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background-color: #555;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    z-index: 1000;
+    right: 10px; /* Unten rechts */
 }
