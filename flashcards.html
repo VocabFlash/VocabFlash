@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <title>Flashcards</title>
@@ -50,13 +50,12 @@
     let currentIndex = 0;
     let showBack = false;
 
-    // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
     function displayFlashcard() {
         const vocabFront = document.getElementById('vocabFront');
         const vocabBack = document.getElementById('vocabBack');
         const counter = document.getElementById('counter');
 
-        if (currentSet.length > 0) {
+        if (currentSet && currentSet.length > 0) {
             const vocab = currentSet[currentIndex];
             vocabFront.innerHTML = vocab.de; // Vorderseite der Karte (Deutsch)
             vocabBack.innerHTML = vocab.ar; // Rückseite der Karte (Arabisch)
@@ -67,19 +66,20 @@
 
             // Aktualisiere den Zähler
             counter.innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
+        } else {
+            console.error("Das ausgewählte Set ist leer oder existiert nicht.");
         }
     }
 
-    // Funktion, um das ausgewählte Set zu aktualisieren
     function updateVocabSet() {
         const selectedSet = document.getElementById('setSelect').value;
         currentSet = vocabSets[selectedSet]; // Das ausgewählte Set laden
+        console.log(`Selected set: ${selectedSet}`, currentSet); // Überprüfen Sie, ob das Set korrekt geladen wird
         currentIndex = 0;
         showBack = false;
         displayFlashcard(); // Flashcard mit dem ersten Eintrag anzeigen
     }
 
-    // Funktion für die vorherige Karte
     function prevFlashcard() {
         if (currentIndex > 0) {
             currentIndex--;
@@ -88,7 +88,6 @@
         }
     }
 
-    // Funktion für die nächste Karte
     function nextFlashcard() {
         if (currentIndex < currentSet.length - 1) {
             currentIndex++;
@@ -97,12 +96,10 @@
         }
     }
 
-    // Initiales Set anzeigen
     window.onload = function() {
         updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
     }
 
-    // Klick auf die Flashcard, um sie zu drehen
     document.getElementById('flashcard').addEventListener('click', function() {
         showBack = !showBack;
         displayFlashcard();
