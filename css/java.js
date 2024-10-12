@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function() {
 //    { value: "set7", text: "Set 7 - " },
 //    { value: "set8", text: "Set 8 - " },
     // Füge hier weitere Sets hinzu
-];
+//];
 
     // Funktion zum Erstellen des Dropdown-Menüs
     //function createDropdown() {
