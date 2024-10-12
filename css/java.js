@@ -30,7 +30,19 @@ function closeFullscreen() {
 // Funktion zum Umschalten des Dark Modes
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
+    // Speichere den aktuellen Status im Local Storage
+    const darkModeEnabled = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', darkModeEnabled);
 }
+
+// Überprüfen, ob der Dark Mode aktiviert ist
+document.addEventListener("DOMContentLoaded", function() {
+    const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
+    if (darkModeEnabled) {
+        document.body.classList.add('dark-mode'); // Dark Mode aktivieren
+    }
+});
+
 
 // Funktion zum Aktualisieren des Vokabelsets
 function updateVocabSet() {
