@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.title = "Home";
     homeButton.style.position = "fixed";
     homeButton.style.bottom = "10px";
-    homeButton.style.left = "60px"; // Position links
+    homeButton.style.left = "70px"; // Position links, näher am Zurück-Button
     homeButton.style.zIndex = "1000";
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
     fullscreenButton.innerHTML = "⛶";
     fullscreenButton.style.position = "fixed";
     fullscreenButton.style.bottom = "10px";
-    fullscreenButton.style.right = "70px"; // Position rechts anpassen
+    fullscreenButton.style.right = "70px"; // Position rechts anpassen, näher am Darkmode-Button
     fullscreenButton.style.zIndex = "1000";
     document.body.appendChild(fullscreenButton); // Button dem Body hinzufügen
 
