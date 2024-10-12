@@ -43,14 +43,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
-// Funktion zum Aktualisieren des Vokabelsets
-function updateVocabSet() {
-    const selectedSet = document.getElementById("setSelect").value;
-    console.log("Ausgewähltes Set:", selectedSet);
-    // Hier kannst du die Logik hinzufügen, um das gewählte Vokabelset zu verwenden
-}
-
 // Funktion für den Zurück-Button
 function goBack() {
     window.history.back();
