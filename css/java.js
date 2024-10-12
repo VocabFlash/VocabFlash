@@ -20,6 +20,13 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 }
 
+// Funktion zum Aktualisieren des Vokabelsets
+function updateVocabSet() {
+    const selectedSet = document.getElementById("setSelect").value;
+    console.log("Ausgewähltes Set:", selectedSet);
+    // Hier kannst du die Logik hinzufügen, um das gewählte Vokabelset zu verwenden
+}
+
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
     // Erstelle den Fullscreen Button
@@ -38,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Erstelle den Dark Mode Button
     const darkModeButton = document.createElement("button");
-    darkModeButton.onclick = toggleDarkMode; // Deine Funktion zum Umschalten des Darkmodes
+    darkModeButton.onclick = toggleDarkMode; // Deine Funktion zum Umschalten des Dark Modes
     darkModeButton.style.position = "fixed";
     darkModeButton.style.bottom = "10px";
     darkModeButton.style.right = "10px";
