@@ -55,10 +55,12 @@ let practiseResults = [];
 
 // Funktion, um das Array zu mischen (Fisher-Yates Shuffle)
 function shuffleArray(array) {
+    console.log('Vor dem Mischen:', array); // Debugging-Log
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]]; // Tauscht die Elemente
     }
+    console.log('Nach dem Mischen:', array); // Debugging-Log
 }
 
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
@@ -77,11 +79,15 @@ function displayFlashcard() {
         
         // Aktualisiere den Zähler
         document.getElementById('counter').innerText = `Card: ${currentIndex + 1} / ${currentSet.length}`;
+        console.log('Aktuelle Karte:', vocab); // Debugging-Log
+    } else {
+        console.warn('Aktuelles Set ist leer.'); // Warnung, falls das Set leer ist
     }
 }
 
 // Funktion, um das Set zu starten und die Karten zu mischen
 function startFlashcards(set) {
+    console.log('Starte mit Set:', set); // Debugging-Log
     currentSet = set;
     shuffleArray(currentSet); // Mische die Karten
     currentIndex = 0; // Setze den Index zurück
@@ -90,6 +96,7 @@ function startFlashcards(set) {
 
 // Funktion zum Speichern der Flashcard-Ergebnisse und Weiterleitung zur Result-Seite
 function showResults() {
+    console.log('Ergebnisse werden gespeichert:', practiseResults); // Debugging-Log
     localStorage.setItem("practiseResults", JSON.stringify(practiseResults)); // Speichert die Flashcard-Ergebnisse speziell für "practise"
     const currentPage = window.location.pathname.split("/").pop(); // Holt den Dateinamen der aktuellen Seite
     window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
@@ -97,10 +104,12 @@ function showResults() {
 
 // Funktion zum Anzeigen der nächsten Karte
 function nextFlashcard() {
+    console.log('Aktueller Index:', currentIndex, 'von', currentSet.length); // Debugging-Log
     if (currentIndex < currentSet.length - 1) {
         currentIndex++;
         displayFlashcard();
     } else if (wrongAnswers.length > 0) {
+        console.log('Wiederhole falsche Antworten:', wrongAnswers); // Debugging-Log
         currentSet = [...wrongAnswers];
         wrongAnswers = [];
         currentIndex = 0;
@@ -113,6 +122,7 @@ function nextFlashcard() {
 // Funktion zum Markieren einer falschen Antwort
 function markWrong() {
     const vocab = currentSet[currentIndex];
+    console.log('Markiere als falsch:', vocab); // Debugging-Log
     savePractiseResults(vocab, 'second-round');
     wrongAnswers.push(vocab); // Falsche Antwort in Liste speichern
     nextFlashcard();
@@ -121,6 +131,7 @@ function markWrong() {
 // Funktion zum Markieren einer richtigen Antwort
 function markCorrect() {
     const vocab = currentSet[currentIndex];
+    console.log('Markiere als richtig:', vocab); // Debugging-Log
     savePractiseResults(vocab, 'correct-first');
     nextFlashcard();
 }
@@ -147,10 +158,12 @@ document.getElementById('flashcard').addEventListener('click', function() {
         vocabBack.style.display = 'block'; // Rückseite anzeigen
         vocabFront.style.display = 'none'; // Vorderseite ausblenden
         showingBack = true;
+        console.log('Rückseite angezeigt:', vocabBack.innerHTML); // Debugging-Log
     } else {
         vocabBack.style.display = 'none'; // Rückseite ausblenden
         vocabFront.style.display = 'block'; // Vorderseite anzeigen
         showingBack = false;
+        console.log('Vorderseite angezeigt:', vocabFront.innerHTML); // Debugging-Log
     }
 });
     
