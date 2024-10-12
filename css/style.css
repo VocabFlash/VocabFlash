@@ -28,6 +28,10 @@
         flex-direction: column;
     }
 
+    .dark-mode button {
+    background-color: gray; /* Grau im Dark Mode */
+}
+    
     #darkModeButton, #fullscreenButton {
         font-size: 14px;
         padding: 6px;
@@ -280,3 +284,30 @@ select {
 #darkModeButton {
     right: 10px; /* Unten rechts */
 }
+
+/* Farbdefinitionen */
+.correct {
+    color: green; /* Grün für richtige Antworten */
+}
+
+.wrong {
+    color: orange; /* Orange für falsch oder nur zum Üben */
+}
+
+.solution {
+    color: red; /* Rot für falsche Lösungen */
+}
+
+/* Dunklere Farben im Dark Mode */
+.dark-mode .correct {
+    color: darkgreen; /* Dunkleres Grün für richtige Antworten */
+}
+
+.dark-mode .wrong {
+    color: darkorange; /* Dunkleres Orange für falsch oder nur zum Üben */
+}
+
+.dark-mode .solution {
+    color: darkred; /* Dunkleres Rot für falsche Lösungen */
+}
+
