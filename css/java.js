@@ -67,25 +67,25 @@ const vocabSetOptions = [
     // Füge hier weitere Sets hinzu
 ];
 
-// Funktion zum Erstellen des Dropdown-Menüs
-function createDropdown() {
-    const label = document.createElement("label");
-    label.setAttribute("for", "setSelect");
-    label.textContent = "Choose a set:";
-
-    const select = document.createElement("select");
-    select.id = "setSelect";
-    select.onchange = updateVocabSet; // Stelle sicher, dass die Funktion existiert
-
-    // Optionen zum Dropdown-Menü hinzufügen
-    vocabSetOptions.forEach(set => {
-        const option = document.createElement("option");
-        option.value = set.value;
-        option.textContent = set.text;
-        select.appendChild(option);
-    });
-
-    // Dropdown und Label zum Body hinzufügen
-    document.body.appendChild(label);
-    document.body.appendChild(select);
-}
+    // Funktion zum Erstellen des Dropdown-Menüs
+    //function createDropdown() {
+        //(const label = document.createElement("label");
+       // label.setAttribute("for", "setSelect");
+        //label.textContent = "Choose a set:";
+    
+        //const select = document.createElement("select");
+        //select.id = "setSelect";
+       // select.onchange = updateVocabSet; // Stelle sicher, dass die Funktion existiert
+    
+        // Optionen zum Dropdown-Menü hinzufügen
+      //  vocabSetOptions.forEach(set => {
+         //   const option = document.createElement("option");
+          //  option.value = set.value;
+         //   option.textContent = set.text;
+        //    select.appendChild(option);
+  //      });
+    
+        // Dropdown und Label zum Body hinzufügen
+    //    document.body.appendChild(label);
+   //     document.body.appendChild(select);
+//    }
