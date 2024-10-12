@@ -31,13 +31,14 @@
 
 <div class="container">
     <label for="setSelect">Choose a set:</label>
-        <div class="container" id="dropdownContainer"></div>
+    <!-- Dropdown wird hier direkt eingefügt -->
+    <select id="setSelect" onchange="updateVocabSet()"></select> 
     <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
     <br><a href="result.html">Show results</a><br>
     <a href="javascript:history.back()">Go back</a><br>
     <a href="index.html">Go back to homepage</a>
-</div> 
-<!--⛶ -->
+</div>
+
 
 <script>
 let currentSet = [];
