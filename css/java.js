@@ -51,19 +51,19 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
 
     // Dropdown-Menü erstellen
-    createDropdown(); // Stelle sicher, dass die Dropdown-Funktion aufgerufen wird
-});
+ //   createDropdown(); // Stelle sicher, dass die Dropdown-Funktion aufgerufen wird
+//});
 
 // Neues Array für das Dropdown-Menü
-const vocabSetOptions = [
-    { value: "set1", text: "Set 1 - Arabisch 1" },
-    { value: "set2", text: "Set 2 - Arabisch 2" },
-    { value: "set3", text: "Set 3 - Franz 1.1" },
-    { value: "set4", text: "Set 4 - Franz 1.2" },
-    { value: "set5", text: "Set 5 - Franz 1.3" },
-    { value: "set6", text: "Set 6 - Franz 1.4" },
-    { value: "set7", text: "Set 7 - " },
-    { value: "set8", text: "Set 8 - " },
+//const vocabSetOptions = [
+   // { value: "set1", text: "Set 1 - Arabisch 1" },
+    //{ value: "set2", text: "Set 2 - Arabisch 2" },
+    //{ value: "set3", text: "Set 3 - Franz 1.1" },
+    //{ value: "set4", text: "Set 4 - Franz 1.2" },
+  //  { value: "set5", text: "Set 5 - Franz 1.3" },
+//    { value: "set6", text: "Set 6 - Franz 1.4" },
+//    { value: "set7", text: "Set 7 - " },
+//    { value: "set8", text: "Set 8 - " },
     // Füge hier weitere Sets hinzu
 ];
 
