@@ -211,6 +211,14 @@ function updateResults() {
     console.log("Results type updated to:", dropdown.value);
     loadResults();
 }
+
+    function clearLocalStorage() {
+    localStorage.clear();
+    console.log("Local storage cleared.");
+    alert("Local storage has been cleared.");
+    loadResults(); // Refresh the results after clearing
+}
+
 </script>
 </body>
 </html>
