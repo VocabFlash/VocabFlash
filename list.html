@@ -1,4 +1,3 @@
-<!-- HTML Aufbau -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,59 +17,79 @@
     
 <div class="container">
     <label for="setSelect">Choose a set:</label>
-        <select id="setSelect" onchange="updateVocabSet()">
-            <option value="set1">Set 1 - Arabisch 1</option>
-            <option value="set2">Set 2 - Arabisch 2</option>
-            <option value="set3">Set 3 - Franz 1.1</option>
-            <option value="set4">Set 4 - Franz 1.2</option>
-            <option value="set5">Set 5 - Franz 1.3</option>
-            <option value="set6">Set 6 - Franz 1.4</option>
-            <option value="set7">Set 7 - </option>
-            <option value="set8">Set 8 - </option>
-             <!-- Füge hier weitere Sets hinzu -->
-        </select>
-        <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
+    <select id="setSelect" onchange="updateVocabSet()">
+        <option value="set1">Set 1 - Arabisch 1</option>
+        <option value="set2">Set 2 - Arabisch 2</option>
+        <option value="set3">Set 3 - Franz 1.1</option>
+        <option value="set4">Set 4 - Franz 1.2</option>
+        <option value="set5">Set 5 - Franz 1.3</option>
+        <option value="set6">Set 6 - Franz 1.4</option>
+        <option value="set7">Set 7 - </option>
+        <option value="set8">Set 8 - </option>
+        <!-- Füge hier weitere Sets hinzu -->
+    </select>
+    <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
 
-        <!-- Zurück -->
-        <a href="javascript:history.back()">Return</a><br>
-        <a href="index.html">Return to homepage</a>
+    <!-- Zurück -->
+    <a href="javascript:history.back()">Return</a><br>
+    <a href="index.html">Return to homepage</a>
 </div>    
     
-    <br>
-    <div id="vocabList"></div>
-    
-    <script>
-        
-        // Hier wird der Code hinzugefügt, um die Vokabeln darzustellen
-            // Funktion, um die Vokabeln aus set1 anzuzeigen
-                function displayVocabSet(setName) {
-                    const vocabList = vocabSets[setName]; // Zugriff auf das gewünschte Set
-                    const listDiv = document.getElementById("vocabList");
+<br>
+<div id="vocabList"></div>
 
-                        // Leere den Inhalt des divs
-                    listDiv.innerHTML = "";
-                    // Erstelle eine Tabelle
-                    let table = "<table border='1'><tr><th>Translation</th><th>Word</th></tr>";
-                    vocabList.forEach(vocab => {
-                        table += `<tr><td>${vocab.de}</td><td>${vocab.ar}</td></tr>`;
-                    });
-                    table += "</table>";
-                
-                    listDiv.innerHTML = table; // Füge die Tabelle in das div ein
-                }
-                
-                     // Funktion, die bei Auswahl eines neuen Sets aufgerufen wird
-                            function updateVocabSet() {
-                                const selectedSet = document.getElementById("setSelect").value;
-                                displayVocabSet(selectedSet);
-                            }
-                    
-                            // Initiales Set anzeigen
-                            updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
-        
-    </script>
+<script>
+    // Überprüfen, ob die Stylesheets geladen wurden
+    console.log("Prüfe, ob style.css geladen wurde:", document.styleSheets[0]);
+    console.log("Prüfe, ob resultstyle.css geladen wurde:", document.styleSheets[1]);
 
+    // Überprüfen, ob das JavaScript-Objekt für Vokabelsets verfügbar ist
+    document.addEventListener("DOMContentLoaded", function() {
+        console.log("DOM vollständig geladen");
 
-<!-- HTML Aufbau Abschluss -->
+        if (typeof vocabSets !== "undefined") {
+            console.log("vocabSets erfolgreich geladen:", vocabSets);
+        } else {
+            console.error("vocabSets konnte nicht geladen werden");
+        }
+
+        // Funktion, um die Vokabeln aus einem bestimmten Set anzuzeigen
+        function displayVocabSet(setName) {
+            console.log("Anzeige des Sets:", setName);
+
+            if (!vocabSets[setName]) {
+                console.error("Das ausgewählte Set ist nicht verfügbar:", setName);
+                return;
+            }
+
+            const vocabList = vocabSets[setName];
+            const listDiv = document.getElementById("vocabList");
+            listDiv.innerHTML = ""; // Leere den Inhalt des divs
+            console.log("Vokabelliste für", setName, ":", vocabList);
+
+            // Erstelle eine Tabelle
+            let table = "<table border='1'><tr><th>Translation</th><th>Word</th></tr>";
+            vocabList.forEach(vocab => {
+                table += `<tr><td>${vocab.de}</td><td>${vocab.ar}</td></tr>`;
+            });
+            table += "</table>";
+
+            listDiv.innerHTML = table; // Füge die Tabelle in das div ein
+            console.log("Tabelle für", setName, "angezeigt");
+        }
+
+        // Funktion, die bei Auswahl eines neuen Sets aufgerufen wird
+        window.updateVocabSet = function() {
+            const selectedSet = document.getElementById("setSelect").value;
+            console.log("Ausgewähltes Set:", selectedSet);
+            displayVocabSet(selectedSet);
+        };
+
+        // Initiales Set anzeigen
+        console.log("Zeige initiales Set an");
+        updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
+    });
+</script>
+
 </body>
 </html>
