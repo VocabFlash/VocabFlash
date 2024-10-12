@@ -247,6 +247,20 @@ button {
     margin: 0 10px; /* Abstand zwischen den Buttons */
 }
 
+#fullscreenButton {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000; /* Über allen anderen Elementen */
+}
+
 /*VOCABLANKS*/
     .correct {
         color: green;
