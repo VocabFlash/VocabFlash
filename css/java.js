@@ -49,7 +49,11 @@ document.addEventListener("DOMContentLoaded", function() {
     darkModeButton.style.zIndex = "1000";
     darkModeButton.innerHTML = "◐";
     document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
-}
+    // Hier fehlt die schließende Klammer
+}); // <-- Diese Klammer schließt den DOMContentLoaded-Event-Listener ab
+
+// Der auskommentierte Code muss ebenfalls überarbeitet werden, falls er wieder aktiviert werden soll.
+
     // Dropdown-Menü erstellen
  //   createDropdown(); // Stelle sicher, dass die Dropdown-Funktion aufgerufen wird
 //});
