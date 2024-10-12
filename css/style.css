@@ -138,20 +138,20 @@ input, select {
 /* Stellt sicher, dass die Menü-Liste keine Standardformatierungen hat */
 .menu {
     list-style-type: none;
-    padding: 5;
+    padding: 0;
     margin: 0;
 }
 
 /* Menü-Elemente Styling */
 .menu li {
-    margin-bottom: 8px; /* Abstand zwischen den Elementen */
+    margin-bottom: 12px; /* Abstand zwischen den Elementen */
 }
 
 /* Links im Menü */
 .menu li a {
     display: block; /* Blockdarstellung */
     padding: 10px; /* Innenabstand */
-    background-color: #007BFF; /* Blaue Hintergrundfarbe */
+    background-color: #0056b3; /* Blaue Hintergrundfarbe */
     color: white; /* Weiße Schrift */
     border-radius: 15px; /* Abgerundete Ecken */
     text-decoration: none; /* Keine Unterstreichung */
