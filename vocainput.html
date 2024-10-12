@@ -43,9 +43,6 @@
     </select>
     <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
     
-    <br><a href="result.html">Show results</a><br>
-    <a href="javascript:history.back()">Go back</a><br>
-    <a href="index.html">Go back to homepage</a>
 </div>
 
 <script>
@@ -234,12 +231,19 @@ function startTimer() {
 }
 
 function handleKeyDown(event) {
-    const submitButton = document.getElementById('submitAnswer');
-    if (event.key === "Enter" && submitButton.style.display === "block") {
+    if (event.key === "Enter") {
         event.preventDefault();
-        checkAnswer();
+        if (document.getElementById('submitAnswer').style.display !== "none") {
+            checkAnswer();
+        } else if (document.getElementById('skipButton').style.display !== "none") {
+            skipToNext();
+        }
+    } else if (event.key === "PageDown") {
+        event.preventDefault();
+        skipToNext();
     }
 }
+
 
 window.onload = updateVocabSet;
 </script>
