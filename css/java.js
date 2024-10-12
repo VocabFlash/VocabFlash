@@ -1,4 +1,5 @@
-<script>
+
+
     // Funktion zum Anfordern des Vollbildmodus
     function openFullscreen() {
         const elem = document.documentElement; // Vollbild für die gesamte Seite anfordern
@@ -15,4 +16,8 @@
 
     // Event-Listener für den Button
     document.getElementById('fullscreenButton').addEventListener('click', openFullscreen);
-</script>
+
+  // Funktion zum Umschalten des Dark Modes
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+    }
