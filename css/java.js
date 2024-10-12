@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function() {
     resultButton.style.right = "70px"; // Position rechts, näher am Home-Button
     resultButton.style.zIndex = "1000";
     resultButton.style.padding = "5px 10px"; // Kleines Padding für den Button
-    resultButton.style.fontSize = "13px"; // Kleinere Schriftgröße, falls gewünscht
+    resultButton.style.fontSize = "9px"; // Kleinere Schriftgröße, falls gewünscht
     resultButton.style.whiteSpace = "nowrap"; // Verhindert Umbrüche im Text
     resultButton.style.display = "inline-block"; // Button nur so groß wie nötig
     resultButton.onclick = goResults; // Funktion für den Result Button
