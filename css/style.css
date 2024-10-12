@@ -36,12 +36,12 @@
     }
 }
 
-/* General Settings */
+/* Allgemeine Einstellungen für alle Geräte */
 body {
     font-size: 16px;
 }
 
-/* Mobile Styles (screens less than 768px) */
+/* Für Bildschirme kleiner als 768px (typisch für mobile Geräte) */
 @media only screen and (max-width: 768px) {
     body {
         font-size: 14px;
@@ -78,7 +78,7 @@ body {
     justify-content: center;
 }
 
-/* Header Styling */
+/* Header für Logo und Titel nebeneinander */
 .header {
     display: flex;
     align-items: center;
@@ -103,12 +103,13 @@ h2 {
     padding: 15px;
     border-radius: 15px;
     text-align: center;
+    font-family: "Arial Black", sans-serif;
     font-weight: bold;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 }
 
-/* Container Styling */
+/* Container für die Menü-Links */
 .container {
     background-color: #fff;
     padding: 20px;
@@ -116,10 +117,10 @@ h2 {
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
     width: 300px;
     text-align: center;
-    margin: 20px auto;
+    margin: 10px auto;
 }
 
-/* Menu Styling */
+/* Menü-Styling */
 .menu {
     list-style-type: none;
     padding: 0;
@@ -137,31 +138,11 @@ h2 {
     color: white;
     border-radius: 15px;
     text-decoration: none;
-    text-align: center;
     transition: background-color 0.3s ease;
+    text-align: center;
 }
 
-/* Vocabulary List */
-#vocabList {
-    max-width: 100%;
-    margin-top: 20px;
-}
-
-#vocabList table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    background-color: transparent;
-}
-
-#vocabList th, #vocabList td {
-    padding: 10px;
-    border: 1px solid #ccc;
-    text-align: left;
-    background-color: #f0f0f0;
-}
-
-/* Flashcard Styles */
+/* Flashcards */
 .flashcard {
     width: 300px;
     height: 200px;
@@ -191,19 +172,20 @@ button {
     transition: background-color 0.3s;
 }
 
-/* Practice Button Container */
-.button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
+.confirm-button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
 }
 
-.button-container button {
-    padding: 10px 20px;
+/* Vokabelset Auswahl */
+#setSelect {
+    padding: 5px;
     font-size: 16px;
-    width: 150px;
-    margin: 0 10px;
 }
 
 /* Dark Mode Styles */
@@ -212,18 +194,73 @@ button {
     color: #fff;
 }
 
-.dark-mode .container, .dark-mode h2, .dark-mode .flashcard {
+.dark-mode .container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid #fff;
+}
+
+.dark-mode h2 {
     background-color: rgba(255, 255, 255, 0.1);
     color: #fff;
     border: 1px solid #fff;
 }
 
-.dark-mode button {
-    background-color: #333;
+.dark-mode .flashcard {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid #fff;
 }
 
-/* Dark Mode for Buttons */
-.dark-mode #darkModeButton, .dark-mode #fullscreenButton {
+.dark-mode input, .dark-mode select {
     background-color: #555;
     color: #fff;
+    border: 1px solid #fff;
+}
+
+/* Einheitliches Design für alle Dropdown-Menüs */
+select {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.dark-mode select {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Button Anpassungen im Dark Mode */
+.dark-mode button {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Positionierung der Buttons */
+#fullscreenButton {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+#darkModeButton {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 1000;
 }
