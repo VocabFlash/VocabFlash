@@ -14,7 +14,6 @@
 <h2 id="inputCounter">Word: 1 / 10</h2>
 
 <div class="container">
-    <!-- Bereich für die Vokabelabfrage -->
     <div id="vocabArea">
         <h3 id="vocabWord"></h3>
         <input type="text" id="userInput" placeholder="Fill in the blank" 
@@ -24,34 +23,30 @@
             <button id="submitAnswer" class="confirm-button" onclick="checkAnswer()" style="display: none;">Check</button>
             <button id="skipButton" class="confirm-button" onclick="skipToNext()" style="display: none;">Skip</button>
         </div> 
-        <!-- Feedback-Element -->
         <p id="feedback"></p>
-    </div> <!-- Schließendes div für vocabArea -->
-</div> <!-- Schließendes div für container -->
+    </div>
+</div>
 
 <div class="container">
-    <!-- Set Auswahl -->
     <label for="setSelect">Choose a set:</label>
     <select id="setSelect" onchange="updateVocabSet()">
         <option value="set1">Set 1</option>
         <option value="set2">Set 2</option>
     </select>
     <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
-    <!-- Zurück Links -->
     <br><a href="result.html">Show results</a><br>
     <a href="javascript:history.back()">Go back</a><br>
     <a href="index.html">Go back to homepage</a>
 </div>
 
-<!-- Skript -->
 <script>
 let currentSet = [];
 let currentIndex = 0;
 let wrongAttempts = 0;
 let wrongAnswers = [];
-let secondRound = false; // Flag für die zweite Runde
+let secondRound = false;
 let timer;
-let results = []; // Speichert alle Ergebnisse
+let results = [];
 
 // Funktion zum Zufälligmischen des Arrays
 function shuffle(array) {
@@ -64,10 +59,12 @@ function shuffle(array) {
 
 // Funktion, um die Vokabeln aus dem ausgewählten Set anzuzeigen
 function displayVocabWord() {
+    console.log("Aktuelles Set:", currentSet);
+    
     if (!secondRound && currentIndex === 0) {
         shuffle(currentSet);
     }
-    console.log("Aktuelles Wort wird angezeigt:", currentSet[currentIndex]);
+    
     const vocabWord = document.getElementById('vocabWord');
     const inputCounter = document.getElementById('inputCounter');
     const submitButton = document.getElementById('submitAnswer');
@@ -87,190 +84,28 @@ function displayVocabWord() {
     }
 }
 
-// Funktion für die Auswertung und Weiterleitung
-function showResults() {
-    console.log("Results:", results);
-    localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); // Speichert die Ergebnisse
-    const currentPage = window.location.pathname.split("/").pop();
-    console.log("Current Page:", currentPage);
-    window.location.href = `result.html?fromPage=${currentPage}`; // Weiterleitung mit dem Parameter
-}
-
-// Funktion zum Überspringen eines Wortes
-function skipToNext() {
-    nextWord();
-}
-
 // Funktion, um das ausgewählte Set zu aktualisieren
 function updateVocabSet() {
     const selectedSet = document.getElementById('setSelect').value;
+    console.log("Ausgewähltes Set:", selectedSet); // Konsolenausgabe hinzufügen
     if (vocabSets[selectedSet]) {
         currentSet = vocabSets[selectedSet];
         currentIndex = 0;
         wrongAnswers = []; // Setze die falschen Antworten zurück
         secondRound = false; // Setze die zweite Runde zurück
-        console.log("Aktuelles Set:", currentSet);
+        console.log("Aktuelles Set geladen:", currentSet); // Konsolenausgabe hinzufügen
         displayVocabWord();
     } else {
-        console.error("Set not found:", selectedSet);
+        console.error("Set nicht gefunden:", selectedSet); // Fehlerausgabe
     }
 }
-
-// Funktion, um den Timer zu starten
-function startTimer() {
-    timer = setTimeout(nextWord, 4000); // Wechselt nach 4 Sekunden zum nächsten Wort
-}
-
-// Funktion zur Behandlung der Tastenereignisse
-function handleKeyDown(event) {
-    const skipButton = document.getElementById('skipButton');
-    if (event.key === 'Enter') {
-        const checkButton = document.getElementById('submitAnswer');
-        if (checkButton.style.display !== 'none') {
-            checkAnswer();
-        } else if (skipButton.style.display !== 'none') {
-            skipToNext();
-        }
-    }
-}
-
-// Funktion, um den Check-Button basierend auf der Eingabe sichtbar zu machen
-function toggleCheckButton() {
-    const userInput = document.getElementById('userInput').value;
-    const submitButton = document.getElementById('submitAnswer');
-    const skipButton = document.getElementById('skipButton');
-
-    // Der Check-Button soll nur sichtbar sein, wenn der Skip-Button nicht sichtbar ist
-    if (userInput.trim() !== "" && skipButton.style.display === "none") {
-        submitButton.style.display = "block";
-    } else {
-        submitButton.style.display = "none";
-    }
-}
-
-function nextWord() {
-    clearTimeout(timer);
-    wrongAttempts = 0;
-
-    const feedback = document.getElementById('feedback');
-    feedback.innerHTML = ''; // Feedback zurücksetzen
-
-    if (currentIndex < currentSet.length - 1) {
-        currentIndex++;
-        displayVocabWord();
-    } else if (!secondRound && wrongAnswers.length > 0) {
-        secondRound = true;
-        currentSet = wrongAnswers;
-        currentIndex = 0;
-        console.log("Zweite Runde gestartet mit falschen Antworten:", currentSet);
-        displayVocabWord();
-    } else {
-        console.log('Ergebnisse vor dem Speichern:', results);
-        localStorage.setItem("vocaBlanksResults", JSON.stringify(results)); // Ergebnisse speichern
-        console.log("Ergebnisse wurden in localStorage gespeichert.");
-        showResults();
-    }
-    
-    // Submit-Button einblenden und Skip-Button ausblenden
-    document.getElementById('submitAnswer').style.display = "none"; // Submit-Button ausblenden
-    document.getElementById('skipButton').style.display = "none"; // Skip-Button ausblenden, falls nötig
-}
-
-
-function checkAnswer() {
-    const userInput = document.getElementById('userInput').value.toLowerCase();
-    const currentWord = currentSet[currentIndex];
-    const feedback = document.getElementById('feedback');
-    const skipButton = document.getElementById('skipButton');
-    const vocabWord = document.getElementById('vocabWord');
-
-    if (userInput === currentWord.ar.toLowerCase()) {
-        feedback.innerText = "Correct!";
-        feedback.classList.remove('wrong', 'solution');
-        feedback.classList.add('correct'); // Grün für richtige Antwort
-        vocabWord.classList.remove('wrong');
-        vocabWord.classList.add('correct');
-        skipButton.style.display = "block"; // Zeige den Skip-Button
-        startTimer();
-        wrongAttempts = 0;
-
-        // Speichere die richtige Antwort mit beiden Sprachen
-        saveVocaBlanksResults(currentWord, "correct-first"); // Hier wird currentWord verwendet
-        document.getElementById('submitAnswer').style.display = "none"; // Verstecke den Submit-Button
-    } else {
-        handleWrongAnswer(currentWord);
-    }
-
-    document.getElementById('userInput').value = ''; // Eingabefeld zurücksetzen
-}
-
-function handleWrongAnswer(currentWord) {
-    const feedback = document.getElementById('feedback');
-    const skipButton = document.getElementById('skipButton');
-    const vocabWord = document.getElementById('vocabWord');
-    const userInput = document.getElementById('userInput').value.toLowerCase(); // Input erneut abrufen
-    
-    wrongAttempts++;
-
-    if (wrongAttempts === 1) {
-        feedback.innerText = "Try again.";
-        feedback.classList.remove('correct', 'solution');
-        feedback.classList.add('wrong'); // Gelb für den ersten Versuch
-        vocabWord.classList.add('wrong');
-        
-        // Skip-Button ausblenden und Submit-Button anzeigen
-        skipButton.style.display = "none"; 
-        document.getElementById('submitAnswer').style.display = "block"; // Zeige den Submit-Button für den zweiten Versuch
-    
-        saveVocaBlanksResults(currentWord, "wrong-first");
-    }
-
-    if (wrongAttempts === 2) {
-        if (userInput === currentWord.ar.toLowerCase()) {
-            feedback.innerText = "Correct!";
-            feedback.classList.remove('wrong', 'solution');
-            feedback.classList.add('correct'); // Grün für den zweiten Versuch
-            vocabWord.classList.remove('wrong');
-            vocabWord.classList.add('correct');
-    
-            saveVocaBlanksResults(currentWord, "wrong-first");
-            wrongAttempts = 0;
-            
-            // Skip-Button einblenden und Submit-Button ausblenden
-            skipButton.style.display = "block"; 
-            document.getElementById('submitAnswer').style.display = "none"; // Verstecke den Submit-Button
-        } else {
-            feedback.innerText = `The correct answer is: ${currentWord.ar}`;
-            feedback.classList.remove('correct', 'wrong');
-            feedback.classList.add('solution'); // Rot für falsche Antwort
-            vocabWord.classList.remove('correct');
-            vocabWord.classList.add('solution');
-    
-            saveVocaBlanksResults(currentWord, "wrong-second");
-            wrongAnswers.push(currentWord);
-            
-            // Skip-Button einblenden und Submit-Button ausblenden
-            skipButton.style.display = "block";
-            document.getElementById('submitAnswer').style.display = "none"; // Verstecke den Submit-Button
-    
-            startTimer();
-        }
-    }
-}
-
-function saveVocaBlanksResults(vocab, status) {
-    // Speichert das deutsche und das arabische Wort zusammen mit dem Status
-    results.push({ ar: vocab.ar, de: vocab.de, status: status }); // Jetzt werden die Wörter richtig gespeichert
-    console.log('VocaBlanks Ergebnisse gespeichert:', results);
-}
-
 
 // Initiales Set anzeigen
 window.onload = function() {
+    console.log("Seite geladen, setSelect wird aktualisiert."); // Konsolenausgabe hinzufügen
     updateVocabSet(); // Zeigt beim ersten Laden das Standardset an
 };
 </script>
-
 
 </body>
 </html>
