@@ -8,7 +8,7 @@
     <script src="data/vocabSets.js" defer></script>
 </head>
 <body>
-  
+
 <a href="index.html"><h1>VocabFlash</h1></a>
 <br>
     <div class="container">
@@ -16,17 +16,20 @@
     </div>
     <br>
     <div class="container">
-        <label for="setSelect">Choose a set:</label>
-        <select id="setSelect" multiple>
-            <!-- Optionen werden hier dynamisch eingefügt -->
-        </select>
+        <label>Choose a set:</label>
+        <div id="setSelectContainer">
+            <!-- Checkboxen für die Sets werden hier dynamisch eingefügt -->
+        </div>
+        <button id="confirmSets">Confirm</button>
+        <button id="editSets" style="display: none;">Edit</button>
         <br><br>
         <label for="numWords">Enter the number of words for the test:</label>
         <input type="number" id="numWords" min="1" style="width: 50px;">
+        <button id="maxButton">MAX</button>
         <button class="confirm-button" id="startTest">Create Test</button>
     </div>
-  <br>
-   <div class="container">
+    <br>
+    <div class="container">
         <div id="testArea" style="display:none;">
             <form id="testForm">
                 <!-- Die Fragen werden hier dynamisch eingefügt -->
@@ -39,45 +42,82 @@
             <button class="confirm-button" id="retryTest">Next</button>
         </div>
     </div>
- <script>
-        // Beispielhafte Funktion zum Befüllen der Set-Auswahl (setSelect)
-        document.addEventListener('DOMContentLoaded', () => {
-            const setSelect = document.getElementById('setSelect');
-            const vocabSets = [
-                { id: 'set1', name: 'Set 1 - Arabic 1' },
-                { id: 'set2', name: 'Set 2 - Arabic 2' },
-                { id: 'set3', name: 'Set 3 - French 1.1' },
-                { id: 'set4', name: 'Set 4 - French 1.2' },
-                { id: 'set5', name: 'Set 5 - French 1.3' },
-                { id: 'set6', name: 'Set 6 - French 1.4' },
-                // Füge weitere Sets hier hinzu
-            ];
 
-            vocabSets.forEach(set => {
-                const option = document.createElement('option');
-                option.value = set.id;
-                option.textContent = set.name;
-                setSelect.appendChild(option);
-            });
+<script>
+    // Beispielhafte Funktion zum Befüllen der Set-Auswahl (Checkboxen)
+    document.addEventListener('DOMContentLoaded', () => {
+        const setSelectContainer = document.getElementById('setSelectContainer');
+        const confirmSetsButton = document.getElementById('confirmSets');
+        const editSetsButton = document.getElementById('editSets');
+        const vocabSets = [
+            { id: 'set1', name: 'Set 1 - Arabic 1' },
+            { id: 'set2', name: 'Set 2 - Arabic 2' },
+            { id: 'set3', name: 'Set 3 - French 1.1' },
+            { id: 'set4', name: 'Set 4 - French 1.2' },
+            { id: 'set5', name: 'Set 5 - French 1.3' },
+            { id: 'set6', name: 'Set 6 - French 1.4' },
+            // Füge weitere Sets hier hinzu
+        ];
 
-            // MAX Button Funktion
-            document.getElementById('maxButton').addEventListener('click', () => {
-                const selectedSets = Array.from(setSelect.selectedOptions).map(option => option.value);
-                let totalWords = 0;
+        // Checkboxen für jedes Set erstellen
+        vocabSets.forEach(set => {
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = set.id;
+            checkbox.value = set.id;
+            checkbox.className = 'setCheckbox';
 
-                // Beispielhaft: Anzahl der Wörter aus den ausgewählten Sets summieren
-                selectedSets.forEach(setId => {
-                    // Hier sollte die tatsächliche Logik eingefügt werden, um die Anzahl der Wörter pro Set zu bestimmen
-                    if (setId === 'set1') {
-                        totalWords += 20; // Beispielanzahl für Set 1
-                    } else if (setId === 'set2') {
-                        totalWords += 30; // Beispielanzahl für Set 2
-                    }
-                });
+            const label = document.createElement('label');
+            label.htmlFor = set.id;
+            label.textContent = set.name;
 
-                document.getElementById('numWords').value = totalWords;
-            });
+            const div = document.createElement('div');
+            div.appendChild(checkbox);
+            div.appendChild(label);
+
+            setSelectContainer.appendChild(div);
         });
-    </script>
+
+        // Bestätigungs-Button sperrt die Checkboxen
+        confirmSetsButton.addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('.setCheckbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.disabled = true;
+            });
+            confirmSetsButton.style.display = 'none';
+            editSetsButton.style.display = 'inline-block';
+        });
+
+        // Bearbeiten-Button entsperrt die Checkboxen
+        editSetsButton.addEventListener('click', () => {
+            const checkboxes = document.querySelectorAll('.setCheckbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.disabled = false;
+            });
+            editSetsButton.style.display = 'none';
+            confirmSetsButton.style.display = 'inline-block';
+        });
+
+        // MAX Button Funktion
+        document.getElementById('maxButton').addEventListener('click', () => {
+            const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
+            let totalWords = 0;
+
+            // Beispielhaft: Anzahl der Wörter aus den ausgewählten Sets summieren
+            selectedSets.forEach(setId => {
+                // Hier sollte die tatsächliche Logik eingefügt werden, um die Anzahl der Wörter pro Set zu bestimmen
+                if (setId === 'set1') {
+                    totalWords += 20; // Beispielanzahl für Set 1
+                } else if (setId === 'set2') {
+                    totalWords += 30; // Beispielanzahl für Set 2
+                }
+                // Füge Logik für weitere Sets hier hinzu
+            });
+
+            document.getElementById('numWords').value = totalWords;
+        });
+    });
+</script>
+
 </body>
 </html>
