@@ -33,6 +33,8 @@
         padding: 6px;
         width: auto;
         margin: 5px 0;
+        border-radius: 50%; /* Runde Form */
+        background-color: gray; /* Grau in allen Ansichten */
     }
 }
 
@@ -118,6 +120,15 @@ h2 {
     width: 300px;
     text-align: center;
     margin: 10px auto;
+}
+
+input, select {
+    background-color: #f0f0f0; /* Hintergrundfarbe für normalen Modus */
+    color: #000; /* Textfarbe für normalen Modus */
+    border: 1px solid #ccc; /* Umrandung für normalen Modus */
+    border-radius: 15px; /* Abgerundet in allen Ansichten */
+    text-align: center; /* Zentriert den Platzhaltertext in allen Ansichten */
+    padding: 10px; /* Fügen Sie etwas Polsterung hinzu */
 }
 
 /* Menü-Styling */
@@ -216,6 +227,7 @@ button {
     color: #fff;
     border: none; /* Keine Umrandung im Dark Mode */
     border-radius: 15px; /* Abgerundet in allen Ansichten */
+    text-align: center; /* Zentriert den Platzhaltertext */
 }
 
 /* Einheitliches Design für alle Dropdown-Menüs */
@@ -236,6 +248,8 @@ select {
 .dark-mode button {
     background-color: #555;
     color: #fff;
+    background-color: gray; /* Grau in allen Ansichten */
+    border-radius: 50%; /* Runde Form */
 }
 
 /* Positionierung der Buttons */
