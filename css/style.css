@@ -138,19 +138,19 @@ input, select {
 /* Stellt sicher, dass die Menü-Liste keine Standardformatierungen hat */
 .menu {
     list-style-type: none;
-    padding: 0;
+    padding: 5;
     margin: 0;
 }
 
 /* Menü-Elemente Styling */
 .menu li {
-    margin-bottom: 5px; /* Abstand zwischen den Elementen */
+    margin-bottom: 8px; /* Abstand zwischen den Elementen */
 }
 
 /* Links im Menü */
 .menu li a {
     display: block; /* Blockdarstellung */
-    padding: 15px; /* Innenabstand */
+    padding: 10px; /* Innenabstand */
     background-color: #007BFF; /* Blaue Hintergrundfarbe */
     color: white; /* Weiße Schrift */
     border-radius: 15px; /* Abgerundete Ecken */
