@@ -1,300 +1,244 @@
-/* Responsive Styles */
+/* Responsive Styles für Geräte mit max. Breite 600px */
+/* Stellt sicher, dass die Seite auf kleineren Geräten gut aussieht */
 @media (max-width: 600px) {
     .container {
-        width: 90%;
-        padding: 10px;
+        width: 90%; /* Breite des Containers auf 90% reduzieren */
+        padding: 10px; /* Weniger Padding für kleinere Bildschirme */
     }
 
     .flashcard {
-        width: 90%;
-        height: auto;
-        font-size: 20px;
+        width: 90%; /* Breite der Flashcard anpassen */
+        height: auto; /* Automatische Höhe */
+        font-size: 20px; /* Kleinere Schriftgröße */
     }
 
     h1 {
-        font-size: 20px;
+        font-size: 20px; /* Kleinere Schriftgröße für Überschriften */
     }
 
     h2 {
-        font-size: 18px;
+        font-size: 18px; /* Kleinere Schriftgröße für Unterüberschriften */
     }
 
     button {
-        width: 100%;
-        margin-top: 10px;
-        background-color: gray;
+        width: 100%; /* Buttons über die gesamte Breite */
+        margin-top: 10px; /* Abstand oben für bessere Lesbarkeit */
+        background-color: gray; /* Grau im Dark Mode */
     }
 
     .button-container {
-        flex-direction: column;
+        flex-direction: column; /* Anordnung der Buttons in einer Spalte */
     }
 
     .dark-mode button {
-        background-color: gray; /* Grau im Dark Mode */
+        background-color: gray; /* Anpassung der Buttonfarbe im Dark Mode */
     }
 }
 
 /* Allgemeine Einstellungen für alle Geräte */
+/* Legt die Schriftgröße für den Body-Text fest */
 body {
     font-size: 16px;
 }
 
 /* Für Bildschirme kleiner als 768px (typisch für mobile Geräte) */
+/* Passt die Schriftgrößen und Layouts für mittelgroße Geräte an */
 @media only screen and (max-width: 768px) {
     body {
-        font-size: 14px;
+        font-size: 14px; /* Kleinere Schriftgröße für den Body */
     }
 
     h1 {
-        font-size: 20px;
+        font-size: 20px; /* Kleinere Schriftgröße für h1 */
     }
 
     h2 {
-        font-size: 18px;
+        font-size: 18px; /* Kleinere Schriftgröße für h2 */
     }
 
     .container {
-        width: 90%;
-        padding: 10px;
+        width: 90%; /* Breite des Containers für mobile Geräte */
+        padding: 10px; /* Weniger Padding für mobile Geräte */
     }
 
     .confirm-button, .flashcard, .button-container button {
-        width: 100%;
-        font-size: 14px;
+        width: 100%; /* Breite auf 100% für mobile Geräte */
+        font-size: 14px; /* Kleinere Schriftgröße für Buttons */
     }
 }
 
 /* Body Styling */
+/* Einstellungen für den gesamten Seitenhintergrund und die allgemeine Ausrichtung */
 body {
-    background-color: #1a1e24;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: "Arial Black", sans-serif;
-    margin: 0;
-    padding: 0;
-    justify-content: center;
+    background-color: #1a1e24; /* Dunkler Hintergrund */
+    display: flex; /* Flexbox für zentrierte Ausrichtung */
+    flex-direction: column; /* Vertikale Ausrichtung */
+    align-items: center; /* Zentrierung der Inhalte */
+    font-family: "Arial Black", sans-serif; /* Schriftart */
+    margin: 0; /* Keine Außenabstände */
+    padding: 0; /* Kein Padding */
+    justify-content: center; /* Zentrierung in der Mitte */
 }
 
 /* Header für Logo und Titel nebeneinander */
 .header {
     display: flex;
-    align-items: center;
+    align-items: center; /* Zentrierung des Logos und des Titels */
 }
 
 .logo {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+    width: 50px; /* Breite des Logos */
+    height: 50px; /* Höhe des Logos */
+    margin-right: 10px; /* Abstand zum Titel */
 }
 
+/* Hauptüberschrift */
 h1 {
-    color: #fff;
-    font-size: 24px;
-    margin: 0;
+    color: #fff; /* Weiße Schriftfarbe */
+    font-size: 24px; /* Schriftgröße */
+    margin: 0; /* Kein Abstand */
 }
 
+/* Unterüberschrift Styling */
 h2 {
-    background-color: #fff;
-    color: black;
-    font-size: 20px;
-    padding: 15px;
-    border-radius: 15px;
-    text-align: center;
-    font-family: "Arial Black", sans-serif;
-    font-weight: bold;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    background-color: #fff; /* Weißer Hintergrund */
+    color: black; /* Schwarzer Text */
+    font-size: 20px; /* Schriftgröße */
+    padding: 15px; /* Innenabstand */
+    border-radius: 15px; /* Abgerundete Ecken */
+    text-align: center; /* Zentrierter Text */
+    font-family: "Arial Black", sans-serif; /* Schriftart */
+    font-weight: bold; /* Fettgedruckt */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Schatteneffekt */
+    margin-bottom: 20px; /* Abstand nach unten */
 }
 
 /* Container für die Menü-Links */
 .container {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
-    width: 300px;
-    text-align: center;
-    margin: 10px auto;
+    background-color: #fff; /* Weißer Hintergrund */
+    padding: 20px; /* Innenabstand */
+    border-radius: 15px; /* Abgerundete Ecken */
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
+    width: 300px; /* Breite des Containers */
+    text-align: center; /* Zentrierter Text */
+    margin: 10px auto; /* Automatischer Abstand */
 }
 
+/* Eingabefelder und Auswahlfelder */
 input, select {
-    background-color: #f0f0f0; /* Hintergrundfarbe für normalen Modus */
-    color: #000; /* Textfarbe für normalen Modus */
-    border: 1px solid #ccc; /* Umrandung für normalen Modus */
-    border-radius: 15px; /* Abgerundet in allen Ansichten */
-    text-align: center; /* Zentriert den Platzhaltertext in allen Ansichten */
-    padding: 10px; /* Fügen Sie etwas Polsterung hinzu */
+    background-color: #f0f0f0; /* Hintergrundfarbe */
+    color: #000; /* Textfarbe */
+    border: 1px solid #ccc; /* Umrandung */
+    border-radius: 15px; /* Abgerundete Ecken */
+    text-align: center; /* Zentrierter Text */
+    padding: 10px; /* Innenabstand */
 }
 
 /* Menü-Styling */
+/* Stellt sicher, dass die Menü-Liste keine Standardformatierungen hat */
 .menu {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
+/* Menü-Elemente Styling */
 .menu li {
-    margin-bottom: 5px;
+    margin-bottom: 5px; /* Abstand zwischen den Elementen */
 }
 
+/* Links im Menü */
 .menu li a {
-    display: block;
-    padding: 15px;
-    background-color: #007BFF;
-    color: white;
-    border-radius: 15px;
-    text-decoration: none;
-    text-align: center;
+    display: block; /* Blockdarstellung */
+    padding: 15px; /* Innenabstand */
+    background-color: #007BFF; /* Blaue Hintergrundfarbe */
+    color: white; /* Weiße Schrift */
+    border-radius: 15px; /* Abgerundete Ecken */
+    text-decoration: none; /* Keine Unterstreichung */
+    text-align: center; /* Zentrierter Text */
 }
 
 /* Flashcards */
 .flashcard {
-    width: 300px; /* Gleiche Breite */
-    height: 200px; /* Gleiche Höhe */
-    margin: 20px auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 15px; /* Runde Form */
-    border: 2px solid #ccc;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 24px;
-    text-align: center;
-    cursor: pointer;
+    width: 300px; /* Breite der Flashcard */
+    height: 200px; /* Höhe der Flashcard */
+    margin: 20px auto; /* Zentrierung */
+    display: flex; /* Flexbox für Zentrierung */
+    justify-content: center; /* Zentrierung horizontal */
+    align-items: center; /* Zentrierung vertikal */
+    background-color: #f9f9f9; /* Heller Hintergrund */
+    border-radius: 15px; /* Abgerundete Ecken */
+    border: 2px solid #ccc; /* Umrandung */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Schatteneffekt */
+    font-size: 24px; /* Schriftgröße */
+    text-align: center; /* Zentrierter Text */
+    cursor: pointer; /* Zeiger beim Hover */
 }
 
 /* Button Styling */
 .button {
-    background-color: #007BFF; /* Beispiel Hintergrundfarbe */
+    background-color: #007BFF; /* Hintergrundfarbe */
     color: white; /* Textfarbe */
     border: none; /* Keine Umrandung */
-    border-radius: 15px; /* Rundung der Ecken */
+    border-radius: 15px; /* Abgerundete Ecken */
     padding: 10px 20px; /* Innenabstand */
     font-size: 16px; /* Schriftgröße */
-    cursor: pointer; /* Zeiger bei Hover */
+    cursor: pointer; /* Zeiger beim Hover */
 }
 
 /* Bestätigungsbutton */
 .confirm-button {
-    padding: 8px 18px; /* Gleiche Innenabstände */
-    margin-top: 15px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
+    padding: 8px 18px; /* Innenabstand */
+    margin-top: 15px; /* Abstand nach oben */
+    background-color: #007BFF; /* Hintergrundfarbe */
+    color: white; /* Textfarbe */
+    border: none; /* Keine Umrandung */
+    border-radius: 15px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeiger beim Hover */
 }
 
 /* Vokabelset Auswahl */
 #setSelect {
-    padding: 5px;
-    font-size: 16px;
+    padding: 5px; /* Innenabstand */
+    font-size: 16px; /* Schriftgröße */
 }
 
 /* Dark Mode Styles */
+/* Styling für den Dark Mode */
 .dark-mode {
-    background-color: #000;
-    color: #fff;
+    background-color: #000; /* Schwarzer Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
 }
 
 .dark-mode .container {
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none; /* Keine Umrandung im Dark Mode */
+    background-color: rgba(255, 255, 255, 0.1); /* Transparenter Hintergrund */
+    border: none; /* Keine Umrandung */
 }
 
 .dark-mode h2 {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: none; /* Keine Umrandung im Dark Mode */
+    background-color: rgba(255, 255, 255, 0.1); /* Transparenter Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
+    border: none; /* Keine Umrandung */
 }
 
 .dark-mode .flashcard {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border: none; /* Keine Umrandung im Dark Mode */
+    background-color: rgba(255, 255, 255, 0.1); /* Transparenter Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
+    border: none; /* Keine Umrandung */
 }
 
 .dark-mode input, .dark-mode select {
-    background-color: #555;
-    color: #fff;
-    border: none; /* Keine Umrandung im Dark Mode */
-    border-radius: 15px; /* Abgerundet in allen Ansichten */
-    text-align: center; /* Zentriert den Platzhaltertext */
+    background-color: #555; /* Dunkler Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
+    border: none; /* Keine Umrandung */
 }
 
 /* Einheitliches Design für alle Dropdown-Menüs */
 select {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    border-radius: 15px; /* Gleiche Rundung wie andere Elemente */
-    padding: 10px; /* Gleiche Innenabstände */
-}
-
-.dark-mode select {
-    background-color: #555;
-    color: #fff;
-    border: none; /* Keine Umrandung im Dark Mode */
-}
-
-/* Button Anpassungen im Dark Mode */
-.dark-mode button {
-    background-color: #555;
-    color: #fff;
-}
-
-/* Dark Mode für Confirm Button */
-.dark-mode .confirm-button {
-    background-color: gray; /* Grau im Dark Mode */
-    color: white; /* Textfarbe */
-    border-radius: 15px; /* Abgerundet */
-}
-
-/* Positionierung der Buttons */
-#fullscreenButton, #darkModeButton {
-    position: fixed;
-    bottom: 10px;
-    width: 40px; /* Gleiche Breite */
-    height: 40px; /* Gleiche Höhe */
-    border-radius: 50%; /* Runde Form */
-    background-color: gray; /* Grau in allen Ansichten */
-    color: white;
-    border: none;
-    cursor: pointer;
-    z-index: 1000;
-}
-
-#fullscreenButton {
-    left: 10px; /* Unten links */
-}
-
-#darkModeButton {
-    right: 10px; /* Unten rechts */
-}
-
-/* Farbdefinitionen */
-.correct {
-    color: green; /* Grün für richtige Antworten */
-}
-
-.wrong {
-    color: orange; /* Orange für falsch oder nur zum Üben */
-}
-
-.solution {
-    color: red; /* Rot für falsche Lösungen */
-}
-
-/* Dunklere Farben im Dark Mode */
-.dark-mode .correct {
-    color: darkgreen; /* Dunkleres Grün für richtige Antworten */
-}
-
-.dark-mode .wrong {
-    color: darkorange; /* Dunkleres Orange für falsch oder nur zum Üben */
-}
-
-.dark-mode .solution {
-    color: darkred; /* Dunkleres Rot für falsche Lösungen */
+    background-color: #f0f0f0; /* Heller Hintergrund */
+    border: 1px solid #ccc; /* Umrandung */
+    border-radius: 15px; /* Abgerundete Ecken */
+    padding: 10px; /* Innenabstand */
+    text-align: center; /* Zentrierter Text */
+    margin: 10px auto; /* Abstand */
 }
