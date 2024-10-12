@@ -273,3 +273,41 @@ button {
     .solution {
         color: red;
     }
+
+
+/* Dark Mode Styles */
+.dark-mode {
+    background-color: #000; /* Schwarzer Hintergrund */
+    color: #fff; /* Weiße Schriftfarbe */
+}
+
+/* Container im Dark Mode */
+.dark-mode .container {
+    background-color: rgba(255, 255, 255, 0.1); /* Durchsichtiger Hintergrund */
+    border: 1px solid #fff; /* Weiße Umrandung */
+}
+
+/* Spezifische Anpassungen für andere Elemente */
+.dark-mode h2 {
+    background-color: rgba(255, 255, 255, 0.1); /* Durchsichtiger Hintergrund */
+    color: #fff; /* Weiße Schrift */
+    border: 1px solid #fff; /* Weiße Umrandung */
+}
+
+.dark-mode .flashcard {
+    background-color: rgba(255, 255, 255, 0.1); /* Durchsichtiger Hintergrund */
+    color: #fff; /* Weiße Schrift */
+    border: 1px solid #fff; /* Weiße Umrandung */
+}
+
+.dark-mode table, .dark-mode th, .dark-mode td {
+    background-color: transparent; /* Kein Hintergrund */
+    color: #fff; /* Weiße Schrift */
+    border: 1px solid #fff; /* Weiße Umrandung */
+}
+
+/* Button Anpassungen im Dark Mode */
+.dark-mode button {
+    background-color: #333; /* Dunklerer Button-Hintergrund */
+    color: #fff; /* Weiße Schrift */
+}
