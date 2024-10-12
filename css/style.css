@@ -252,6 +252,13 @@ select {
     border-radius: 50%; /* Runde Form */
 }
 
+/* Dark Mode für Confirm Button */
+.dark-mode .confirm-button {
+    background-color: gray; /* Grau im Dark Mode */
+    color: white; /* Textfarbe */
+    border-radius: 15px; /* Abgerundet */
+}
+
 /* Positionierung der Buttons */
 #fullscreenButton, #darkModeButton {
     position: fixed;
