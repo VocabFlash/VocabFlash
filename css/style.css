@@ -30,16 +30,7 @@
     }
 
     .dark-mode button {
-    background-color: gray; /* Grau im Dark Mode */
-}
-    
-    #darkModeButton, #fullscreenButton {
-        font-size: 14px;
-        padding: 6px;
-        width: auto;
-        margin: 5px 0;
-        border-radius: 50%; /* Runde Form */
-        background-color: gray; /* Grau in allen Ansichten */
+        background-color: gray; /* Grau im Dark Mode */
     }
 }
 
@@ -154,42 +145,40 @@ input, select {
     color: white;
     border-radius: 15px;
     text-decoration: none;
-    transition: background-color 0.3s ease;
     text-align: center;
 }
 
 /* Flashcards */
 .flashcard {
-    width: 300px;
-    height: 200px;
+    width: 300px; /* Gleiche Breite */
+    height: 200px; /* Gleiche Höhe */
     margin: 20px auto;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #f9f9f9;
-    border-radius: 10px;
+    border-radius: 15px; /* Runde Form */
     border: 2px solid #ccc;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 24px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s ease-in-out;
 }
 
 /* Button Styling */
-button {
-    padding: 10px 20px;
-    margin-top: 10px;
-    background-color: #4CAF50;
-    background-color: gray;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.button {
+    background-color: #007BFF; /* Beispiel Hintergrundfarbe */
+    color: white; /* Textfarbe */
+    border: none; /* Keine Umrandung */
+    border-radius: 15px; /* Rundung der Ecken */
+    padding: 10px 20px; /* Innenabstand */
+    font-size: 16px; /* Schriftgröße */
+    cursor: pointer; /* Zeiger bei Hover */
 }
 
+/* Bestätigungsbutton */
 .confirm-button {
-    padding: 10px 20px;
+    padding: 10px 20px; /* Gleiche Innenabstände */
     margin-top: 10px;
     background-color: #007BFF;
     color: white;
@@ -239,8 +228,8 @@ button {
 select {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 15px; /* Gleiche Rundung wie andere Elemente */
+    padding: 10px; /* Gleiche Innenabstände */
 }
 
 .dark-mode select {
@@ -253,8 +242,6 @@ select {
 .dark-mode button {
     background-color: #555;
     color: #fff;
-    background-color: gray; /* Grau in allen Ansichten */
-    border-radius: 50%; /* Runde Form */
 }
 
 /* Dark Mode für Confirm Button */
@@ -311,4 +298,3 @@ select {
 .dark-mode .solution {
     color: darkred; /* Dunkleres Rot für falsche Lösungen */
 }
-
