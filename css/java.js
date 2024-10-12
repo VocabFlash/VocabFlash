@@ -53,6 +53,11 @@ function goHome() {
     window.location.href = 'index.html'; // Ersetze mit der URL deiner Startseite
 }
 
+// Funktion für den Result-Button
+function goResults() {
+    window.location.href = 'result.html'; // Ersetze mit der URL deiner Startseite
+}
+
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
     // Erstelle den Zurück-Button
@@ -77,6 +82,17 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
 
+    // Erstelle den Result Button
+    const resultButton = document.createElement("button");
+    homeButton.innerHTML = "RESULTS"; // Symbol für den Home-Button
+    homeButton.title = "Results";
+    homeButton.style.position = "fixed";
+    homeButton.style.bottom = "10px";
+    homeButton.style.right = "70px"; // Position links, näher am Zurück-Button
+    homeButton.style.zIndex = "1000";
+    homeButton.onclick = goResults; // Funktion für den Home-Button
+    document.body.appendChild(resultButton); // Button dem Body hinzufügen
+    
     // Erstelle den Fullscreen-Button
     const fullscreenButton = document.createElement("button");
     fullscreenButton.id = "fullscreenButton";
