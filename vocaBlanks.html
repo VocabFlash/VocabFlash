@@ -222,12 +222,15 @@ function handleKeyDown(event) {
         event.preventDefault();
         if (document.getElementById('submitAnswer').style.display !== "none") {
             checkAnswer();
+        } else if (document.getElementById('skipButton').style.display !== "none") {
+            skipToNext();
         }
     } else if (event.key === "PageDown") {
         event.preventDefault();
         skipToNext();
     }
 }
+
 
 function startTimer() {
     console.log("Starting timer for 3 seconds");
