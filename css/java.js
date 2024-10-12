@@ -84,16 +84,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
-    homeButton.innerHTML = "RESULTS"; // Symbol für den Home-Button
-    homeButton.title = "Results";
-    homeButton.style.position = "fixed";
-    homeButton.style.bottom = "10px";
-    homeButton.style.right = "70px"; // Position links, näher am Zurück-Button
-    homeButton.style.zIndex = "1000";
+    resultButton.innerHTML = "RESULTS"; // Text für den Result Button
+    resultButton.title = "Results";
+    resultButton.style.position = "fixed";
+    resultButton.style.bottom = "10px";
+    resultButton.style.right = "70px"; // Position rechts, näher am Home-Button
+    resultButton.style.zIndex = "1000";
     resultButton.style.padding = "5px 10px"; // Kleines Padding für den Button
     resultButton.style.fontSize = "13px"; // Kleinere Schriftgröße, falls gewünscht
-    homeButton.onclick = goResults; // Funktion für den Home-Button
+    resultButton.style.whiteSpace = "nowrap"; // Verhindert Umbrüche im Text
+    resultButton.style.display = "inline-block"; // Button nur so groß wie nötig
+    resultButton.onclick = goResults; // Funktion für den Result Button
     document.body.appendChild(resultButton); // Button dem Body hinzufügen
+
     
     // Erstelle den Fullscreen-Button
     const fullscreenButton = document.createElement("button");
