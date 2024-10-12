@@ -1,185 +1,167 @@
 /* Responsive Styles */
 @media (max-width: 600px) {
     .container {
-        width: 90%; /* Container Breite auf 90% setzen */
-        padding: 10px; /* Innenabstand verringern */
+        width: 90%;
+        padding: 10px;
     }
 
     .flashcard {
-        width: 90%; /* Flashcard Breite auf 90% setzen */
-        height: auto; /* Höhe automatisch anpassen */
-        font-size: 20px; /* Schriftgröße reduzieren */
+        width: 90%;
+        height: auto;
+        font-size: 20px;
     }
 
     h1 {
-        font-size: 20px; /* Überschrift Schriftgröße reduzieren */
+        font-size: 20px;
     }
 
     h2 {
-        font-size: 18px; /* Unterüberschrift Schriftgröße reduzieren */
+        font-size: 18px;
     }
 
     button {
-        width: 100%; /* Buttons auf volle Breite setzen */
-        margin-top: 10px; /* Abstand nach oben */
+        width: 100%;
+        margin-top: 10px;
     }
 
     .button-container {
-        flex-direction: column; /* Buttons untereinander anordnen */
+        flex-direction: column;
+    }
+
+    #darkModeButton, #fullscreenButton {
+        font-size: 14px;
+        padding: 6px;
+        width: auto;
+        margin: 5px 0;
     }
 }
 
-/* Allgemeine Einstellungen für alle Geräte */
+/* General Settings */
 body {
-    font-size: 16px; /* Standardgröße */
+    font-size: 16px;
 }
 
-/* Für Bildschirme kleiner als 768px (typisch für mobile Geräte) */
+/* Mobile Styles (screens less than 768px) */
 @media only screen and (max-width: 768px) {
     body {
-        font-size: 14px; /* Kleinere Schriftgröße für Mobilgeräte */
+        font-size: 14px;
     }
 
     h1 {
-        font-size: 20px; /* Kleinere Überschrift auf mobilen Geräten */
+        font-size: 20px;
     }
 
     h2 {
-        font-size: 18px; /* Kleinere Unterüberschrift auf mobilen Geräten */
+        font-size: 18px;
     }
 
     .container {
-        width: 90%; /* Passt die Containerbreite an */
-        padding: 10px; /* Verringert den Innenabstand */
+        width: 90%;
+        padding: 10px;
     }
 
     .confirm-button, .flashcard, .button-container button {
-        width: 100%; /* Buttons nehmen die volle Breite ein */
-        font-size: 14px; /* Kleinere Schriftgröße für Buttons */
+        width: 100%;
+        font-size: 14px;
     }
 }
 
-
 /* Body Styling */
 body {
-    background-color: #1a1e24; /* Dunkler Hintergrund */
+    background-color: #1a1e24;
     display: flex;
-    flex-direction: column; /* Inhalte werden vertikal ausgerichtet */
-    align-items: center; /* Inhalte zentrieren */
-    font-family: "Arial Black", sans-serif; /* Schriftart für den gesamten Body */
+    flex-direction: column;
+    align-items: center;
+    font-family: "Arial Black", sans-serif;
     margin: 0;
     padding: 0;
-    justify-content: center; /* Vertikal in der Mitte ausrichten */
+    justify-content: center;
 }
 
-/* Header für Logo und Titel nebeneinander */
+/* Header Styling */
 .header {
     display: flex;
-    align-items: center; /* Zentriert das Logo und den Titel vertikal */
+    align-items: center;
 }
 
 .logo {
     width: 50px;
     height: 50px;
-    margin-right: 10px; /* Abstand zwischen Logo und Titel */
+    margin-right: 10px;
 }
 
 h1 {
-    color: #fff; /* VocabFlash in weiß */
+    color: #fff;
     font-size: 24px;
-    margin: 0; /* Kein Abstand oberhalb und unterhalb des Titels */
+    margin: 0;
 }
 
 h2 {
-    background-color: #fff; /* Weiße Hintergrundfarbe */
-    color: black; /* Schwarze Schrift */
+    background-color: #fff;
+    color: black;
     font-size: 20px;
-    padding: 15px; /* Abstand innerhalb der Box */
-    border-radius: 15px; /* Abgerundete Ecken */
-    text-align: center; /* Text zentrieren */
-    font-family: "Arial Black", sans-serif; /* Fette Schriftart */
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
     font-weight: bold;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Leichter Schatteneffekt */
-    margin-bottom: 20px; /* Abstand nach unten */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
-/* Container für die Menü-Links */
+/* Container Styling */
 .container {
-    background-color: #fff; /* Weiße Hintergrundfarbe für die Box */
-    padding: 20px; /* Innenabstand */
-    border-radius: 15px; /* Abgerundete Ecken */
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3); /* Schatteneffekt */
-    width: 300px; /* Breite der Box */
-    text-align: center; /* Zentrierte Texte */
-    margin: 10px auto; /* Zentrierung und Abstand */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.3);
+    width: 300px;
+    text-align: center;
+    margin: 20px auto;
 }
 
-/* Menü-Styling */
+/* Menu Styling */
 .menu {
-    list-style-type: none; /* Entfernt Aufzählungszeichen */
+    list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-/* Styling für die Link-Liste */
 .menu li {
-    margin-bottom: 5px; /* Abstand zwischen den Links */
+    margin-bottom: 5px;
 }
 
 .menu li a {
-    display: block; /* Link wird als Block angezeigt */
-    padding: 15px; /* Abstand innerhalb des Links */
-    background-color: #007BFF; /* Dunkelblaue Hintergrundfarbe */
-    color: white; /* Weiße Schriftfarbe */
-    border-radius: 15px; /* Abgerundete Ecken */
-    text-decoration: none; /* Keine Unterstreichung */
-    transition: background-color 0.3s ease; /* Sanfter Übergang */
-    text-align: center; /* Text wird zentriert */
+    display: block;
+    padding: 15px;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 15px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
-
-/*LIST*/ 
-
+/* Vocabulary List */
 #vocabList {
-    max-width: 100%; /* Begrenze die Breite auf 100% */
-    margin-top: 20px; /* Abstand zum oberen Element */
+    max-width: 100%;
+    margin-top: 20px;
 }
 
 #vocabList table {
-    width: 100%; /* Tabelle auf volle Breite */
-    border-collapse: collapse; /* Entfernt doppelte Ränder */
-    margin-top: 20px; /* Abstand zum oberen Element */
-    background-color: transparent; /* kein Hintergrund für die Tabelle */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: transparent;
 }
 
 #vocabList th, #vocabList td {
-    padding: 10px; /* Innenabstand */
-    border: 1px solid #ccc; /* Rand für die Zellen */
-    text-align: left; /* Text linksbündig */
-    background-color: #f0f0f0; /* Hellgrauer Hintergrund für Zellen */
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+    background-color: #f0f0f0;
 }
 
-h1, h2, label {
-    margin-top: 20px; /* Abstand nach oben */
-    margin-bottom: 10px; /* Abstand nach unten */
-}
-
-.container {
-    margin-top: 20px; /* Abstand nach oben */
-}
-
-
-/* Optional: Stil für die Links */
-a {
-    display: inline-block; /* Macht die Links zu Block-Elementen */
-    margin-top: 20px; /* Abstand nach oben */
-}
-
-
-
-/*FLASHCARDS*/
-
-/* Flashcard Box Styling */
+/* Flashcard Styles */
 .flashcard {
     width: 300px;
     height: 200px;
@@ -197,8 +179,6 @@ a {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Platzhalter für Animation */
-
 /* Button Styling */
 button {
     padding: 10px 20px;
@@ -211,103 +191,39 @@ button {
     transition: background-color 0.3s;
 }
 
-.confirm-button {
-    padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
-    margin-top: 10px; /* Abstand oben */
-    background-color: #007BFF; /* Setzt die Hintergrundfarbe auf Blau */
-    color: white; /* Weiße Schriftfarbe */
-    border: none; /* Entfernt den Rahmen */
-    border-radius: 15px; /* Einheitliche abgerundete Ecken */
-    cursor: pointer; /* Zeigt den Zeiger-Cursor an */
-}
-
-
-/* Vokabelset Auswahl */
-#setSelect {
-    padding: 5px;
-    font-size: 16px;
-}
-
-
-
-
-/*PRACTISE*/
-
+/* Practice Button Container */
 .button-container {
-    display: flex; /* Macht den Container zu einer Flexbox */
-    justify-content: center; /* Zentriert den Inhalt horizontal */
-    align-items: center; /* Zentriert den Inhalt vertikal, falls nötig */
-    margin-top: 20px; /* Optional: Abstand oben */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .button-container button {
-    padding: 10px 20px; /* Vergrößert den Abstand innerhalb des Buttons */
-    font-size: 16px; /* Verändert die Schriftgröße */
-    width: 150px; /* Setzt eine feste Breite für die Buttons */
-    margin: 0 10px; /* Abstand zwischen den Buttons */
-}
-
-#fullscreenButton {
-    position: fixed;
-    bottom: 10px;
-    left: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px;
+    padding: 10px 20px;
     font-size: 16px;
-    cursor: pointer;
-    z-index: 1000; /* Über allen anderen Elementen */
+    width: 150px;
+    margin: 0 10px;
 }
-
-/*VOCABLANKS*/
-    .correct {
-        color: green;
-    }
-
-    .wrong {
-        color: orange;
-    }
-
-    .solution {
-        color: red;
-    }
-
 
 /* Dark Mode Styles */
 .dark-mode {
-    background-color: #000; /* Schwarzer Hintergrund */
-    color: #fff; /* Weiße Schriftfarbe */
+    background-color: #000;
+    color: #fff;
 }
 
-/* Container im Dark Mode */
-.dark-mode .container {
-    background-color: rgba(255, 255, 255, 0.1); /* Durchsichtiger Hintergrund */
-    border: 1px solid #fff; /* Weiße Umrandung */
+.dark-mode .container, .dark-mode h2, .dark-mode .flashcard {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid #fff;
 }
 
-/* Spezifische Anpassungen für andere Elemente */
-.dark-mode h2 {
-    background-color: rgba(255, 255, 255, 0.1); /* Durchsichtiger Hintergrund */
-    color: #fff; /* Weiße Schrift */
-    border: 1px solid #fff; /* Weiße Umrandung */
-}
-
-.dark-mode .flashcard {
-    background-color: rgba(255, 255, 255, 0.1); /* Durchsichtiger Hintergrund */
-    color: #fff; /* Weiße Schrift */
-    border: 1px solid #fff; /* Weiße Umrandung */
-}
-
-.dark-mode table, .dark-mode th, .dark-mode td {
-    background-color: transparent; /* Kein Hintergrund */
-    color: #fff; /* Weiße Schrift */
-    border: 1px solid #fff; /* Weiße Umrandung */
-}
-
-/* Button Anpassungen im Dark Mode */
 .dark-mode button {
-    background-color: #333; /* Dunklerer Button-Hintergrund */
-    color: #fff; /* Weiße Schrift */
+    background-color: #333;
+}
+
+/* Dark Mode for Buttons */
+.dark-mode #darkModeButton, .dark-mode #fullscreenButton {
+    background-color: #555;
+    color: #fff;
 }
