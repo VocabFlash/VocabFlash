@@ -8,12 +8,22 @@
     <link rel="stylesheet" href="css/resultstyle.css">
     <script src="css/java.js" defer></script>
     <script src="data/vocabSets.js" defer></script>
+    <style>
+            /* Dark Mode Stile */
+            body.dark-mode table {
+                background-color: #333; /* Dunkelgrauer Hintergrund für die Tabelle */
+            }
+            
+            body.dark-mode td {
+                color: white; /* Weiße Schrift für die Daten-Zellen */
+            }
+    </style>
 </head>
 <body>
 
 <!-- Liste mit allen Vokabel Sets -->
 <a href="index.html"><h1>VocabFlash</h1></a>
-<h2>List</h2>
+<!--<h2>List</h2>-->
     
 <div class="container">
     <label for="setSelect">Choose a set:</label>
@@ -30,9 +40,6 @@
     </select>
     <button class="confirm-button" onclick="updateVocabSet()">Confirm</button>
 
-    <!-- Zurück -->
-    <a href="javascript:history.back()">Return</a><br>
-    <a href="index.html">Return to homepage</a>
 </div>    
     
 <br>
