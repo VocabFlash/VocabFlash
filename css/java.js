@@ -98,6 +98,28 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
 
+    // Event-Listener für das DOMContentLoaded-Event
+document.addEventListener("DOMContentLoaded", function() {
+    // (Erstelle den Zurück-Button, Home-Button und Result Button hier wie im Original)
+
+    // Erstelle den Menu-Button
+    const menuButton = document.createElement("button");
+    menuButton.classList.add("fixed-button"); // Füge die Klasse hinzu
+    menuButton.innerHTML = "☰"; // Symbol für den Menu-Button
+    menuButton.title = "Menu";
+    menuButton.style.position = "fixed";
+    menuButton.style.bottom = "10px";
+    menuButton.style.left = "70px"; // Position rechts anpassen
+    menuButton.style.zIndex = "1000";
+    menuButton.onclick = function() {
+        console.log("Menu button clicked!"); // Beispiel-Aktion
+    };
+    document.body.appendChild(menuButton); // Button dem Body hinzufügen
+
+    // (Rest des Codes für den Fullscreen-Button und Dark-Mode-Button)
+});
+
+
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
     resultButton.classList.add("fixed-button"); // Füge die Klasse hinzu
