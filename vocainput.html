@@ -179,39 +179,42 @@ function handleWrongAnswer(currentWord) {
     wrongAttempts++;
     console.log("Wrong attempt number:", wrongAttempts);
 
-if (tryAgainEnabled) { // Nur wenn "Try Again" aktiviert ist
-    if (wrongAttempts === 1) {
-        feedback.innerText = "Try again.";
-        feedback.classList.remove('correct', 'solution');
-        feedback.classList.add('wrong'); 
-        vocabWord.classList.remove('correct', 'solution');
-        vocabWord.classList.add('wrong');
-        skipButton.style.display = "none"; 
-        saveVocaInputResults(currentWord, "wrong-first");
-    } else if (wrongAttempts === 2) {
-        const userInput = document.getElementById('userInput').value.toLowerCase();
-        if (userInput === currentWord.ar.toLowerCase()) {
-            feedback.innerText = "Correct!";
-            feedback.classList.remove('wrong', 'solution');
-            feedback.classList.add('correct'); 
-            vocabWord.classList.remove('wrong', 'solution');
-            vocabWord.classList.add('correct'); 
+    if (tryAgainEnabled) { // Nur wenn "Try Again" aktiviert ist
+        if (wrongAttempts === 1) {
+            feedback.innerText = "Try again.";
+            feedback.classList.remove('correct', 'solution');
+            feedback.classList.add('wrong'); 
+            vocabWord.classList.remove('correct', 'solution');
+            vocabWord.classList.add('wrong');
+            skipButton.style.display = "none"; 
             saveVocaInputResults(currentWord, "wrong-first");
-            wrongAttempts = 0;
-        } else {
-            feedback.innerText = `The correct answer is: ${currentWord.ar}`;
-            feedback.classList.remove('correct', 'wrong');
-            feedback.classList.add('solution'); 
-            vocabWord.classList.remove('correct', 'wrong');
-            vocabWord.classList.add('solution'); 
-            saveVocaInputResults(currentWord, "second-round");
-            wrongAnswers.push(currentWord); 
-            skipButton.style.display = "block"; 
-            document.getElementById('submitAnswer').style.display = "none"; 
-            startTimer(); 
+        } else if (wrongAttempts === 2) {
+            const userInput = document.getElementById('userInput').value.toLowerCase();
+            if (userInput === currentWord.ar.toLowerCase()) {
+                feedback.innerText = "Correct!";
+                feedback.classList.remove('wrong', 'solution');
+                feedback.classList.add('correct'); 
+                vocabWord.classList.remove('wrong', 'solution');
+                vocabWord.classList.add('correct'); 
+                saveVocaInputResults(currentWord, "wrong-first");
+                wrongAttempts = 0;
+            } else {
+                feedback.innerText = `The correct answer is: ${currentWord.ar}`;
+                feedback.classList.remove('correct', 'wrong');
+                feedback.classList.add('solution'); 
+                vocabWord.classList.remove('correct', 'wrong');
+                vocabWord.classList.add('solution'); 
+                saveVocaInputResults(currentWord, "second-round");
+                wrongAnswers.push(currentWord); 
+                skipButton.style.display = "block"; 
+                document.getElementById('submitAnswer').style.display = "none"; 
+                startTimer(); 
+            }
         }
-    }
+    } // Hier schließt die Klammer für die if-Anweisung
+
 }
+
 
 function saveVocaInputResults(vocab, status) {
     results.push({ de: vocab.de, ar: vocab.ar, status: status });
