@@ -241,13 +241,13 @@
             // Passé Composé erfordert das Hilfsverb und das Partizip Perfekt
             const auxiliary = endings.auxiliary;
             const pastParticiple = `${stem}${endings.pastParticiple}`;
-            
+
             // Unregelmäßiges Verb abrufen, falls vorhanden
             const irregularVerb = verbSets.irreguler[verb.verb];
             if (irregularVerb) {
                 return irregularVerb[tense][pronoun]; // Unregelmäßige Form zurückgeben
             }
-            
+
             // Hilfsverb konjugieren und das Partizip Perfekt hinzufügen
             const auxiliaryConjugation = conjugate({ verb: auxiliary, group: "irreguler" }, "present", pronoun);
             return `${auxiliaryConjugation} ${pastParticiple}`;
