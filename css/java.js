@@ -70,6 +70,7 @@ darkModeButton.classList.add("fixed-button");
 document.addEventListener("DOMContentLoaded", function() {
     // Erstelle den Zurück-Button
     const backButton = document.createElement("button");
+    backButton.classList.add("fixed-button"); // Füge die Klasse hinzu
     backButton.innerHTML = "↩"; // Symbol für den Zurück-Button
     backButton.title = "Zurück";
     backButton.style.position = "fixed";
@@ -81,6 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Erstelle den Home-Button
     const homeButton = document.createElement("button");
+    homeButton.classList.add("fixed-button"); // Füge die Klasse hinzu
     homeButton.innerHTML = "🏠︎"; // Symbol für den Home-Button
     homeButton.title = "Home";
     homeButton.style.position = "fixed";
@@ -92,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
+    resultButton.classList.add("fixed-button"); // Füge die Klasse hinzu
     resultButton.innerHTML = "RESULTS"; // Text für den Result Button
     resultButton.title = "Results";
     resultButton.style.position = "fixed";
@@ -105,9 +108,9 @@ document.addEventListener("DOMContentLoaded", function() {
     resultButton.onclick = goResults; // Funktion für den Result Button
     document.body.appendChild(resultButton); // Button dem Body hinzufügen
 
-    
     // Erstelle den Fullscreen-Button
     const fullscreenButton = document.createElement("button");
+    fullscreenButton.classList.add("fixed-button"); // Füge die Klasse hinzu
     fullscreenButton.id = "fullscreenButton";
     fullscreenButton.title = "Fullscreen";
     fullscreenButton.innerHTML = "⛶";
@@ -128,6 +131,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Erstelle den Dark-Mode-Button
     const darkModeButton = document.createElement("button");
+    darkModeButton.classList.add("fixed-button"); // Füge die Klasse hinzu
     darkModeButton.onclick = toggleDarkMode; // Funktion zum Umschalten des Dark Modes
     darkModeButton.style.position = "fixed";
     darkModeButton.style.bottom = "10px";
@@ -136,3 +140,4 @@ document.addEventListener("DOMContentLoaded", function() {
     darkModeButton.innerHTML = "◐";
     document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
 });
+
