@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="data/vocabSets.js" defer></script>
     <script src="css/java.js" defer></script>
+    <style>
+        .question {
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 
@@ -40,6 +45,9 @@
 
     <div id="results" style="display:none;">
         <p id="feedback"></p>
+        <div id="evaluationContainer">
+            <!-- Bewertungsdetails werden hier eingefügt -->
+        </div>
         <button class="confirm-button" id="retryTest">Next</button>
     </div>
 </div>
@@ -48,17 +56,12 @@
     // MAX-Button-Funktion
     document.getElementById('maxButton').addEventListener('click', () => {
         const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
-    
-        // Wörter aus den ausgewählten Sets sammeln
         let allWords = [];
         selectedSets.forEach(setId => {
             allWords = allWords.concat(vocabSets[setId]);
         });
-    
-        // Setze die Anzahl der Wörter auf die maximale Anzahl der gesammelten Wörter
         document.getElementById('numWords').value = allWords.length;
     });
-
 
     document.addEventListener('DOMContentLoaded', () => {
         const setSelectContainer = document.getElementById('setSelectContainer');
@@ -70,6 +73,10 @@
         const testForm = document.getElementById('testForm');
         const results = document.getElementById('results');
         const feedback = document.getElementById('feedback');
+        const evaluationContainer = document.getElementById('evaluationContainer');
+        const retryTestButton = document.getElementById('retryTest');
+
+        let incorrectWords = [];
 
         // Checkboxen für jedes Set erstellen
         Object.keys(vocabSets).forEach(setKey => {
@@ -115,25 +122,22 @@
         startTestButton.addEventListener('click', () => {
             testArea.style.display = 'block';
             results.style.display = 'none';
-            testForm.innerHTML = ''; // Vorherige Fragen löschen
+            testForm.innerHTML = '';
+            evaluationContainer.innerHTML = '';
+            incorrectWords = [];
 
             const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
             const numWords = parseInt(document.getElementById('numWords').value, 10);
-
-            // Wörter aus den ausgewählten Sets sammeln
             let allWords = [];
             selectedSets.forEach(setId => {
                 allWords = allWords.concat(vocabSets[setId]);
             });
-
-            // Zufällige Auswahl der Wörter für den Test
             const selectedWords = [];
             for (let i = 0; i < numWords && allWords.length > 0; i++) {
                 const randomIndex = Math.floor(Math.random() * allWords.length);
                 selectedWords.push(allWords.splice(randomIndex, 1)[0]);
             }
 
-            // Testfragen erstellen
             selectedWords.forEach((word, index) => {
                 const questionDiv = document.createElement('div');
                 questionDiv.classList.add('question');
@@ -154,7 +158,6 @@
                 testForm.appendChild(questionDiv);
             });
 
-            // Speichern der ausgewählten Wörter für die Überprüfung
             testForm.dataset.selectedWords = JSON.stringify(selectedWords);
         });
 
@@ -163,29 +166,58 @@
             event.preventDefault();
             const formData = new FormData(testForm);
             const selectedWords = JSON.parse(testForm.dataset.selectedWords);
+            let correctCount = 0;
 
-            // Feedback generieren
             testForm.querySelectorAll('.question').forEach((div, i) => {
                 const input = div.querySelector('input');
                 const feedback = div.querySelector('.feedback');
                 const userAnswer = formData.get(`answer${i}`);
                 const correctAnswer = selectedWords[i].ar;
 
+                input.disabled = true; // Eingabefelder sperren
+
                 if (userAnswer && userAnswer.trim() === correctAnswer) {
                     feedback.textContent = "Richtig!";
                     feedback.classList.remove('solution');
                     feedback.classList.add('correct');
+                    correctCount++;
                 } else {
                     feedback.textContent = `Falsch! Korrekt: ${correctAnswer}`;
                     feedback.classList.remove('correct');
                     feedback.classList.add('solution');
+                    incorrectWords.push(selectedWords[i]);
                 }
             });
 
+            const totalQuestions = selectedWords.length;
+            const percentageCorrect = Math.round((correctCount / totalQuestions) * 100);
+            const grade = calculateGrade(percentageCorrect);
+
+            evaluationContainer.innerHTML = `
+                <p>Note: ${grade}</p>
+                <p>Prozentual richtig: ${percentageCorrect}%</p>
+                <p>Richtig/Falsch: ${correctCount}/${totalQuestions - correctCount}</p>
+            `;
+
             results.style.display = 'block';
         });
+
+        // Nächster Test mit falschen Wörtern
+        retryTestButton.addEventListener('click', () => {
+            if (incorrectWords.length > 0) {
+                startTestButton.click();
+            }
+        });
+
+        function calculateGrade(percentage) {
+            if (percentage >= 90) return 1;
+            if (percentage >= 80) return 2;
+            if (percentage >= 70) return 3;
+            if (percentage >= 60) return 4;
+            if (percentage >= 50) return 5;
+            return 6;
+        }
     });
 </script>
 </body>
 </html>
-
