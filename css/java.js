@@ -8,7 +8,7 @@ function openFullscreen() {
     } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera und Brave
         elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) { // IE/Edge
-        elem.msRequestFullscreen();
+        elem.msExitFullscreen();
     } else if (typeof elem.webkitEnterFullscreen !== "undefined") { 
         // Für iOS Safari: Im Gegensatz zu desktop-Vollbild ist dies eher "Inline-Vollbild"
         alert("Fullscreen mode is not fully supported on iOS.");
@@ -17,7 +17,6 @@ function openFullscreen() {
         elem.style.overflow = "hidden"; // Versteckt den Scrollbalken
     }
 }
-
 
 // Funktion, um das Standardverhalten des Doppelklick-Zooms zu verhindern
 function preventDoubleClickZoom() {
@@ -28,7 +27,6 @@ function preventDoubleClickZoom() {
 
 // Überprüfen, ob das DOM vollständig geladen ist, bevor die Funktion ausgeführt wird
 document.addEventListener("DOMContentLoaded", preventDoubleClickZoom);
-
 
 // Funktion zum Beenden des Vollbildmodus 
 function closeFullscreen() {
@@ -42,7 +40,6 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
 }
-
 
 // Funktion zum Umschalten des Dark Modes
 function toggleDarkMode() {
@@ -149,4 +146,3 @@ document.addEventListener("DOMContentLoaded", function() {
     darkModeButton.innerHTML = "◐";
     document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
 });
-
