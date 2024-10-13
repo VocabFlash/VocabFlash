@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,7 @@
     <style>
         .question {
             text-align: left;
+            margin-bottom: 10px; /* Abstand zwischen den Fragen erhöhen */
         }
         .correct {
             color: green;
@@ -58,7 +59,7 @@
             <!-- Bewertungsdetails werden hier eingefügt -->
         </div>
         <button class="confirm-button" id="retryTest" style="display:none;">Next</button>
-        <button class="confirm-button" id="quitTest" style="display:none;">Quit</button>
+        <button class="confirm-button" id="quitTest" style="display:block;">Quit</button> <!-- Always visible -->
     </div>
 </div>
 
@@ -76,6 +77,8 @@
         const evaluationContainer = document.getElementById('evaluationContainer');
         const retryTestButton = document.getElementById('retryTest');
         const quitTestButton = document.getElementById('quitTest');
+        const maxButton = document.getElementById('maxButton');
+        const numWordsInput = document.getElementById('numWords');
 
         let incorrectWords = [];
 
@@ -127,10 +130,9 @@
             evaluationContainer.innerHTML = '';
             incorrectWords = [];
             retryTestButton.style.display = 'none';
-            quitTestButton.style.display = 'none';
 
             const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
-            const numWords = parseInt(document.getElementById('numWords').value, 10);
+            const numWords = parseInt(numWordsInput.value, 10);
             let allWords = [];
             selectedSets.forEach(setId => {
                 allWords = allWords.concat(vocabSets[setId]);
@@ -162,6 +164,15 @@
             });
 
             testForm.dataset.selectedWords = JSON.stringify(selectedWords);
+        });
+
+        // Funktionalität des Max-Buttons
+        maxButton.addEventListener('click', () => {
+            const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked'));
+            const totalWords = selectedSets.reduce((total, cb) => {
+                return total + vocabSets[cb.value].length;
+            }, 0);
+            numWordsInput.value = totalWords; // Setze die maximale Anzahl der Wörter
         });
 
         // Testüberprüfung
@@ -199,37 +210,53 @@
             evaluationContainer.innerHTML = `
                 <p>Grade: ${grade}</p>
                 <p>${correctCount} of ${totalQuestions} correct</p>
+                <p>Percentage correct: ${percentageCorrect.toFixed(2)}%</p> <!-- Percentage added -->
             `;
 
             results.style.display = 'block';
             if (incorrectWords.length > 0) {
                 retryTestButton.style.display = 'inline-block';
-                quitTestButton.style.display = 'inline-block';
             }
         });
 
         // Nächster Test mit falschen Wörtern
         retryTestButton.addEventListener('click', () => {
-            if (incorrectWords.length > 0) {
-                testForm.innerHTML = '';
-                startTestButton.click();
-                testForm.dataset.selectedWords = JSON.stringify(incorrectWords);
-            }
-        });
-
-        // Test abbrechen
-        quitTestButton.addEventListener('click', () => {
-            testArea.style.display = 'none';
+            testArea.style.display = 'block';
             results.style.display = 'none';
-            incorrectWords = [];
-            evaluationContainer.innerHTML = '';
             testForm.innerHTML = '';
+            evaluationContainer.innerHTML = '';
+            incorrectWords.forEach((word, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+
+                const label = document.createElement('label');
+                label.textContent = `${index + 1}. ${word.de}`;
+
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.name = `answer${index}`;
+
+                const feedbackSpan = document.createElement('span');
+                feedbackSpan.classList.add('feedback');
+
+                questionDiv.appendChild(label);
+                questionDiv.appendChild(input);
+                questionDiv.appendChild(feedbackSpan);
+                testForm.appendChild(questionDiv);
+            });
+
+            testForm.dataset.selectedWords = JSON.stringify(incorrectWords);
         });
 
-        function roundToNearestQuarter(num) {
-            return (Math.round(num * 4) / 4).toFixed(2);
-        }
+        // Quit-Button Funktionalität
+        quitTestButton.addEventListener('click', () => {
+            window.location.href = 'index.html'; // Redirect to main page
+        });
     });
+
+    function roundToNearestQuarter(num) {
+        return Math.round(num * 4) / 4;
+    }
 </script>
 </body>
 </html>
