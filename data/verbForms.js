@@ -106,8 +106,8 @@ function conjugate(verb, tense, pronoun) {
         // Partizip Perfekt für das gewählte Verb
         const pastParticiple = endings.pastParticiple;
 
-        // Hilfsverb konjugieren
-        const auxiliaryConjugation = verbSets.irreguler['avoir'][tense][pronoun] || endings.auxiliary;
+        // Hilfsverb konjugieren (wir nutzen immer avoir für er- und regelmäßige Verben)
+        const auxiliaryConjugation = verbSets.irreguler['avoir'][tense][pronoun];
 
         return `${pronoun === "je" ? auxiliaryConjugation.replace('ai', 'j\'ai') : auxiliaryConjugation} ${stem}${pastParticiple}`;
     }
@@ -121,8 +121,8 @@ function conjugate(verb, tense, pronoun) {
 }
 
 // Beispielaufruf:
+console.log(conjugate({ verb: "arrêter", group: "er" }, "passeCompose", "je")); // Erwartet: "j'ai arrêté"
 console.log(conjugate({ verb: "parler", group: "er" }, "passeCompose", "je")); // Erwartet: "j'ai parlé"
-
 
 // Definition der Konjugation von avoir im passé composé
 const avoirConjugation = {
