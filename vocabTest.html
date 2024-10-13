@@ -6,6 +6,7 @@
     <title>VocabTest</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/vocabSets.js" defer></script>
+    <script src="css/java.js" defer></script>
 </head>
 <body>
 
@@ -172,12 +173,12 @@
 
                 if (userAnswer && userAnswer.trim() === correctAnswer) {
                     feedback.textContent = "Richtig!";
-                    feedback.classList.remove('wrong');
+                    feedback.classList.remove('solution');
                     feedback.classList.add('correct');
                 } else {
                     feedback.textContent = `Falsch! Korrekt: ${correctAnswer}`;
                     feedback.classList.remove('correct');
-                    feedback.classList.add('wrong');
+                    feedback.classList.add('solution');
                 }
             });
 
