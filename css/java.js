@@ -60,71 +60,83 @@ function goResults() {
 
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
+    // Gemeinsame Button-Eigenschaften
+    const buttonStyle = {
+        position: 'fixed',
+        bottom: '10px',
+        zIndex: '1000',
+        padding: '5px',
+        fontSize: '14px', // Größer für mobile Lesbarkeit
+        backgroundColor: '#f0f0f0',
+        borderRadius: '5px',
+        border: '1px solid #ccc'
+    };
+
     // Erstelle den Zurück-Button
     const backButton = document.createElement("button");
     backButton.innerHTML = "↩"; // Symbol für den Zurück-Button
     backButton.title = "Zurück";
-    backButton.style.position = "fixed";
-    backButton.style.bottom = "10px";
-    backButton.style.left = "10px"; // Position links
-    backButton.style.zIndex = "1000";
-    backButton.onclick = goBack; // Funktion für den Zurück-Button
-    document.body.appendChild(backButton); // Button dem Body hinzufügen
+    Object.assign(backButton.style, buttonStyle, { left: '10px' });
+    backButton.onclick = goBack;
+    document.body.appendChild(backButton);
 
     // Erstelle den Home-Button
     const homeButton = document.createElement("button");
     homeButton.innerHTML = "🏠︎"; // Symbol für den Home-Button
     homeButton.title = "Home";
-    homeButton.style.position = "fixed";
-    homeButton.style.bottom = "10px";
-    homeButton.style.left = "40px"; // Position links, näher am Zurück-Button
-    homeButton.style.zIndex = "1000";
-    homeButton.onclick = goHome; // Funktion für den Home-Button
-    document.body.appendChild(homeButton); // Button dem Body hinzufügen
+    Object.assign(homeButton.style, buttonStyle, { left: '60px' });
+    homeButton.onclick = goHome;
+    document.body.appendChild(homeButton);
 
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
-    resultButton.innerHTML = "RESULTS"; // Text für den Result Button
+    resultButton.innerHTML = "RESULTS";
     resultButton.title = "Results";
-    resultButton.style.position = "fixed";
-    resultButton.style.bottom = "10px";
-    resultButton.style.right = "70px"; // Position rechts, näher am Home-Button
-    resultButton.style.zIndex = "1000";
-    resultButton.style.padding = "5px 10px"; // Kleines Padding für den Button
-    resultButton.style.fontSize = "9px"; // Kleinere Schriftgröße, falls gewünscht
-    resultButton.style.whiteSpace = "nowrap"; // Verhindert Umbrüche im Text
-    resultButton.style.display = "inline-block"; // Button nur so groß wie nötig
-    resultButton.onclick = goResults; // Funktion für den Result Button
-    document.body.appendChild(resultButton); // Button dem Body hinzufügen
+    Object.assign(resultButton.style, buttonStyle, { right: '110px' });
+    resultButton.onclick = goResults;
+    document.body.appendChild(resultButton);
 
-    
     // Erstelle den Fullscreen-Button
     const fullscreenButton = document.createElement("button");
     fullscreenButton.id = "fullscreenButton";
     fullscreenButton.title = "Fullscreen";
     fullscreenButton.innerHTML = "⛶";
-    fullscreenButton.style.position = "fixed";
-    fullscreenButton.style.bottom = "10px";
-    fullscreenButton.style.right = "40px"; // Position rechts anpassen, näher am Darkmode-Button
-    fullscreenButton.style.zIndex = "1000";
-    document.body.appendChild(fullscreenButton); // Button dem Body hinzufügen
+    Object.assign(fullscreenButton.style, buttonStyle, { right: '60px' });
+    document.body.appendChild(fullscreenButton);
 
-    // Event-Listener für den Fullscreen-Button
     fullscreenButton.addEventListener('click', () => {
         if (!document.fullscreenElement) {
-            openFullscreen(); // Vollbildmodus aktivieren
+            openFullscreen();
         } else {
-            closeFullscreen(); // Vollbildmodus beenden
+            closeFullscreen();
         }
     });
 
     // Erstelle den Dark-Mode-Button
     const darkModeButton = document.createElement("button");
-    darkModeButton.onclick = toggleDarkMode; // Funktion zum Umschalten des Dark Modes
-    darkModeButton.style.position = "fixed";
-    darkModeButton.style.bottom = "10px";
-    darkModeButton.style.right = "10px"; // Position rechts anpassen
-    darkModeButton.style.zIndex = "1000";
     darkModeButton.innerHTML = "◐";
-    document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
+    darkModeButton.title = "Dark Mode";
+    Object.assign(darkModeButton.style, buttonStyle, { right: '10px' });
+    darkModeButton.onclick = toggleDarkMode;
+    document.body.appendChild(darkModeButton);
 });
+
+// Stile für kleine Bildschirme anpassen
+function adjustButtonPositions() {
+    const isSmallScreen = window.innerWidth < 600; // Schwellenwert für kleine Bildschirme
+    const buttons = document.querySelectorAll('button');
+
+    buttons.forEach(button => {
+        if (isSmallScreen) {
+            button.style.fontSize = '12px';
+            button.style.padding = '3px';
+        } else {
+            button.style.fontSize = '14px';
+            button.style.padding = '5px';
+        }
+    });
+}
+
+// Ereignislistener für Größenänderungen des Fensters
+window.addEventListener('resize', adjustButtonPositions);
+adjustButtonPositions(); // Initial aufrufen
