@@ -59,12 +59,6 @@ function goHome() {
 function goResults() {
     window.location.href = 'result.html'; // Ersetze mit der URL deiner Startseite
 }
-// Beispiel für das Hinzufügen der Klasse im JavaScript-Code
-backButton.classList.add("fixed-button");
-homeButton.classList.add("fixed-button");
-resultButton.classList.add("fixed-button");
-fullscreenButton.classList.add("fixed-button");
-darkModeButton.classList.add("fixed-button");
 
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
