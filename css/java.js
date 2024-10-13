@@ -18,7 +18,6 @@ function openFullscreen() {
     }
 }
 
-
 // Funktion, um das Standardverhalten des Doppelklick-Zooms zu verhindern
 function preventDoubleClickZoom() {
     document.addEventListener('gesturestart', function (e) {
@@ -28,7 +27,6 @@ function preventDoubleClickZoom() {
 
 // Überprüfen, ob das DOM vollständig geladen ist, bevor die Funktion ausgeführt wird
 document.addEventListener("DOMContentLoaded", preventDoubleClickZoom);
-
 
 // Funktion zum Beenden des Vollbildmodus 
 function closeFullscreen() {
@@ -42,7 +40,6 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
 }
-
 
 // Funktion zum Umschalten des Dark Modes
 function toggleDarkMode() {
@@ -114,23 +111,6 @@ menuItems.forEach(item => {
 // Menü zum Body hinzufügen
 document.body.appendChild(menu);
 
-// Funktion für das Menü
-menuButton.onclick = function() {
-    if (menu.style.display === "none") {
-        menu.style.display = "block"; // Menü anzeigen
-    } else {
-        menu.style.display = "none"; // Menü verstecken
-    }
-};
-
-// Schließen des Menüs, wenn außerhalb geklickt wird
-window.onclick = function(event) {
-    if (event.target !== menuButton && menu.style.display === "block") {
-        menu.style.display = "none"; // Menü verstecken
-    }
-};
-
-
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
     // Erstelle den Zurück-Button
@@ -157,18 +137,34 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
 
-        // Erstelle den Menü-Button
+    // Erstelle den Menü-Button
     const menuButton = document.createElement("button");
     menuButton.classList.add("fixed-button"); // Füge die Klasse hinzu
-    menuButton.innerHTML = "☰"; // Symbol für den Home-Button
+    menuButton.innerHTML = "☰"; // Symbol für den Menü-Button
     menuButton.title = "Menu";
     menuButton.style.position = "fixed";
     menuButton.style.bottom = "10px";
     menuButton.style.left = "70px"; // Position links, näher am Zurück-Button
     menuButton.style.zIndex = "1000";
-    menuButton.onclick = goMenu; // Funktion für den Home-Button
+
+    // Funktion für das Menü
+    menuButton.onclick = function() {
+        if (menu.style.display === "none") {
+            menu.style.display = "block"; // Menü anzeigen
+        } else {
+            menu.style.display = "none"; // Menü verstecken
+        }
+    };
+
     document.body.appendChild(menuButton); // Button dem Body hinzufügen
-    
+
+    // Schließen des Menüs, wenn außerhalb geklickt wird
+    window.onclick = function(event) {
+        if (event.target !== menuButton && menu.style.display === "block") {
+            menu.style.display = "none"; // Menü verstecken
+        }
+    };
+
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
     resultButton.classList.add("fixed-button"); // Füge die Klasse hinzu
@@ -202,19 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!document.fullscreenElement) {
             openFullscreen(); // Vollbildmodus aktivieren
         } else {
-            closeFullscreen(); // Vollbildmodus beenden
+            closeFullscreen(); // Vollbildmodus schließen
         }
     });
-
-    // Erstelle den Dark-Mode-Button
-    const darkModeButton = document.createElement("button");
-    darkModeButton.classList.add("fixed-button"); // Füge die Klasse hinzu
-    darkModeButton.onclick = toggleDarkMode; // Funktion zum Umschalten des Dark Modes
-    darkModeButton.style.position = "fixed";
-    darkModeButton.style.bottom = "10px";
-    darkModeButton.style.right = "10px"; // Position rechts anpassen
-    darkModeButton.style.zIndex = "1000";
-    darkModeButton.innerHTML = "◐";
-    document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
 });
-
