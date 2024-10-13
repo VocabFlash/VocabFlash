@@ -8,7 +8,7 @@ function openFullscreen() {
     } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera und Brave
         elem.webkitRequestFullscreen();
     } else if (elem.msRequestFullscreen) { // IE/Edge
-        elem.msExitFullscreen();
+        elem.msRequestFullscreen();
     } else if (typeof elem.webkitEnterFullscreen !== "undefined") { 
         // Für iOS Safari: Im Gegensatz zu desktop-Vollbild ist dies eher "Inline-Vollbild"
         alert("Fullscreen mode is not fully supported on iOS.");
@@ -17,6 +17,7 @@ function openFullscreen() {
         elem.style.overflow = "hidden"; // Versteckt den Scrollbalken
     }
 }
+
 
 // Funktion, um das Standardverhalten des Doppelklick-Zooms zu verhindern
 function preventDoubleClickZoom() {
@@ -27,6 +28,7 @@ function preventDoubleClickZoom() {
 
 // Überprüfen, ob das DOM vollständig geladen ist, bevor die Funktion ausgeführt wird
 document.addEventListener("DOMContentLoaded", preventDoubleClickZoom);
+
 
 // Funktion zum Beenden des Vollbildmodus 
 function closeFullscreen() {
@@ -40,6 +42,7 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
 }
+
 
 // Funktion zum Umschalten des Dark Modes
 function toggleDarkMode() {
@@ -97,28 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.style.zIndex = "1000";
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
-
-    // Event-Listener für das DOMContentLoaded-Event
-document.addEventListener("DOMContentLoaded", function() {
-    // (Erstelle den Zurück-Button, Home-Button und Result Button hier wie im Original)
-
-    // Erstelle den Menu-Button
-    const menuButton = document.createElement("button");
-    menuButton.classList.add("fixed-button"); // Füge die Klasse hinzu
-    menuButton.innerHTML = "☰"; // Symbol für den Menu-Button
-    menuButton.title = "Menu";
-    menuButton.style.position = "fixed";
-    menuButton.style.bottom = "10px";
-    menuButton.style.left = "70px"; // Position rechts anpassen
-    menuButton.style.zIndex = "1000";
-    menuButton.onclick = function() {
-        console.log("Menu button clicked!"); // Beispiel-Aktion
-    };
-    document.body.appendChild(menuButton); // Button dem Body hinzufügen
-
-    // (Rest des Codes für den Fullscreen-Button und Dark-Mode-Button)
-});
-
 
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
