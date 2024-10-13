@@ -232,33 +232,33 @@
         nextWord();
     }
 
-    function conjugate(verb, tense, pronoun) {
-        const verbGroup = verb.group || "er"; // Standardmäßig "er", falls keine Gruppe angegeben ist
-        const endings = verbEndings[verbGroup][tense]; // Endungen basierend auf Zeitform und Gruppe
-        const stem = verb.verb.slice(0, -2); // Stamm des Verbs
-        
-        if (tense === "passeCompose") {
-            // Passé Composé erfordert das Hilfsverb und das Partizip Perfekt
-            const auxiliary = endings.auxiliary;
-            const pastParticiple = `${stem}${endings.pastParticiple}`;
+ function conjugate(verb, tense, pronoun) {
+    const verbGroup = verb.group || "er"; // Standardmäßig "er", falls keine Gruppe angegeben ist
+    const endings = verbEndings[verbGroup][tense]; // Endungen basierend auf Zeitform und Gruppe
+    const stem = verb.verb.slice(0, -2); // Stamm des Verbs
+    
+    if (tense === "passeCompose") {
+        // Passé Composé erfordert das Hilfsverb und das Partizip Perfekt
+        const pastParticiple = `${stem}${endings.pastParticiple}`;
 
-            // Unregelmäßiges Verb abrufen, falls vorhanden
-            const irregularVerb = verbSets.irreguler[verb.verb];
-            if (irregularVerb) {
-                return irregularVerb[tense][pronoun]; // Unregelmäßige Form zurückgeben
-            }
-
-            // Hilfsverb konjugieren und das Partizip Perfekt hinzufügen
-            const auxiliaryConjugation = conjugate({ verb: auxiliary, group: "irreguler" }, "present", pronoun);
-            return `${auxiliaryConjugation} ${pastParticiple}`;
-        } else if (endings) {
-            return `${pronoun} ${stem}${endings[pronoun]}`; // Konjugiertes Verb für andere Zeitformen
-        } else {
-            // Unregelmäßiges Verb komplett abrufen
-            const irregularVerb = verbSets.irreguler[verb.verb];
-            return irregularVerb ? irregularVerb[tense][pronoun] : "Verb not found";
+        // Unregelmäßiges Verb abrufen, falls vorhanden
+        const irregularVerb = verbSets.irreguler[verb.verb];
+        if (irregularVerb) {
+            return irregularVerb[tense][pronoun]; // Unregelmäßige Form zurückgeben
         }
+
+        // Hilfsverb konjugieren und das Partizip Perfekt hinzufügen
+        const auxiliaryConjugation = endings[pronoun]; // Konjugierte Form des Hilfsverbs
+        return `${auxiliaryConjugation} ${pastParticiple}`;
+    } else if (endings) {
+        return `${pronoun} ${stem}${endings[pronoun]}`; // Konjugiertes Verb für andere Zeitformen
+    } else {
+        // Unregelmäßiges Verb komplett abrufen
+        const irregularVerb = verbSets.irreguler[verb.verb];
+        return irregularVerb ? irregularVerb[tense][pronoun] : "Verb not found";
     }
+}
+
 
     // VERBEN LADEN BEI SEITENAUFRUF
     document.addEventListener('DOMContentLoaded', loadVerbs);
