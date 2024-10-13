@@ -11,9 +11,24 @@ function openFullscreen() {
         elem.msRequestFullscreen();
     } else if (typeof elem.webkitEnterFullscreen !== "undefined") { 
         // Für iOS Safari: Im Gegensatz zu desktop-Vollbild ist dies eher "Inline-Vollbild"
-        elem.webkitEnterFullscreen();
+        alert("Fullscreen mode is not fully supported on iOS.");
+        elem.style.width = "100vw";
+        elem.style.height = "100vh";
+        elem.style.overflow = "hidden"; // Versteckt den Scrollbalken
     }
 }
+
+
+// Funktion, um das Standardverhalten des Doppelklick-Zooms zu verhindern
+function preventDoubleClickZoom() {
+    document.addEventListener('gesturestart', function (e) {
+        e.preventDefault(); // Verhindert den Zoom durch Doppelklicken
+    });
+}
+
+// Überprüfen, ob das DOM vollständig geladen ist, bevor die Funktion ausgeführt wird
+document.addEventListener("DOMContentLoaded", preventDoubleClickZoom);
+
 
 // Funktion zum Beenden des Vollbildmodus 
 function closeFullscreen() {
