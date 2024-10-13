@@ -44,6 +44,21 @@
 </div>
 
 <script>
+    // MAX-Button-Funktion
+    document.getElementById('maxButton').addEventListener('click', () => {
+        const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
+    
+        // Wörter aus den ausgewählten Sets sammeln
+        let allWords = [];
+        selectedSets.forEach(setId => {
+            allWords = allWords.concat(vocabSets[setId]);
+        });
+    
+        // Setze die Anzahl der Wörter auf die maximale Anzahl der gesammelten Wörter
+        document.getElementById('numWords').value = allWords.length;
+    });
+
+
     document.addEventListener('DOMContentLoaded', () => {
         const setSelectContainer = document.getElementById('setSelectContainer');
         const confirmSetsButton = document.getElementById('confirmSets');
