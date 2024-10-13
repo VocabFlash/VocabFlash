@@ -104,17 +104,55 @@
     let submitButton = document.getElementById('submitConjugation');
     let skipButton = document.getElementById('skipButton');
 
-    // VERB ANZEIGEN
-    function displayVocabWord() {
-        if (currentSet.length > 0) {
-            const vocab = currentSet[currentIndex];
-            document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`;
-            inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-            submitButton.style.display = "block"; // Zeige den Check-Button
-            skipButton.style.display = "none"; // Verstecke den Skip-Button
-            clearInputs(); // Eingabefelder zurücksetzen
-        }
+// VERB ANZEIGEN
+function displayVocabWord() {
+    if (currentSet.length > 0 && currentIndex < currentSet.length) {
+        const vocab = currentSet[currentIndex];
+        document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`;
+        inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
+        submitButton.style.display = "block"; // Zeige den Check-Button
+        skipButton.style.display = "none"; // Verstecke den Skip-Button
+        clearInputs(); // Eingabefelder zurücksetzen
+        clearFeedback(); // Feedback entfernen
+    } else {
+        // Wenn alle Verben im Set verwendet wurden
+        alert("All verbs in the set are completed!"); 
     }
+}
+
+// ZUM NÄCHSTEN WORT WECHSELN
+function nextWord() {
+    clearTimeout(timer);
+    wrongAttempts = 0;
+    clearFeedback();
+    
+    if (currentIndex < currentSet.length - 1) {
+        currentIndex++; // Nächster Index
+        displayVocabWord(); // Zeige das nächste Verb
+    } else {
+        // Wenn das Ende des Sets erreicht ist
+        alert("You have completed all the verbs in the current set.");
+        // Reset the index or provide further actions, such as restarting or ending the session.
+        currentIndex = 0; // Zurücksetzen, wenn Sie von vorne beginnen möchten
+    }
+}
+
+// SET AKTUALISIEREN
+function updateVerbSet() {
+    const selectedSet = document.getElementById('setSelect').value;
+    const selectedTense = document.getElementById('tenseSelect').value; // Zeitform auswählen
+    
+    if (verbSets[selectedSet]) {
+        currentSet = verbSets[selectedSet];
+        currentTense = selectedTense; // Die ausgewählte Zeitform speichern
+        currentIndex = 0; // Setzt den Index für das neue Set zurück
+        wrongAnswers = []; // Falsche Antworten zurücksetzen
+        displayVocabWord(); // Neues Verb anzeigen
+    } else {
+        console.error("Set not found: ", selectedSet);
+    }
+}
+
 
     //TIMER START
     function startTimer() {
@@ -148,32 +186,7 @@
         nextWord();
     }
 
-    //ZUM NÄCHSTEN WORT WECHSELN
-    function nextWord() {
-        clearTimeout(timer);
-        wrongAttempts = 0;
-        clearFeedback();
-        //FEEDBACK ENTFERNEN
-             // Ersetze 'feedback' durch die ID deines Feedback-Elements
-             // Entfernt den vorherigen Feedback-Text
-        //ERSTE RUNDE IM GANGE
-             if (!secondRound && currentIndex < currentSet.length - 1) {
-                currentIndex++;
-                displayVocabWord();
-             }        
-        //ZWEITE RUNDE IM GANGE
-            else if (!secondRound && wrongAnswers.length > 0) {
-                secondRound = true;
-                currentSet = wrongAnswers;
-                currentIndex = 0;
-                displayVocabWord();
-            } 
-        //RUNDEN ABGESCHLOSSEN
-            else {
-                showResults(); // Leite nach den Fragen zur Ergebnisseite weiter
-            }
-        }
-
+  
     // ANTWORTEN ÜBERPRÜFEN
     function checkAnswers() {
         const selectedTense = document.getElementById('tenseSelect').value;
@@ -257,23 +270,6 @@
         });
     }
     
-    // SET AKTUALISIEREN
-    function updateVocabSet() {
-        const selectedSet = document.getElementById('setSelect').value;
-        const selectedTense = document.getElementById('tenseSelect').value; // Zeitform auswählen
-    
-        if (verbSets[selectedSet]) {
-            currentSet = verbSets[selectedSet];
-            currentTense = selectedTense; // Die ausgewählte Zeitform speichern
-            currentIndex = 0;
-            wrongAnswers = []; // Falsche Antworten zurücksetzen
-            secondRound = false; // Zweite Runde zurücksetzen
-            displayVocabWord(); // Neues Verb anzeigen
-        } else {
-            console.error("Set not found: ", selectedSet);
-        }
-    }
-
     // ERGEBNISSE ANZEIGEN
     function showResults() {
         const mode = "verbForms"; // Modus festlegen
