@@ -204,13 +204,13 @@
             });
 
             const totalQuestions = selectedWords.length;
-            const percentageCorrect = (correctCount / totalQuestions) * 100;
-            const grade = roundToNearestQuarter(6 - (5 * (percentageCorrect / 100)));
+            const percentageCorrect = Math.round((correctCount / totalQuestions) * 100); // Auf ganze Zahl gerundet
+            const grade = roundToNearestQuarter(6 - (5 * (percentageCorrect / 100))); // Note basierend auf dem CH System
 
             evaluationContainer.innerHTML = `
                 <p>Grade: ${grade}</p>
                 <p>${correctCount} of ${totalQuestions} correct</p>
-                <p>Percentage correct: ${percentageCorrect.toFixed(2)}%</p> <!-- Percentage added -->
+                <p>Percentage correct: ${percentageCorrect}%</p> <!-- Prozent ohne Dezimalstellen -->
             `;
 
             results.style.display = 'block';
@@ -248,14 +248,15 @@
             testForm.dataset.selectedWords = JSON.stringify(incorrectWords);
         });
 
-        // Quit-Button Funktionalität
+        // Abbrechen-Button
         quitTestButton.addEventListener('click', () => {
-            window.location.href = 'index.html'; // Redirect to main page
+            window.location.href = "index.html"; // Zurück zur Startseite
         });
     });
 
-    function roundToNearestQuarter(num) {
-        return Math.round(num * 4) / 4;
+    // Funktion zum Runden auf den nächsten Viertel
+    function roundToNearestQuarter(value) {
+        return Math.round(value * 4) / 4;
     }
 </script>
 </body>
