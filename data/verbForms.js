@@ -1,7 +1,15 @@
 const verbEndings = {
     er: {
         present: { je: "e", tu: "es", il: "e", nous: "ons", vous: "ez", ils: "ent" },
-        passeCompose: { auxiliary: "avoir", pastParticiple: "é" }, // Passe compose basiert auf avoir + participe
+                passeCompose: {
+                je: "ai",        // "j'ai"
+                tu: "as",        // "tu as"
+                il: "a",         // "il a"
+                nous: "avons",   // "nous avons"
+                vous: "avez",    // "vous avez"
+                ils: "ont",      // "ils ont"
+                pastParticiple: "é" // Das Partizip bleibt gleich
+            },
         imparfait: { je: "ais", tu: "ais", il: "ait", nous: "ions", vous: "iez", ils: "aient" }
     },
     cer: {
@@ -107,6 +115,11 @@ function conjugate(verb, tense, pronoun) {
         return irregularVerb ? irregularVerb[tense][pronoun] : "Verb not found";
     }
 }
+
+// Definition der Konjugation von avoir im passé composé
+const avoirConjugation = {
+    present: { je: "ai", tu: "as", il: "a", nous: "avons", vous: "avez", ils: "ont" },
+};
 
 // Beispielaufruf:
 console.log(conjugate({ verb: "parler", group: "er" }, "passeCompose", "je")); // Erwartet: "j'ai parlé"
