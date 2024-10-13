@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vokabeln Editor</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Füge hier deinen CSS-Pfad hinzu -->
+</head>
+<body>
+    <h1>Vokabeln Editor</h1>
+    
+    <form id="vocabForm">
+        <textarea id="vocabInput" placeholder="Gib Vokabeln ein (z.B. 'Beweis, Bestätigung - إثبات')" rows="10" cols="50"></textarea><br>
+        <button type="submit">Set erstellen</button>
+    </form>
+
+    <h2>Erstellte Sets</h2>
+    <div id="vocabSets"></div>
+
+    <script>
+    // vocabEditor.js
+
+document.getElementById('vocabForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Verhindert das Standardverhalten des Formulars
+
+    const input = document.getElementById('vocabInput').value; // Vokabeleingabe
+    const vocabLines = input.split('\n'); // Aufteilen nach Zeilen
+    const vocabSets = {};
+
+    vocabLines.forEach((line, index) => {
+        const [de, ar] = line.split(' - '); // Aufteilen nach ' - '
+        if (de && ar) {
+            // Set für die aktuelle Zeile erstellen
+            vocabSets[`set${index + 1}`] = vocabSets[`set${index + 1}`] || [];
+            vocabSets[`set${index + 1}`].push({ de: de.trim(), ar: ar.trim() });
+        }
+    });
+
+    displayVocabSets(vocabSets); // Vokabelsets anzeigen
+    document.getElementById('vocabInput').value = ''; // Eingabefeld zurücksetzen
+});
+
+// Funktion zum Anzeigen der Vokabelsets
+function displayVocabSets(vocabSets) {
+    const vocabSetsDiv = document.getElementById('vocabSets');
+    vocabSetsDiv.innerHTML = ''; // Vorherige Sets löschen
+
+    for (const set in vocabSets) {
+        const setElement = document.createElement('div');
+        setElement.innerHTML = `<strong>${set}:</strong> ${vocabSets[set].map(v => `${v.de} - ${v.ar}`).join(', ')}`;
+        vocabSetsDiv.appendChild(setElement);
+    }
+}
+    </script>
+</body>
+</html>
