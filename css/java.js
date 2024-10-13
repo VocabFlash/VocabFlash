@@ -75,6 +75,62 @@ function goResults() {
     window.location.href = 'result.html'; // Ersetze mit der URL deiner Startseite
 }
 
+// Erstelle das Menü
+const menu = document.createElement("div");
+menu.classList.add("menu"); // Füge die Klasse hinzu
+menu.style.display = "none"; // Menü verstecken
+menu.style.position = "fixed";
+menu.style.bottom = "50px"; // Position über dem Button
+menu.style.left = "70px"; // Gleiche Position wie der Button
+menu.style.backgroundColor = "white"; // Hintergrundfarbe
+menu.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.5)"; // Schatten
+menu.style.zIndex = "999"; // Ein bisschen unter dem Button
+
+// Beispiel-Menüeinträge
+const menuItems = ["Toggle Try Again", "Item 2", "Item 3"];
+let tryAgainEnabled = true;
+
+menuItems.forEach(item => {
+    const menuItem = document.createElement("div");
+    menuItem.innerHTML = item;
+    menuItem.style.padding = "10px";
+    menuItem.style.cursor = "pointer";
+    
+    // Füge eine Funktion für den "Toggle Try Again" Menüeintrag hinzu
+    if (item === "Toggle Try Again") {
+        menuItem.onclick = function() {
+            tryAgainEnabled = !tryAgainEnabled; // Status umkehren
+            alert(`"Try Again" ist jetzt ${tryAgainEnabled ? "aktiviert" : "deaktiviert"}.`); // Beispielaktion bei Auswahl
+        };
+    } else {
+        menuItem.onclick = function() {
+            alert(`Du hast ${item} ausgewählt!`); // Beispielaktion bei Auswahl
+        };
+    }
+    
+    menu.appendChild(menuItem); // Menüeintrag zum Menü hinzufügen
+});
+
+// Menü zum Body hinzufügen
+document.body.appendChild(menu);
+
+// Funktion für das Menü
+menuButton.onclick = function() {
+    if (menu.style.display === "none") {
+        menu.style.display = "block"; // Menü anzeigen
+    } else {
+        menu.style.display = "none"; // Menü verstecken
+    }
+};
+
+// Schließen des Menüs, wenn außerhalb geklickt wird
+window.onclick = function(event) {
+    if (event.target !== menuButton && menu.style.display === "block") {
+        menu.style.display = "none"; // Menü verstecken
+    }
+};
+
+
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
     // Erstelle den Zurück-Button
@@ -101,6 +157,18 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
 
+        // Erstelle den Menü-Button
+    const menuButton = document.createElement("button");
+    menuButton.classList.add("fixed-button"); // Füge die Klasse hinzu
+    menuButton.innerHTML = "☰"; // Symbol für den Home-Button
+    menuButton.title = "Menu";
+    menuButton.style.position = "fixed";
+    menuButton.style.bottom = "10px";
+    menuButton.style.left = "70px"; // Position links, näher am Zurück-Button
+    menuButton.style.zIndex = "1000";
+    menuButton.onclick = goMenu; // Funktion für den Home-Button
+    document.body.appendChild(menuButton); // Button dem Body hinzufügen
+    
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
     resultButton.classList.add("fixed-button"); // Füge die Klasse hinzu
