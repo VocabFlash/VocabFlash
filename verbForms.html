@@ -100,6 +100,29 @@
     let submitButton = document.getElementById('submitConjugation');
     let skipButton = document.getElementById('skipButton');
 
+    // VERB FÜR DIE KONJUGATION LADEN
+function loadVerbForConjugation() {
+    clearTimeout(timer); // Timer zurücksetzen
+    const selectedSet = document.getElementById('setSelect').value;
+    const selectedTense = document.getElementById('tenseSelect').value;
+    const verbs = verbSets[selectedSet];
+
+    if (!verbs) {
+        alert("Verb set not found!");
+        return;
+    }
+
+    // Verben zufällig mischen
+    currentSet = verbs.sort(() => Math.random() - 0.5);
+    currentIndex = 0; // Setze den Index zurück
+    currentTense = selectedTense; // Zeitform speichern
+    wrongAttempts = 0; // Anzahl der falschen Versuche zurücksetzen
+    wrongAnswers = []; // Falsche Antworten zurücksetzen
+
+    displayVocabWord(); // Zeige das erste Verb im Set an
+}
+
+
     // VERBEN LADEN UND ZUFÄLLIG MISCHEN
     function loadVerbs() {
         const selectedSet = document.getElementById('setSelect').value;
