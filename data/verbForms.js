@@ -94,14 +94,19 @@ function conjugate(verb, tense, pronoun) {
     const endings = verbEndings[verbGroup][tense]; // Endungen basierend auf Zeitform und Gruppe
     const stem = verb.verb.slice(0, -2); // Stamm des Verbs
     
+ if (tense === "passeCompose") {
+        const aux = endings.auxiliary;
+        const pastParticiple = endings.pastParticiple;
+        return `${pronoun === "je" && aux === "être" ? "suis" : aux} ${stem}${pastParticiple}`;
+    }
+
     if (endings) {
         return `${pronoun} ${stem}${endings[pronoun]}`; // Konjugiertes Verb
     } else {
-        // Unregelmäßiges Verb komplett abrufen
         const irregularVerb = verbSets.irreguler[verb.verb];
         return irregularVerb ? irregularVerb[tense][pronoun] : "Verb not found";
     }
 }
 
 // Beispielaufruf:
-console.log(conjugate({ verb: "se lever", group: "doubl" }, "present", "je")); // Erwartet: "je me lève"
+console.log(conjugate({ verb: "parler", group: "er" }, "passeCompose", "je")); // Erwartet: "j'ai parlé"
