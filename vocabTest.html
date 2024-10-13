@@ -175,49 +175,53 @@
             numWordsInput.value = totalWords; // Setze die maximale Anzahl der Wörter
         });
 
-        // Testüberprüfung
-        submitTestButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            const formData = new FormData(testForm);
-            const selectedWords = JSON.parse(testForm.dataset.selectedWords);
-            let correctCount = 0;
+       // Testüberprüfung
+submitTestButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    const formData = new FormData(testForm);
+    const selectedWords = JSON.parse(testForm.dataset.selectedWords);
+    let correctCount = 0;
 
-            testForm.querySelectorAll('.question').forEach((div, i) => {
-                const input = div.querySelector('input');
-                const feedback = div.querySelector('.feedback');
-                const userAnswer = formData.get(`answer${i}`);
-                const correctAnswer = selectedWords[i].ar;
+    testForm.querySelectorAll('.question').forEach((div, i) => {
+        const input = div.querySelector('input');
+        const feedback = div.querySelector('.feedback');
+        const userAnswer = formData.get(`answer${i}`);
+        const correctAnswer = selectedWords[i].ar;
 
-                input.disabled = true;
+        input.disabled = true;
 
-                if (userAnswer && userAnswer.trim() === correctAnswer) {
-                    feedback.textContent = "Correct!";
-                    feedback.classList.remove('solution');
-                    feedback.classList.add('correct');
-                    correctCount++;
-                } else {
-                    feedback.textContent = `Incorrect! Correct: ${correctAnswer}`;
-                    feedback.classList.remove('correct');
-                    feedback.classList.add('solution');
-                    incorrectWords.push(selectedWords[i]);
-                }
-            });
+        if (userAnswer && userAnswer.trim() === correctAnswer) {
+            feedback.textContent = "Correct!";
+            feedback.classList.remove('solution');
+            feedback.classList.add('correct');
+            correctCount++;
+        } else {
+            feedback.textContent = `Incorrect! Correct: ${correctAnswer}`;
+            feedback.classList.remove('correct');
+            feedback.classList.add('solution');
+            incorrectWords.push(selectedWords[i]);
+        }
+    });
 
-            const totalQuestions = selectedWords.length;
-            const percentageCorrect = Math.round((correctCount / totalQuestions) * 100); // Auf ganze Zahl gerundet
-            const grade = roundToNearestQuarter(6 - (5 * (percentageCorrect / 100))); // Note basierend auf dem CH System
+    const totalQuestions = selectedWords.length;
+    const percentageCorrect = Math.round((correctCount / totalQuestions) * 100); // Auf ganze Zahl gerundet
 
-            evaluationContainer.innerHTML = `
-                <p>Grade: ${grade}</p>
-                <p>${correctCount} of ${totalQuestions} correct</p>
-                <p>Percentage correct: ${percentageCorrect}%</p> <!-- Prozent ohne Dezimalstellen -->
-            `;
+    // Note basierend auf der angegebenen Formel
+    const maxPoints = totalQuestions; // Maximale Punktzahl entspricht der Anzahl der Fragen
+    const grade = (correctCount * 5 / maxPoints) + 1;
 
-            results.style.display = 'block';
-            if (incorrectWords.length > 0) {
-                retryTestButton.style.display = 'inline-block';
-            }
-        });
+    evaluationContainer.innerHTML = `
+        <p>Grade: ${grade.toFixed(1)}</p> <!-- Auf eine Dezimalstelle gerundet -->
+        <p>${correctCount} of ${totalQuestions} correct</p>
+        <p>Percentage correct: ${percentageCorrect}%</p>
+    `;
+
+    results.style.display = 'block';
+    if (incorrectWords.length > 0) {
+        retryTestButton.style.display = 'inline-block';
+    }
+});
+
 
         // Nächster Test mit falschen Wörtern
         retryTestButton.addEventListener('click', () => {
@@ -248,10 +252,19 @@
             testForm.dataset.selectedWords = JSON.stringify(incorrectWords);
         });
 
-        // Abbrechen-Button
-        quitTestButton.addEventListener('click', () => {
-            window.location.href = "index.html"; // Zurück zur Startseite
-        });
+// Abbrechen-Button
+quitTestButton.addEventListener('click', () => {
+    // Aktuellen Test zurücksetzen
+    testForm.reset(); // Setzt das Formular zurück
+    const feedbackElements = testForm.querySelectorAll('.feedback');
+    feedbackElements.forEach(feedback => {
+        feedback.textContent = ''; // Feedback zurücksetzen
+        feedback.classList.remove('correct', 'solution'); // Klassen zurücksetzen
+    });
+    incorrectWords = []; // Leere die Liste der falschen Wörter
+    results.style.display = 'none'; // Ergebnisse ausblenden
+});
+
     });
 
     // Funktion zum Runden auf den nächsten Viertel
