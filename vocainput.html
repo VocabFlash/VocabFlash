@@ -179,6 +179,7 @@ function handleWrongAnswer(currentWord) {
     wrongAttempts++;
     console.log("Wrong attempt number:", wrongAttempts);
 
+if (tryAgainEnabled) { // Nur wenn "Try Again" aktiviert ist
     if (wrongAttempts === 1) {
         feedback.innerText = "Try again.";
         feedback.classList.remove('correct', 'solution');
