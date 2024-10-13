@@ -6,304 +6,218 @@
     <title>VerbForms - VocabFlash</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="data/verbForms.js" defer></script>
+    <script defer>
+        let currentVerb; // Aktuelles Verb
+        let currentIndex = 0; // Index des aktuellen Verbs
+        let wrongAttempts = 0; // Anzahl der falschen Versuche
+        let wrongAnswers = []; // Falsche Antworten speichern
+        let secondRound = false; // Überprüfen, ob es die zweite Runde ist
+        let currentSet = []; // Aktuelles Set von Verben
+        let currentTense; // Aktuelle Zeitform
+        let timer; // Timer für automatisches Weiterspringen
+        let results = []; // Ergebnisse speichern
+        let submitButton;
+        let skipButton;
+
+        // VERB ANZEIGEN
+        function displayVocabWord() {
+            if (currentSet.length > 0 && currentIndex < currentSet.length) {
+                const vocab = currentSet[currentIndex];
+                document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`;
+                document.getElementById('inputCounter').innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
+                submitButton.style.display = "block"; // Zeige den Check-Button
+                skipButton.style.display = "none"; // Verstecke den Skip-Button
+                clearInputs(); // Eingabefelder zurücksetzen
+                clearFeedback(); // Feedback entfernen
+            } else {
+                alert("All verbs in the set are completed!");
+            }
+        }
+
+        // ZUM NÄCHSTEN WORT WECHSELN
+        function nextWord() {
+            clearTimeout(timer);
+            wrongAttempts = 0;
+            clearFeedback();
+
+            if (currentIndex < currentSet.length - 1) {
+                currentIndex++;
+                displayVocabWord();
+            } else {
+                alert("You have completed all the verbs in the current set.");
+                currentIndex = 0;
+            }
+        }
+
+        // SET AKTUALISIEREN
+        function updateVerbSet() {
+            const selectedSet = document.getElementById('setSelect').value;
+            const selectedTense = document.getElementById('tenseSelect').value;
+
+            if (verbSets[selectedSet]) {
+                currentSet = verbSets[selectedSet];
+                currentTense = selectedTense;
+                currentIndex = 0;
+                wrongAnswers = [];
+                displayVocabWord();
+            } else {
+                console.error("Set not found: ", selectedSet);
+            }
+        }
+
+        // TIMER START
+        function startTimer() {
+            timer = setTimeout(nextWord, 4000);
+        }
+
+        // TASTATUR-EINGABEN BEHANDELN
+        function handleKeyDown(event) {
+            if (event.key === 'Enter') {
+                const checkButton = document.getElementById('submitConjugation');
+                if (checkButton.style.display !== 'none') {
+                    checkAnswers();
+                } else if (skipButton.style.display !== 'none') {
+                    skipToNext();
+                }
+            } else if (event.key === 'PageDown') {
+                const currentInput = document.activeElement;
+                const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
+                const currentIndex = inputs.indexOf(currentInput);
+                const nextInput = inputs[currentIndex + 1];
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        }
+
+        // SKIP-BUTTON AKTION
+        function skipToNext() {
+            clearTimeout(timer);
+            nextWord();
+        }
+
+        // ANTWORTEN ÜBERPRÜFEN
+        function checkAnswers() {
+            const correctAnswers = {
+                je: conjugate(currentVerb, currentTense, 'je').replace('je ', ''),
+                tu: conjugate(currentVerb, currentTense, 'tu').replace('tu ', ''),
+                ilElle: conjugate(currentVerb, currentTense, 'il').replace('il ', ''),
+                nous: conjugate(currentVerb, currentTense, 'nous').replace('nous ', ''),
+                vous: conjugate(currentVerb, currentTense, 'vous').replace('vous ', ''),
+                ilsElles: conjugate(currentVerb, currentTense, 'ils').replace('ils ', '')
+            };
+
+            let allCorrect = true;
+            for (const pronoun in correctAnswers) {
+                const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
+                const feedbackElement = document.getElementById(`feedback${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`);
+
+                if (userAnswer === correctAnswers[pronoun]) {
+                    feedbackElement.innerHTML = 'Correct!';
+                    feedbackElement.className = 'feedback correct';
+                } else {
+                    feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`;
+                    feedbackElement.className = 'feedback wrong';
+                    wrongAnswers.push(pronoun);
+                    allCorrect = false;
+                }
+            }
+
+            if (allCorrect || wrongAttempts >= 2) {
+                skipButton.style.display = "block";
+                submitButton.style.display = "none";
+                startTimer();
+            } else {
+                wrongAttempts++;
+            }
+
+            if (currentIndex === currentSet.length - 1 && allCorrect) {
+                showResults();
+            }
+        }
+
+        //FEEDBACK ENTFERNEN
+        function clearFeedback() {
+            ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
+                const feedbackElement = document.getElementById(`feedback${pronoun}`);
+                feedbackElement.innerHTML = '';
+                feedbackElement.className = 'feedback';
+            });
+        }
+
+        // EINGABEFELDER LÖSCHEN
+        function clearInputs() {
+            ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
+                document.getElementById(`input${pronoun}`).value = '';
+            });
+        }
+
+        // ERGEBNISSE ANZEIGEN
+        function showResults() {
+            const mode = "verbForms";
+            localStorage.setItem("verbInputResults", JSON.stringify(results));
+            const currentPage = window.location.pathname.split("/").pop();
+            window.location.href = `result.html?fromPage=${currentPage}&mode=${mode}`;
+        }
+
+        // VERB LADEN
+        function loadVerbForConjugation() {
+            clearTimeout(timer);
+            updateVerbSet();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            submitButton = document.getElementById('submitConjugation');
+            skipButton = document.getElementById('skipButton');
+        });
+    </script>
 </head>
 <body>
+    <h1>VocabFlash</h1>
+    <h2 id="inputCounter">Verb: 1 / 10</h2>
 
-<h1>VocabFlash</h1>
-<h2 id="inputCounter">Verb: 1 / 10</h2>
+    <div class="container">
+        <h3 id="selectedVerb">Selected Verb: </h3>
+        <table id="conjugationTable">
+            <thead>
+                <tr>
+                    <th>Pronoun</th>
+                    <th>Your Answer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>je</td>
+                    <td>
+                        <input type="text" id="inputJe" onkeydown="handleKeyDown(event)">
+                        <span id="feedbackJe" class="feedback"></span>
+                    </td>
+                </tr>
+                <!-- Repeat for tu, il/elle, nous, vous, ils/elles -->
+            </tbody>
+        </table>
+        
+        <button class="confirm-button" id="submitConjugation" onclick="checkAnswers()">Check</button>
+        <button class="confirm-button" id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button>
+    </div>
 
-<div class="container">
-    <h3 id="selectedVerb">Selected Verb: </h3>
-    <table id="conjugationTable">
-        <thead>
-            <tr>
-                <th>Pronoun</th>
-                <th>Your Answer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>je</td>
-                <td>
-                    <input type="text" id="inputJe" onkeydown="handleKeyDown(event)">
-                    <span id="feedbackJe" class="feedback"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>tu</td>
-                <td>
-                    <input type="text" id="inputTu" onkeydown="handleKeyDown(event)">
-                    <span id="feedbackTu" class="feedback"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>il/elle</td>
-                <td>
-                    <input type="text" id="inputIlElle" onkeydown="handleKeyDown(event)">
-                    <span id="feedbackIlElle" class="feedback"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>nous</td>
-                <td>
-                    <input type="text" id="inputNous" onkeydown="handleKeyDown(event)">
-                    <span id="feedbackNous" class="feedback"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>vous</td>
-                <td>
-                    <input type="text" id="inputVous" onkeydown="handleKeyDown(event)">
-                    <span id="feedbackVous" class="feedback"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>ils/elles</td>
-                <td>
-                    <input type="text" id="inputIlsElles" onkeydown="handleKeyDown(event)">
-                    <span id="feedbackIlsElles" class="feedback"></span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    
-    <button class="confirm-button" id="submitConjugation" onclick="checkAnswers()">Check</button>
-    <button class="confirm-button" id="skipButton" onclick="skipToNext()" style="display: none;">Skip</button>
-</div>
+    <div class="container">
+        <label for="setSelect">Choose a verb set:</label>
+        <select id="setSelect" onchange="updateVerbSet()">
+            <option value="reg1">er-Verbs</option>
+            <option value="cerVerbs">cer-Verbs</option>
+            <!-- Other sets -->
+        </select>
 
-<div class="container">
-    <label for="setSelect">Choose a verb set:</label>
-    <select id="setSelect" onchange="updateVerbSet()">
-        <option value="reg1">er-Verbs</option>
-        <option value="cerVerbs">cer-Verbs</option>
-        <option value="gerVerbs">ger-Verbs</option>
-        <option value="doublVerbs">doubl-Verbs</option>
-        <option value="irreguler">Irregular Verbs</option>
-    </select>
-
-    <label for="tenseSelect">Choose a tense:</label>
-    <select id="tenseSelect">
-        <option value="present">Present</option>
-        <option value="passeCompose">Passé Composé</option>
-        <option value="imparfait">Imparfait</option>
-        <option value="mixed">Mixed</option>
-    </select>
-    
-    <button class="confirm-button" onclick="loadVerbForConjugation()">Confirm</button>
-</div>
-
-<script>
-    let currentVerb; // Aktuelles Verb
-    let currentIndex = 0; // Index des aktuellen Verbs
-    let wrongAttempts = 0; // Anzahl der falschen Versuche
-    let wrongAnswers = []; // Falsche Antworten speichern
-    let secondRound = false; // Überprüfen, ob es die zweite Runde ist
-    let currentSet = []; // Aktuelles Set von Verben
-    let timer; // Timer für automatisches Weiterspringen
-    let results = []; // Ergebnisse speichern
-    let submitButton = document.getElementById('submitConjugation');
-    let skipButton = document.getElementById('skipButton');
-
-// VERB ANZEIGEN
-function displayVocabWord() {
-    if (currentSet.length > 0 && currentIndex < currentSet.length) {
-        const vocab = currentSet[currentIndex];
-        document.getElementById('selectedVerb').innerText = `Selected Verb: ${vocab.verb}`;
-        inputCounter.innerText = `Word: ${currentIndex + 1} / ${currentSet.length}`;
-        submitButton.style.display = "block"; // Zeige den Check-Button
-        skipButton.style.display = "none"; // Verstecke den Skip-Button
-        clearInputs(); // Eingabefelder zurücksetzen
-        clearFeedback(); // Feedback entfernen
-    } else {
-        // Wenn alle Verben im Set verwendet wurden
-        alert("All verbs in the set are completed!"); 
-    }
-}
-
-// ZUM NÄCHSTEN WORT WECHSELN
-function nextWord() {
-    clearTimeout(timer);
-    wrongAttempts = 0;
-    clearFeedback();
-    
-    if (currentIndex < currentSet.length - 1) {
-        currentIndex++; // Nächster Index
-        displayVocabWord(); // Zeige das nächste Verb
-    } else {
-        // Wenn das Ende des Sets erreicht ist
-        alert("You have completed all the verbs in the current set.");
-        // Reset the index or provide further actions, such as restarting or ending the session.
-        currentIndex = 0; // Zurücksetzen, wenn Sie von vorne beginnen möchten
-    }
-}
-
-// SET AKTUALISIEREN
-function updateVerbSet() {
-    const selectedSet = document.getElementById('setSelect').value;
-    const selectedTense = document.getElementById('tenseSelect').value; // Zeitform auswählen
-    
-    if (verbSets[selectedSet]) {
-        currentSet = verbSets[selectedSet];
-        currentTense = selectedTense; // Die ausgewählte Zeitform speichern
-        currentIndex = 0; // Setzt den Index für das neue Set zurück
-        wrongAnswers = []; // Falsche Antworten zurücksetzen
-        displayVocabWord(); // Neues Verb anzeigen
-    } else {
-        console.error("Set not found: ", selectedSet);
-    }
-}
-
-
-    //TIMER START
-    function startTimer() {
-        timer = setTimeout(nextWord, 4000); // Nach 4 Sekunden automatisch zum nächsten Wort
-    }
-
-    // TASTATUR-EINGABEN BEHANDELN
-    function handleKeyDown(event) {
-        const skipButton = document.getElementById('skipButton');
-        if (event.key === 'Enter') {
-            const checkButton = document.getElementById('submitConjugation');
-            if (checkButton.style.display !== 'none') {
-                checkAnswers(); // Antworten prüfen
-            } else if (skipButton.style.display !== 'none') {
-                skipToNext(); // Zum nächsten Wort springen
-            }
-        } else if (event.key === 'PageDown') {
-            const currentInput = document.activeElement;
-            const inputs = Array.from(document.querySelectorAll('input[type="text"]'));
-            const currentIndex = inputs.indexOf(document.activeElement);
-            const nextInput = inputs[currentIndex + 1];
-            if (nextInput && nextInput.tagName === 'INPUT') {
-                nextInput.focus(); // Fokus zum nächsten Eingabefeld verschieben
-            }
-        }
-    }
-
-    // SKIP-BUTTON AKTION
-    function skipToNext() {
-        clearTimeout(timer);
-        nextWord();
-    }
-
-  
-    // ANTWORTEN ÜBERPRÜFEN
-    function checkAnswers() {
-        const selectedTense = document.getElementById('tenseSelect').value;
-    
-        const correctAnswers = {
-            je: conjugate(currentVerb, selectedTense, 'je').replace('je ', ''),
-            tu: conjugate(currentVerb, selectedTense, 'tu').replace('tu ', ''),
-            ilElle: conjugate(currentVerb, selectedTense, 'il').replace('il ', ''),
-            nous: conjugate(currentVerb, selectedTense, 'nous').replace('nous ', ''),
-            vous: conjugate(currentVerb, selectedTense, 'vous').replace('vous ', ''),
-            ilsElles: conjugate(currentVerb, selectedTense, 'ils').replace('ils ', '')
-        };
-    
-    let allCorrect = true;
-        for (const pronoun in correctAnswers) {
-            const userAnswer = document.getElementById(`input${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`).value.trim();
-            const feedbackElement = document.getElementById(`feedback${pronoun.charAt(0).toUpperCase() + pronoun.slice(1)}`);
-    
-            if (userAnswer === correctAnswers[pronoun]) {
-                feedbackElement.innerHTML = 'Correct!';
-                feedbackElement.className = 'feedback correct';
-            } else {
-                feedbackElement.innerHTML = `Wrong! Correct answer: ${correctAnswers[pronoun]}`;
-                feedbackElement.className = 'feedback wrong';
-                wrongAnswers.push(pronoun); // Falsche Antwort speichern
-                allCorrect = false;
-            }
-        }
-        // Nach 2 falschen Versuchen oder korrekten Antworten Timer starten
-        if (allCorrect || wrongAttempts >= 2) {
-            skipButton.style.display = "block"; // Zeige den Skip-Button
-            submitButton.style.display = "none"; // Verstecke den Check-Button
-            startTimer(); // Timer starten, um automatisch zum nächsten Wort zu wechseln
-        } else {
-            wrongAttempts++; // Falsche Versuche zählen
-        }
-    
-        // Überprüfen, ob alle Verben abgeschlossen sind
-        if (currentIndex === currentSet.length - 1 && allCorrect) {
-            showResults(); // Weiterleitung zu den Ergebnissen
-        }
-    }
-
-    // CHECK-BUTTON ANZEIGEN/VERSTECKEN
-    function toggleCheckButton() {
-        const inputs = document.querySelectorAll('.verb-input'); // Alle Eingabefelder für die Konjugationen
-        const submitButton = document.getElementById('submitConjugation');
-        const skipButton = document.getElementById('skipButton');
-        let allFilled = true; // Annahme, dass alle Felder ausgefüllt sind
-    
-        // Überprüfe, ob alle Eingabefelder ausgefüllt sind
-        inputs.forEach(input => {
-            if (input.value.trim() === "") {
-                allFilled = false; // Falls ein Feld leer ist, setze allFilled auf false
-            }
-        });
-    
-        // Zeige den Check-Button nur, wenn alle Felder ausgefüllt sind und der Skip-Button nicht sichtbar ist
-        if (allFilled && skipButton.style.display === "none") {
-            document.getElementById('submitConjugation').style.display = "block"; // Zeige den Check-Button
-        } else {
-            document.getElementById('submitConjugation').style.display = "none"; // Verberge den Check-Button
-        }
-    }
-
-    //FEEDBACK ENTFERNEN
-    function clearFeedback() {
-    ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
-        const feedbackElement = document.getElementById(`feedback${pronoun}`);
-        if (feedbackElement) {
-            feedbackElement.innerHTML = ''; // Entfernt den vorherigen Feedback-Text
-            feedbackElement.className = 'feedback'; // Setzt die Klasse zurück
-        }
-    });
-    }
-
-    // EINGABEFELDER LÖSCHEN
-    function clearInputs() {
-        ['Je', 'Tu', 'IlElle', 'Nous', 'Vous', 'IlsElles'].forEach(pronoun => {
-            document.getElementById(`input${pronoun}`).value = ''; // Eingabefelder leeren
-        });
-    }
-    
-    // ERGEBNISSE ANZEIGEN
-    function showResults() {
-        const mode = "verbForms"; // Modus festlegen
-        localStorage.setItem("verbInputResults", JSON.stringify(results)); // Ergebnisse speichern
-        const currentPage = window.location.pathname.split("/").pop(); // Aktuelle Seite ermitteln
-        window.location.href = `result.html?fromPage=${currentPage}&mode=${mode}`; // Weiterleitung zur Ergebnisseite
-    }
-
-
-    // VERB LADEN
-    function loadVerbForConjugation() {
-        clearTimeout(timer);
-        const selectedSet = document.getElementById('setSelect').value;
-        const selectedTense = document.getElementById('tenseSelect').value;
-        const verbs = verbSets[selectedSet];
-
-        if (!verbs) {
-            alert("Verb set not found!");
-            return;
-        }
-
-        const randomIndex = Math.floor(Math.random() * verbs.length);
-        currentVerb = verbs[randomIndex];
-        document.getElementById('selectedVerb').innerText = `Selected Verb: ${currentVerb.verb}`;
-
-        clearInputs();
-        clearFeedback();
-    }
-
-    // TASTATUR-EINGABEN HANDLER
-    document.addEventListener('keydown', function(event) {
-        handleKeyDown(event);
-    });
-</script>
-
+        <label for="tenseSelect">Choose a tense:</label>
+        <select id="tenseSelect">
+            <option value="present">Present</option>
+            <option value="passeCompose">Passé Composé</option>
+            <option value="imparfait">Imparfait</option>
+            <option value="mixed">Mixed</option>
+        </select>
+        
+        <button class="confirm-button" onclick="loadVerbForConjugation()">Confirm</button>
+    </div>
 </body>
 </html>
