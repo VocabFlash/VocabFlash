@@ -282,3 +282,17 @@ select {
     text-align: center; /* Zentrierter Text */
     margin: 10px auto; /* Abstand */
 }
+
+/* Standard Button-Styles */
+button {
+    position: fixed;
+    }
+
+/* Anpassungen für kleinere Bildschirme */
+@media (max-width: 600px) {
+    button {
+        width: auto; /* Verhindert, dass sich die Buttons auf die volle Breite ausdehnen */
+        font-size: 12px; /* Kleinere Schriftgröße für mobile Geräte */
+        padding: 5px; /* Kleinere Innenabstände */
+    }
+}
