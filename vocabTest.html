@@ -11,6 +11,15 @@
         .question {
             text-align: left;
         }
+        .correct {
+            color: green;
+        }
+        .solution {
+            color: red;
+        }
+        .feedback {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
@@ -48,21 +57,12 @@
         <div id="evaluationContainer">
             <!-- Bewertungsdetails werden hier eingefügt -->
         </div>
-        <button class="confirm-button" id="retryTest">Next</button>
+        <button class="confirm-button" id="retryTest" style="display:none;">Next</button>
+        <button class="confirm-button" id="quitTest" style="display:none;">Quit</button>
     </div>
 </div>
 
 <script>
-    // MAX-Button-Funktion
-    document.getElementById('maxButton').addEventListener('click', () => {
-        const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
-        let allWords = [];
-        selectedSets.forEach(setId => {
-            allWords = allWords.concat(vocabSets[setId]);
-        });
-        document.getElementById('numWords').value = allWords.length;
-    });
-
     document.addEventListener('DOMContentLoaded', () => {
         const setSelectContainer = document.getElementById('setSelectContainer');
         const confirmSetsButton = document.getElementById('confirmSets');
@@ -75,6 +75,7 @@
         const feedback = document.getElementById('feedback');
         const evaluationContainer = document.getElementById('evaluationContainer');
         const retryTestButton = document.getElementById('retryTest');
+        const quitTestButton = document.getElementById('quitTest');
 
         let incorrectWords = [];
 
@@ -125,6 +126,8 @@
             testForm.innerHTML = '';
             evaluationContainer.innerHTML = '';
             incorrectWords = [];
+            retryTestButton.style.display = 'none';
+            quitTestButton.style.display = 'none';
 
             const selectedSets = Array.from(document.querySelectorAll('.setCheckbox:checked')).map(cb => cb.value);
             const numWords = parseInt(document.getElementById('numWords').value, 10);
@@ -174,15 +177,15 @@
                 const userAnswer = formData.get(`answer${i}`);
                 const correctAnswer = selectedWords[i].ar;
 
-                input.disabled = true; // Eingabefelder sperren
+                input.disabled = true;
 
                 if (userAnswer && userAnswer.trim() === correctAnswer) {
-                    feedback.textContent = "Richtig!";
+                    feedback.textContent = "Correct!";
                     feedback.classList.remove('solution');
                     feedback.classList.add('correct');
                     correctCount++;
                 } else {
-                    feedback.textContent = `Falsch! Korrekt: ${correctAnswer}`;
+                    feedback.textContent = `Incorrect! Correct: ${correctAnswer}`;
                     feedback.classList.remove('correct');
                     feedback.classList.add('solution');
                     incorrectWords.push(selectedWords[i]);
@@ -190,32 +193,41 @@
             });
 
             const totalQuestions = selectedWords.length;
-            const percentageCorrect = Math.round((correctCount / totalQuestions) * 100);
-            const grade = calculateGrade(percentageCorrect);
+            const percentageCorrect = (correctCount / totalQuestions) * 100;
+            const grade = roundToNearestQuarter(6 - (5 * (percentageCorrect / 100)));
 
             evaluationContainer.innerHTML = `
-                <p>Note: ${grade}</p>
-                <p>Prozentual richtig: ${percentageCorrect}%</p>
-                <p>Richtig/Falsch: ${correctCount}/${totalQuestions - correctCount}</p>
+                <p>Grade: ${grade}</p>
+                <p>${correctCount} of ${totalQuestions} correct</p>
             `;
 
             results.style.display = 'block';
+            if (incorrectWords.length > 0) {
+                retryTestButton.style.display = 'inline-block';
+                quitTestButton.style.display = 'inline-block';
+            }
         });
 
         // Nächster Test mit falschen Wörtern
         retryTestButton.addEventListener('click', () => {
             if (incorrectWords.length > 0) {
+                testForm.innerHTML = '';
                 startTestButton.click();
+                testForm.dataset.selectedWords = JSON.stringify(incorrectWords);
             }
         });
 
-        function calculateGrade(percentage) {
-            if (percentage >= 90) return 1;
-            if (percentage >= 80) return 2;
-            if (percentage >= 70) return 3;
-            if (percentage >= 60) return 4;
-            if (percentage >= 50) return 5;
-            return 6;
+        // Test abbrechen
+        quitTestButton.addEventListener('click', () => {
+            testArea.style.display = 'none';
+            results.style.display = 'none';
+            incorrectWords = [];
+            evaluationContainer.innerHTML = '';
+            testForm.innerHTML = '';
+        });
+
+        function roundToNearestQuarter(num) {
+            return (Math.round(num * 4) / 4).toFixed(2);
         }
     });
 </script>
