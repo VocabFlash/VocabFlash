@@ -101,11 +101,15 @@ function conjugate(verb, tense, pronoun) {
     const verbGroup = verb.group || "er"; // Standardmäßig "er" falls keine Gruppe angegeben ist
     const endings = verbEndings[verbGroup][tense]; // Endungen basierend auf Zeitform und Gruppe
     const stem = verb.verb.slice(0, -2); // Stamm des Verbs
-    
- if (tense === "passeCompose") {
-        const aux = endings.auxiliary;
+
+    if (tense === "passeCompose") {
+        // Partizip Perfekt für das gewählte Verb
         const pastParticiple = endings.pastParticiple;
-        return `${pronoun === "je" && aux === "être" ? "suis" : aux} ${stem}${pastParticiple}`;
+
+        // Hilfsverb konjugieren
+        const auxiliaryConjugation = verbSets.irreguler['avoir'][tense][pronoun] || endings.auxiliary;
+
+        return `${pronoun === "je" ? auxiliaryConjugation.replace('ai', 'j\'ai') : auxiliaryConjugation} ${stem}${pastParticiple}`;
     }
 
     if (endings) {
@@ -115,6 +119,10 @@ function conjugate(verb, tense, pronoun) {
         return irregularVerb ? irregularVerb[tense][pronoun] : "Verb not found";
     }
 }
+
+// Beispielaufruf:
+console.log(conjugate({ verb: "parler", group: "er" }, "passeCompose", "je")); // Erwartet: "j'ai parlé"
+
 
 // Definition der Konjugation von avoir im passé composé
 const avoirConjugation = {
