@@ -66,5 +66,27 @@ const vocabSets = {
       { de: "I _____ (forget, Past Perfect) my keys at home.", ar: "had forgotten" },
       { de: "He _____ (call, Past Perfect) her before she left the office.", ar: "had called" },
   ],
+    set3: [
+      // Present Perfect
+      { de: "She _____ (write, Present Perfect) three novels so far.", ar: "has written" },
+      { de: "They _____ (not, finish, Present Perfect) their homework yet.", ar: "have not finished" },
+      { de: "I _____ (learn, Present Perfect) a lot this semester.", ar: "have learned" },
+  
+      // Present Perfect Continuous
+      { de: "He _____ (exercise, Present Perfect Continuous) for an hour.", ar: "has been exercising" },
+      { de: "We _____ (not, talk, Present Perfect Continuous) since last week.", ar: "have not been talking" },
+      { de: "They _____ (work, Present Perfect Continuous) on the project all day.", ar: "have been working" },
+  
+      // Past Perfect
+      { de: "She _____ (find, Past Perfect) her keys before leaving the house.", ar: "had found" },
+      { de: "They _____ (not, see, Past Perfect) that movie before last night.", ar: "had not seen" },
+      { de: "I _____ (read, Past Perfect) the book before the discussion started.", ar: "had read" },
+  
+      // Past Perfect Continuous
+      { de: "He _____ (wait, Past Perfect Continuous) for over an hour when she finally arrived.", ar: "had been waiting" },
+      { de: "They _____ (not, practice, Past Perfect Continuous) for the game before the rain started.", ar: "had not been practicing" },
+      { de: "I _____ (work, Past Perfect Continuous) on that assignment for weeks before it was due.", ar: "had been working" },
+  ],
+
 
 };
