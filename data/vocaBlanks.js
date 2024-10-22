@@ -52,7 +52,19 @@ const vocabSets = {
   ],
 
   set2: [
-    { de: "They enjoy ... .", ar: "swimming" },
-    // Weitere Einträge
-  ]
+      // Present Perfect
+      { de: "I _____ (visit, Present Perfect) France three times.", ar: "have visited" },
+      { de: "They _____ (not, see, Present Perfect) the latest movie yet.", ar: "have not seen" },
+      { de: "She _____ (learn, Present Perfect) to play the piano.", ar: "has learned" },
+      { de: "We _____ (finish, Present Perfect) our project ahead of schedule.", ar: "have finished" },
+      { de: "He _____ (break, Present Perfect) his leg playing soccer.", ar: "has broken" },
+  
+      // Past Perfect
+      { de: "By the time the show started, we _____ (arrive, Past Perfect).", ar: "had arrived" },
+      { de: "They _____ (not, eat, Past Perfect) dinner before the guests arrived.", ar: "had not eaten" },
+      { de: "She _____ (complete, Past Perfect) the assignment before the deadline.", ar: "had completed" },
+      { de: "I _____ (forget, Past Perfect) my keys at home.", ar: "had forgotten" },
+      { de: "He _____ (call, Past Perfect) her before she left the office.", ar: "had called" },
+  ],
+
 };
