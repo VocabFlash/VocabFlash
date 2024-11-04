@@ -428,6 +428,105 @@ set4: [
 
     { "de": "sich aus den Augen verlieren", "ar": "se perdre de vue" },
     { "de": "sich an jdn./etw. erinnern", "ar": "se souvenir de qn/qc" }
+  ],
+
+  // Set 1: Kennzeichen des Lebens
+  set8: [
+    // Lernziel: Kennzeichen des Lebens
+    { "de": "Nenne die 8 Kennzeichen des Lebens.", "ar": "Bewegung, Wachstum, Fortpflanzung, Stoffwechsel, Reizbarkeit, (Aufbau aus) Zellen, Evolution" },
+    { "de": "Was versteht man unter Reizbarkeit als Kennzeichen des Lebens?", "ar": "Die Fähigkeit eines Organismus, auf Umwelteinflüsse zu reagieren." },
+    { "de": "Erkläre die Bedeutung der Fortpflanzung als Kennzeichen des Lebens.", "ar": "Die Fähigkeit, Nachkommen zu erzeugen und die Art zu erhalten." },
+    { "de": "Warum ist Wachstum ein Kennzeichen des Lebens?", "ar": "Lebewesen können durch Zellvermehrung und -vergrößerung wachsen und sich entwickeln." },
+    { "de": "Was ist der Stoffwechsel in Lebewesen?", "ar": "Die Gesamtheit aller chemischen Reaktionen, die Stoffe aufnehmen, umwandeln und abbauen." },
+  ],
+
+  // Set 2: Organisationsebenen der Biosysteme
+  set9: [
+    // Lernziel: Organisationsebenen der Biosysteme
+    { "de": "Nenne die 10 Organisationsebenen der Biosysteme.", "ar": "Biomolekül, Organell, Zelle, Gewebe, Organ, Organismus, Population, Lebensgemeinschaft (Biozönose), Ökosystem, Biosphäre." },
+
+    { "de": "Was ist ein Biomolekül? Nenne ein Beispiel.", "ar": "Ein Biomolekül ist eine chemische Verbindung, die für den Aufbau und die Funktion von Lebewesen essentiell ist. Beispiele: Proteine, Kohlenhydrate, Lipide, Nukleinsäuren." },
+
+    { "de": "Was ist ein Zellorganell? Nenne ein Beispiel.", "ar": "Zellorganellen sind spezialisierte Strukturen innerhalb einer Zelle, die bestimmte Funktionen erfüllen. Beispiele: Mitochondrien (Energieerzeugung), Chloroplasten (Fotosynthese in Pflanzenzellen)." },
+
+    { "de": "Was ist eine Zelle? Nenne ein Beispiel.", "ar": "Die Zelle ist die kleinste lebende Einheit eines Organismus, die selbstständig lebensfähig ist. Beispiele: Nervenzellen, Muskelzellen, Bakterienzellen." },
+
+    { "de": "Was ist Gewebe? Nenne ein Beispiel.", "ar": "Ein Gewebe ist eine Gruppe ähnlicher Zellen, die gemeinsam eine spezifische Funktion erfüllen. Beispiele: Muskelgewebe, Nervengewebe, Bindegewebe." },
+
+    { "de": "Was ist ein Organ? Nenne ein Beispiel.", "ar": "Ein Organ ist eine Struktur aus verschiedenen Geweben, die zusammen eine bestimmte Funktion ausführen. Beispiele: Herz, Lunge, Blatt (bei Pflanzen)." },
+
+    { "de": "Was ist ein Organsystem? Nenne ein Beispiel.", "ar": "Ein Organsystem ist eine Gruppe von Organen, die zusammenarbeiten, um bestimmte lebenswichtige Aufgaben zu erfüllen. Beispiele: Verdauungssystem, Atmungssystem, Kreislaufsystem." },
+
+    { "de": "Was ist ein Organismus? Nenne ein Beispiel.", "ar": "Ein Organismus ist ein einzelnes Lebewesen, das alle Lebensprozesse in sich vereint. Beispiele: Ein Mensch, eine Pflanze, ein Bakterium." },
+
+    { "de": "Was ist eine Population? Nenne ein Beispiel.", "ar": "Eine Population ist eine Gruppe von Individuen derselben Art, die in einem bestimmten Gebiet leben und sich fortpflanzen. Beispiel: Eine Gruppe von Hirschen in einem Wald." },
+
+    { "de": "Was ist eine Lebensgemeinschaft (Biozönose)? Nenne ein Beispiel.", "ar": "Eine Lebensgemeinschaft ist eine Ansammlung von verschiedenen Arten, die in einem gemeinsamen Lebensraum interagieren. Beispiel: Die Gemeinschaft aus Fischen, Algen und Korallen in einem Riff." },
+
+    { "de": "Was ist ein Ökosystem? Nenne ein Beispiel.", "ar": "Ein Ökosystem besteht aus einer Lebensgemeinschaft und ihrer unbelebten Umwelt, die zusammen interagieren. Beispiel: Ein Wald, der Bäume, Tiere, Boden, Wasser und Luft umfasst." },
+
+    { "de": "Was ist die Biosphäre? Nenne ein Beispiel.", "ar": "Die Biosphäre ist die Gesamtheit aller Ökosysteme der Erde, also der belebte Bereich der Erde. Beispiel: Alle Ökosysteme der Erde zusammen, einschließlich Land, Wasser und Atmosphäre." }
   ]
+}
+
+
+  ],
+
+  // Set 3: Entdeckung der Zellen
+  set10: [
+    // Lernziel: Entdeckung der Zellen (Hook, Leeuwenhoek, Schleiden, Schwann, Virchow)
+    { "de": "Was entdeckte Robert Hooke und wie?", "ar": "Er beobachtete dünne Korkscheiben unter dem Mikroskop und prägte den Begriff 'Zelle'." },
+    { "de": "Was entdeckte Antonie van Leeuwenhoek?", "ar": "Er war der erste, der Bakterien und andere Mikroorganismen mit einem selbstgebauten Mikroskop beobachtete." },
+    { "de": "Was leisteten Matthias Schleiden und Theodor Schwann?", "ar": "Schleiden stellte fest, dass Pflanzen aus Zellen bestehen; Schwann übertrug dies auf Tiere und entwickelte die Zelltheorie." },
+    { "de": "Welche Aussage machte Rudolf Virchow zur Zelltheorie?", "ar": "Er ergänzte die Zelltheorie mit der Erkenntnis, dass alle Zellen aus bereits bestehenden Zellen entstehen." }
+  ],
+
+  // Set 4: Mikroskopieren
+  set11: [
+    // Lernziel: Mikroskopieren (Auflösungsvermögen, Vergrößerung, Gesichtsfelddurchmesser)
+    { "de": "Was versteht man unter Auflösungsvermögen?", "ar": "Die Fähigkeit, zwei nahe beieinander liegende Punkte getrennt darzustellen." },
+    { "de": "Was ist die leere Vergrößerung?", "ar": "Eine Vergrößerung ohne zusätzliche Detailgenauigkeit, das Bild wird lediglich größer." },
+    { "de": "Definiere den Gesichtsfelddurchmesser.", "ar": "Der Durchmesser des sichtbaren Bereichs im Mikroskop bei einer bestimmten Vergrößerung." },
+    { "de": "Wie berechnet man die tatsächliche Größe eines Objekts im Mikroskop?", "ar": "Tatsächliche Größe = Gesichtsfelddurchmesser / Anzahl der Objekte, die im Gesichtsfeld sichtbar sind." }
+  ],
+
+  // Set 5: Unterschiede zwischen Procyte und Eucyte
+  set12: [
+    // Lernziel: Zelltypen Procyte und Eucyte
+    { "de": "Was ist eine Procyte?", "ar": "Zelle ohne Zellkern und membranumhüllte Organellen; Beispiel: Bakterien." },
+    { "de": "Was ist eine Eucyte?", "ar": "Zelle mit Zellkern und membranumhüllten Organellen; Beispiele: Pflanzen- und Tierzellen." },
+    { "de": "Nenne zwei Unterschiede zwischen Procyte und Eucyte.", "ar": "Procyten haben keinen Zellkern, Eucyten haben einen. Procyten besitzen keine Organellen wie Mitochondrien, Eucyten schon." }
+  ],
+
+  // Set 6: Endosymbiontentheorie
+  set13: [
+    // Lernziel: Endosymbiontentheorie
+    { "de": "Erkläre die Endosymbiontentheorie.", "ar": "Die Theorie besagt, dass Mitochondrien und Plastiden aus prokaryotischen Organismen entstanden sind, die in eine andere Zelle aufgenommen wurden." },
+    { "de": "Nenne Hinweise für die Endosymbiontentheorie.", "ar": "Eigene DNA, Doppelmembran, Ähnlichkeiten mit Bakterien, Fähigkeit zur Teilung wie Bakterien." },
+    { "de": "Was sind Mitochondrien und ihre Funktion?", "ar": "Organellen, die Energie in Form von ATP erzeugen; werden als 'Kraftwerke der Zelle' bezeichnet." },
+    { "de": "Was sind Plastiden und ihre Funktion?", "ar": "Organellen in Pflanzenzellen, die für Fotosynthese (Chloroplasten) verantwortlich sind." }
+  ],
+
+  // Set 7: Zellorganellen und ihre Funktionen
+  set14: [
+    // Lernziel: Zellorganellen
+    { "de": "Nenne die Funktion des Zellkerns.", "ar": "Der Zellkern enthält die DNA und steuert die Zellaktivitäten." },
+    { "de": "Welche Funktion haben Ribosomen?", "ar": "Ribosomen sind für die Proteinbiosynthese zuständig." },
+    { "de": "Was ist das Endoplasmatische Retikulum (ER)?", "ar": "Das ER ist ein Netzwerk für den Stofftransport; glattes ER: Lipidsynthese, raues ER: Proteintransport." },
+    { "de": "Was ist die Funktion des Golgi-Apparats?", "ar": "Verarbeitet und verpackt Proteine und Lipide für den Transport in der Zelle." },
+    { "de": "Was machen die Lysosomen?", "ar": "Sie sind Verdauungsorganellen, die zellulären Abfall abbauen." }
+  ],
+
+  // Set 8: Kohlenhydrate und ATP
+  set15: [
+    // Lernziel: Kohlenhydrate und ATP
+    { "de": "Was sind Kohlenhydrate und ihre Hauptfunktion?", "ar": "Organische Moleküle, die Energie liefern; bestehen aus Kohlenstoff, Wasserstoff und Sauerstoff." },
+    { "de": "Nenne die drei Haupttypen von Kohlenhydraten.", "ar": "Monosaccharide (z.B. Glukose), Disaccharide (z.B. Saccharose), Polysaccharide (z.B. Stärke, Zellulose)." },
+    { "de": "Was ist Glukose und ihre Rolle im Stoffwechsel?", "ar": "Glukose ist ein Monosaccharid und dient als primäre Energiequelle für Zellen." },
+    { "de": "Was ist ATP und wofür wird es verwendet?", "ar": "ATP (Adenosintriphosphat) ist der Hauptenergieträger der Zelle und treibt viele biochemische Reaktionen an." },
+    { "de": "Wie wird ATP in der Zelle produziert?", "ar": "ATP wird hauptsächlich in den Mitochondrien durch Zellatmung produziert." }
+  ]
+}
+
 };
   
