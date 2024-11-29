@@ -18,7 +18,6 @@ function openFullscreen() {
     }
 }
 
-
 // Funktion, um das Standardverhalten des Doppelklick-Zooms zu verhindern
 function preventDoubleClickZoom() {
     document.addEventListener('gesturestart', function (e) {
@@ -28,7 +27,6 @@ function preventDoubleClickZoom() {
 
 // Überprüfen, ob das DOM vollständig geladen ist, bevor die Funktion ausgeführt wird
 document.addEventListener("DOMContentLoaded", preventDoubleClickZoom);
-
 
 // Funktion zum Beenden des Vollbildmodus 
 function closeFullscreen() {
@@ -42,7 +40,6 @@ function closeFullscreen() {
         document.msExitFullscreen();
     }
 }
-
 
 // Funktion zum Umschalten des Dark Modes
 function toggleDarkMode() {
@@ -75,6 +72,45 @@ function goResults() {
     window.location.href = 'result.html'; // Ersetze mit der URL deiner Startseite
 }
 
+// Erstelle das Menü
+const menu = document.createElement("div");
+menu.classList.add("menu"); // Füge die Klasse hinzu
+menu.style.display = "none"; // Menü verstecken
+menu.style.position = "fixed";
+menu.style.bottom = "50px"; // Position über dem Button
+menu.style.left = "70px"; // Gleiche Position wie der Button
+menu.style.backgroundColor = "white"; // Hintergrundfarbe
+menu.style.boxShadow = "0 2px 10px rgba(0, 0, 0, 0.5)"; // Schatten
+menu.style.zIndex = "999"; // Ein bisschen unter dem Button
+
+// Beispiel-Menüeinträge
+const menuItems = ["Toggle Try Again", "Item 2", "Item 3"];
+let tryAgainEnabled = true;
+
+menuItems.forEach(item => {
+    const menuItem = document.createElement("div");
+    menuItem.innerHTML = item;
+    menuItem.style.padding = "10px";
+    menuItem.style.cursor = "pointer";
+    
+    // Füge eine Funktion für den "Toggle Try Again" Menüeintrag hinzu
+    if (item === "Toggle Try Again") {
+        menuItem.onclick = function() {
+            tryAgainEnabled = !tryAgainEnabled; // Status umkehren
+            alert(`"Try Again" ist jetzt ${tryAgainEnabled ? "aktiviert" : "deaktiviert"}.`); // Beispielaktion bei Auswahl
+        };
+    } else {
+        menuItem.onclick = function() {
+            alert(`Du hast ${item} ausgewählt!`); // Beispielaktion bei Auswahl
+        };
+    }
+    
+    menu.appendChild(menuItem); // Menüeintrag zum Menü hinzufügen
+});
+
+// Menü zum Body hinzufügen
+document.body.appendChild(menu);
+
 // Event-Listener für das DOMContentLoaded-Event
 document.addEventListener("DOMContentLoaded", function() {
     // Erstelle den Zurück-Button
@@ -100,6 +136,34 @@ document.addEventListener("DOMContentLoaded", function() {
     homeButton.style.zIndex = "1000";
     homeButton.onclick = goHome; // Funktion für den Home-Button
     document.body.appendChild(homeButton); // Button dem Body hinzufügen
+
+    // Erstelle den Menü-Button
+    const menuButton = document.createElement("button");
+    menuButton.classList.add("fixed-button"); // Füge die Klasse hinzu
+    menuButton.innerHTML = "☰"; // Symbol für den Menü-Button
+    menuButton.title = "Menu";
+    menuButton.style.position = "fixed";
+    menuButton.style.bottom = "10px";
+    menuButton.style.left = "70px"; // Position links, näher am Zurück-Button
+    menuButton.style.zIndex = "1000";
+
+    // Funktion für das Menü
+    menuButton.onclick = function() {
+        if (menu.style.display === "none") {
+            menu.style.display = "block"; // Menü anzeigen
+        } else {
+            menu.style.display = "none"; // Menü verstecken
+        }
+    };
+
+    document.body.appendChild(menuButton); // Button dem Body hinzufügen
+
+    // Schließen des Menüs, wenn außerhalb geklickt wird
+    window.onclick = function(event) {
+        if (event.target !== menuButton && menu.style.display === "block") {
+            menu.style.display = "none"; // Menü verstecken
+        }
+    };
 
     // Erstelle den Result Button
     const resultButton = document.createElement("button");
@@ -134,18 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (!document.fullscreenElement) {
             openFullscreen(); // Vollbildmodus aktivieren
         } else {
-            closeFullscreen(); // Vollbildmodus beenden
+            closeFullscreen(); // Vollbildmodus schließen
         }
     });
-
-    // Erstelle den Dark-Mode-Button
-    const darkModeButton = document.createElement("button");
-    darkModeButton.classList.add("fixed-button"); // Füge die Klasse hinzu
-    darkModeButton.onclick = toggleDarkMode; // Funktion zum Umschalten des Dark Modes
-    darkModeButton.style.position = "fixed";
-    darkModeButton.style.bottom = "10px";
-    darkModeButton.style.right = "10px"; // Position rechts anpassen
-    darkModeButton.style.zIndex = "1000";
-    darkModeButton.innerHTML = "◐";
-    document.body.appendChild(darkModeButton); // Button dem Body hinzufügen
 });
